@@ -25,11 +25,9 @@ export const Slider = () => {
 
       gsap.to(sliderRef.current, {
         xPercent: -46,
-        duration: 1,
-        ease: "power3.inOut",
         scrollTrigger: {
           trigger: wrapperRef.current,
-          start: "top 40%",
+          start: "top 30%",
           end: 'bottom bottom',
           // end: () => `-=${widthSlider}`,
           pin: true,
@@ -54,9 +52,9 @@ export const Slider = () => {
         scale: 1,
         ease: "expo.inOut",
         scrollTrigger: {
-          trigger: '.about',
-          start: "20% bottom",
-          end: "20% top",
+          trigger: wrapperRef.current,
+          start: "top bottom",
+          end: "top top",
           scrub: true,
         },
       });

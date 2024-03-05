@@ -1,23 +1,29 @@
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import React, { useRef } from 'react'
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import React, { useRef } from "react";
+import { motion } from "framer-motion";
 
-import './Loader.scss';
+import "./Loader.scss";
+import { motionParametr } from "@/helpers/motionParametr";
 
 const numAnim = (first, second) => {
   const tl = gsap.timeline({ repeat: 3, repeatRefresh: true });
 
   tl.to(first, {
-    yPercent: '-=20',
+    yPercent: "-=20",
     duration: 1.4,
-    ease: 'expo.out'
-  })
-  
-  tl.to(second, {
-    yPercent: '+=20',
-    duration: 1.4,
-    ease: 'expo.out'
-  }, 0)
+    ease: "expo.out",
+  });
+
+  tl.to(
+    second,
+    {
+      yPercent: "+=20",
+      duration: 1.4,
+      ease: "expo.out",
+    },
+    0
+  );
 
   return tl;
 };
@@ -26,39 +32,51 @@ const linesAnim = (linesArray) => {
   const tl = gsap.timeline({ repeat: 3, repeatRefresh: true });
 
   linesArray.forEach((currLine) => {
-    tl.to(currLine, {
-      width: '+=25%',
-      height: '+=25%',
-      duration: 1.4,
-      ease: 'expo.out'
-    }, 0)
-  })
+    tl.to(
+      currLine,
+      {
+        width: "+=25%",
+        height: "+=25%",
+        duration: 1.4,
+        ease: "expo.out",
+      },
+      0
+    );
+  });
 
   return tl;
-}
+};
 
 const endingAnim = (image, progress, lastLine) => {
   const tl = gsap.timeline();
-  
+
   tl.to(image, {
     opacity: 1,
-    height: '101%',
+    height: "101%",
     duration: 1.4,
-    ease: 'expo.out'
+    ease: "expo.out",
   })
-  .to(progress, {
-    opacity: 0,
-    duration: .4,
-    ease: 'expo.out'
-  }, 0)
-  .to(lastLine, {
-    border: 0,
-    duration: .4,
-    ease: 'expo.out'
-  }, 0)
+    .to(
+      progress,
+      {
+        opacity: 0,
+        duration: 0.4,
+        ease: "expo.out",
+      },
+      0
+    )
+    .to(
+      lastLine,
+      {
+        border: 0,
+        duration: 0.4,
+        ease: "expo.out",
+      },
+      0
+    );
 
   return tl;
-}
+};
 
 export const Loader = ({ setLoaderFinished }) => {
   const loaderRef = useRef();
@@ -71,19 +89,26 @@ export const Loader = ({ setLoaderFinished }) => {
   useGSAP(() => {
     const tl = gsap.timeline({
       onComplete: () => setLoaderFinished(true),
-    })
+    });
 
     gsap.set(progressNumSecond.current, {
       yPercent: -80,
-    })
+    });
 
-    tl.add(numAnim(progressNumFirst.current, progressNumSecond.current), 0)
-    tl.add(linesAnim(linesRef.current), 0)
-    tl.add(endingAnim(imageRef.current, progressWrapperRef.current, linesRef.current[3]), '<77%')
-  })
+    tl.add(numAnim(progressNumFirst.current, progressNumSecond.current), 0);
+    tl.add(linesAnim(linesRef.current), 0);
+    tl.add(
+      endingAnim(
+        imageRef.current,
+        progressWrapperRef.current,
+        linesRef.current[3]
+      ),
+      "<77%"
+    );
+  });
 
   return (
-    <section className="loader" ref={loaderRef}>
+    <motion.section {...motionParametr} className="loader" ref={loaderRef}>
       <div className="progress" ref={progressWrapperRef}>
         <div className="progress__num-wrapper">
           <div ref={progressNumFirst} className="progress__num">
@@ -103,18 +128,16 @@ export const Loader = ({ setLoaderFinished }) => {
             <span>0</span>
           </div>
         </div>
-        <div className="progress__num">
-          %
-        </div>
+        <div className="progress__num">%</div>
       </div>
       <div className="lines">
-        <span className="line"  ref={(l) => linesRef.current.push(l)}/>
-        <span className="line"  ref={(l) => linesRef.current.push(l)}/>
-        <span className="line"  ref={(l) => linesRef.current.push(l)}/>
+        <span className="line" ref={(l) => linesRef.current.push(l)} />
+        <span className="line" ref={(l) => linesRef.current.push(l)} />
+        <span className="line" ref={(l) => linesRef.current.push(l)} />
         <span className="line line--last" ref={(l) => linesRef.current.push(l)}>
-          <img src="/media/loaderImage.webp" alt="" ref={imageRef}/>
+          <img src="/media/loaderImage.webp" alt="" ref={imageRef} />
         </span>
       </div>
-    </section>
-  )
-}
+    </motion.section>
+  );
+};

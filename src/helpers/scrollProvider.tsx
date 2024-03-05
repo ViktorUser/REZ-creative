@@ -67,7 +67,7 @@ export const ScrollProvider: React.FC<ScrollProviderProps> = ({ children }) => {
       const LocomotiveScroll = (await import("locomotive-scroll")).default;
       locomotiveScroll.current = new LocomotiveScroll({
         lenisOptions: {
-          duration: 0.7,
+          duration: 1.4,
           lerp: 0.1,
           smoothWheel: true,
           wheelMultiplier: 2,
