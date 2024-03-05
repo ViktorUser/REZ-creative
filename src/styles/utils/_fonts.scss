@@ -1,32 +1,15 @@
 @font-face {
-  font-family: Formula-Condensed;
-  src: url("/public/font/FormulaCondensed/FormulaCondensed-Light.otf")
-    format("opentype");
-  font-weight: lighter;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: Formula-Condensed;
-  src: url("/public/font/FormulaCondensed/FormulaCondensed-Bold.otf")
-    format("opentype");
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: Roboto;
-  src: url("/public/font/Roboto/Roboto-Medium.ttf")
-    format("opentype");
+  font-family: DenimWD;
+  src: url("/public/font/Denim-wd/DenimWDTRIAL-Regular.woff2")
+    format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: Roboto;
-  src: url("/public/font/Roboto/Roboto-Black.ttf")
-    format("opentype");
+  font-family: DenimWD;
+  src: url("/public/font/Denim-wd/DenimWDTRIAL-SemiBold.woff2")
+    format("woff2");
   font-weight: bold;
   font-style: normal;
 }
-

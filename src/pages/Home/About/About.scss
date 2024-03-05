@@ -1,0 +1,25 @@
+.about {
+  margin-top: 10vw;
+  margin-bottom: 5vw;
+  position: relative;
+  z-index: 2;
+
+  &__title {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 20vw;
+    margin: 0 auto;
+    width: 57%;
+    text-wrap: balance;
+  
+    .word{
+      position: relative;
+      margin-right: 0.7vw;
+
+      &__shadow{
+        position: absolute;
+        opacity: 20%;
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+@import "/src/styles/global.scss";
+
+.hero {
+  height: 100lvh;
+  width: 100vw;
+  position: relative;
+  
+  &__video-bg {
+    position: absolute;
+    z-index: -1;
+    width: 100vw;
+    height: 100lvh;
+    object-fit: cover;
+  }
+
+  &__logo {
+    grid-column: 1/13;
+  }
+
+  &__bottom {
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8vw);
+    width: 100vw;
+    position: absolute;
+    bottom: 0;
+    color: $c-white;
+
+    .content {
+      @include grid();
+      margin: 0.6vw 3.2vw;
+      height: 100%;
+    }
+  }
+
+  .timelines {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 1vw;
+    grid-column: 1/13;
+    margin-bottom: 0.5vw;
+
+    &__name {
+      opacity: .4;
+      padding-bottom: 0.4vw;
+    }
+
+    &__line {
+      display: block;
+      width: 100%;
+      height: 0.1vw;
+      background-color: #fff;
+      clip-path: inset(0 100% 0 0);
+    }
+  }
+}
