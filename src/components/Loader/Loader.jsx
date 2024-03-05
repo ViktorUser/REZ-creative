@@ -112,7 +112,7 @@ export const Loader = ({ setLoaderFinished }) => {
         <span className="line"  ref={(l) => linesRef.current.push(l)}/>
         <span className="line"  ref={(l) => linesRef.current.push(l)}/>
         <span className="line line--last" ref={(l) => linesRef.current.push(l)}>
-          <img src="/media/loaderImage.png" alt="" ref={imageRef}/>
+          <img src="/media/loaderImage.webp" alt="" ref={imageRef}/>
         </span>
       </div>
     </section>
