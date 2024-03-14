@@ -13,8 +13,7 @@ export const Footer = () => {
   gsap.registerPlugin(ScrollTrigger);
 
   useGSAP(() => {
-    // setTimeout(() => {
-      gsap.set(footerRef.current, { filter: "brightness(0.7)" });
+      gsap.set(footerRef.current, { filter: "brightness(0.5)" });
       gsap.to(footerRef.current, {
         filter: "brightness(1)",
         scrollTrigger: {
@@ -26,7 +25,7 @@ export const Footer = () => {
         },
       });
       
-      gsap.set(footerWrapperRef.current, { yPercent: -55, scale: 0.9 });
+      gsap.set(footerWrapperRef.current, { yPercent: -55, scale: 0.95 });
       gsap.to(footerWrapperRef.current, {
         filter: "brightness(1)",
         yPercent: 55,
@@ -39,7 +38,6 @@ export const Footer = () => {
           invalidateOnRefresh: true,
         },
       });
-    // }, 100)
   }, []);
 
   return (

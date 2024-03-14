@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
-import VideoTrailer from "./Video/Trailers-comp.mp4";
+import VideoTrailer from "./Video/Trailers-compressed-1.mp4";
+import VideoTrailerPixels from "./Video/Trailers-pixel.mp4";
 
 import "./Hero.scss";
-import { Logo } from "@/components/Logo/Logo";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
@@ -61,6 +61,20 @@ export const Hero = () => {
         <source src={VideoTrailer} />
       </video>
 
+      <div className="hero__logo">
+        <video
+          loop
+          muted
+          autoPlay
+          webkit-playsinline="true"
+          playsInline
+          ref={videoRef}
+          className="hero__logo-video"
+        >
+          <source src={VideoTrailerPixels} />
+        </video>
+      </div>
+
       <div className="hero__bottom">
         <div className="content">
           <div className="timelines">
@@ -101,9 +115,6 @@ export const Hero = () => {
                 ref={(n) => timelineLine.current.push(n)}
               />
             </div>
-          </div>
-          <div className="hero__logo">
-            <Logo />
           </div>
           <div className="timelines timelines__bottom">
             <p className="timelines__name">Team Deathmatch Trailer</p>

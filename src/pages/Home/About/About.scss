@@ -1,6 +1,5 @@
 .about {
-  margin-top: 10vw;
-  margin-bottom: 5vw;
+  margin: 10vw 0;
   position: relative;
   z-index: 2;
 
@@ -10,16 +9,28 @@
     padding-bottom: 20vw;
     margin: 0 auto;
     width: 57%;
-    text-wrap: balance;
   
     .word{
       position: relative;
       margin-right: 0.7vw;
+      
+      &:nth-of-type(8) {
+        margin-right: 4vw
+      }
 
       &__shadow{
         position: absolute;
         opacity: 20%;
       }
     }
+  }
+
+  &__icon {
+    width: 3.5vw;
+    height: 3.7vw;
+    position: absolute;
+    top: 7.7%;
+    left: 47.3%;
+    transform: scale(1.5);
   }
 }

@@ -4,10 +4,14 @@
   width: fit-content;
 	display: flex;
 	flex-wrap: nowrap;
+  position: sticky;
+  top: 40%;
 
   &__wrapper {
     height: 600lvh;
     width: 100vw;
+    position: relative;
+    z-index: -1;
   }
 
   &__item {
@@ -41,7 +45,6 @@
     .top {
       width: 3.5vw;
       height: 3.5vw;
-
     }
 
     .main {

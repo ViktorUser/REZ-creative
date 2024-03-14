@@ -14,6 +14,7 @@ export default function Home() {
         className="home"
       >
         <Hero />
+        {/* <div style={{ marginTop: '100lvh' }}></div> */}
         <About />
         <Footer />
       </motion.main>

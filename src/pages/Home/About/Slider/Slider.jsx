@@ -29,11 +29,7 @@ export const Slider = () => {
           trigger: wrapperRef.current,
           start: "top 30%",
           end: 'bottom bottom',
-          // end: () => `-=${widthSlider}`,
-          pin: true,
-          pinSpacing: false,
           scrub: 1,
-          invalidateOnRefresh: true,
         },
       });
     }
