@@ -1,0 +1,49 @@
+@import '/src/styles/global.scss';
+
+.socials {
+  margin-top: 1.2vw;
+  
+  &__list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5vw;
+    margin-top: 0.5vw;
+
+    @include forVerticalTablet() {
+      gap: 3vw;
+    }
+
+    @include forMobile() {
+      gap: 3vw;
+    }
+    
+  }
+
+  &__item {
+    @include hoverForLinks();
+    width: 1.5vw;
+    height: 1.5vw;
+    
+    @include forVerticalTablet() {
+      width: 3.5vw;
+      height: 3.5vw;
+    }
+
+    @include forMobile() {
+      width: 5.5vw;
+      height: 5.5vw;
+    }
+
+    & > a {
+      display: block;
+      width: 100%;
+      height: 100%;
+
+      & > img {
+        width: 100%;
+        height: 100%;  
+      }
+    }
+  }
+}

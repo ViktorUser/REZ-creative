@@ -3,8 +3,10 @@ import { motion } from "framer-motion";
 
 import { Hero } from "./Hero/Hero";
 import About from "./About/About";
-import { Footer } from "@/components/Footer/Footer";
 import { motionParametr } from "@/helpers/motionParametr";
+import WorksTop from "./WorksTop/WorksTop";
+import Works from "./Works/Works";
+import Partners from "./Partners/Partners";
 
 export default function Home() {
   return (
@@ -14,9 +16,11 @@ export default function Home() {
         className="home"
       >
         <Hero />
-        {/* <div style={{ marginTop: '100lvh' }}></div> */}
+        {/* <div style={{ paddingBottom: '120lvh' }}></div> */}
         <About />
-        <Footer />
+        <WorksTop />
+        <Works />
+        <Partners />
       </motion.main>
     </>
   );

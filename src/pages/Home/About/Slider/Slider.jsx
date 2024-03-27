@@ -8,9 +8,21 @@ import sliderIcon2 from "./Icons/slider2.svg";
 import sliderIcon3 from "./Icons/slider3.svg";
 import sliderIcon4 from "./Icons/slider4.svg";
 
+import { useIsTouchDevice } from "@/helpers/isTouchDevice";
+
 import "./Slider.scss";
 
 export const Slider = () => {
+  const isTouch = useIsTouchDevice();
+
+  return (
+    <>
+      {isTouch ? (<SliderTouch />) : <SliderDesktop/>}
+    </>
+  )
+} 
+
+const SliderDesktop = () => {
   const sliderRef = useRef();
   const iconRef = useRef();
   const wrapperRef = useRef();
@@ -29,7 +41,7 @@ export const Slider = () => {
           trigger: wrapperRef.current,
           start: "top 30%",
           end: 'bottom bottom',
-          scrub: 1,
+          scrub: 2,
         },
       });
     }
@@ -38,7 +50,7 @@ export const Slider = () => {
   useGSAP(() => {
     if (iconRef && wrapperRef) {
       gsap.set(iconRef.current, {
-        yPercent: -700,
+        yPercent: -670,
         rotate: 270,
         scale: 1.7,
       });
@@ -51,7 +63,7 @@ export const Slider = () => {
           trigger: wrapperRef.current,
           start: "top bottom",
           end: "top top",
-          scrub: true,
+          scrub: 1.2,
         },
       });
     }
@@ -65,7 +77,7 @@ export const Slider = () => {
             <img src={sliderIcon1} className="slider__icon" />
           </div>
           <div className="main">
-            <p className="body-text-secondary">Strategy</p>
+            <h3 className="semiBold">Strategy</h3>
             <p className="shadow">Integrated campaigns, social media, print</p>
           </div>
           <div className="bottom shadow">01</div>
@@ -75,7 +87,7 @@ export const Slider = () => {
             <img src={sliderIcon2} className="slider__icon" />
           </div>
           <div className="main">
-            <p className="body-text-secondary">Trailers</p>
+            <h3 className="semiBold">Trailers</h3>
             <p className="shadow">In-game & In-engine gameplay</p>
           </div>
           <div className="bottom shadow">02</div>
@@ -85,7 +97,7 @@ export const Slider = () => {
             <img src={sliderIcon3} className="slider__icon" />
           </div>
           <div className="main">
-            <p className="body-text-secondary">Cinematics</p>
+            <h3 className="semiBold">Cinematics</h3>
             <p className="shadow">CGI, 2D, 2.5D</p>
           </div>
           <div className="bottom shadow">03</div>
@@ -95,7 +107,7 @@ export const Slider = () => {
             <img src={sliderIcon4} className="slider__icon" />
           </div>
           <div className="main">
-            <p className="body-text-secondary">Art</p>
+            <h3 className="semiBold">Art</h3>
             <p className="shadow">Key art, marketing art, logo</p>
           </div>
           <div className="bottom shadow">04</div>
@@ -104,3 +116,51 @@ export const Slider = () => {
     </div>
   );
 };
+
+const SliderTouch = () => {
+  return (
+      <div className="slider touch">
+        <div className="slider__item">
+          <div className="top">
+            <img src={sliderIcon1} className="slider__icon" />
+          </div>
+          <div className="main">
+            <h3 className="semiBold">Strategy</h3>
+            <p className="shadow">Integrated campaigns, social media, print</p>
+          </div>
+          <div className="bottom shadow">01</div>
+        </div>
+        <div className="slider__item">
+          <div className="top">
+            <img src={sliderIcon2} className="slider__icon" />
+          </div>
+          <div className="main">
+            <h3 className="semiBold">Trailers</h3>
+            <p className="shadow">In-game & In-engine gameplay</p>
+          </div>
+          <div className="bottom shadow">02</div>
+        </div>
+        <div className="slider__item">
+          <div className="top">
+            <img src={sliderIcon3} className="slider__icon" />
+          </div>
+          <div className="main">
+            <h3 className="semiBold">Cinematics</h3>
+            <p className="shadow">CGI, 2D, 2.5D</p>
+          </div>
+          <div className="bottom shadow">03</div>
+        </div>
+        <div className="slider__item">
+          <div className="top">
+            <img src={sliderIcon4} className="slider__icon" />
+          </div>
+          <div className="main">
+            <h3 className="semiBold">Art</h3>
+            <p className="shadow">Key art, marketing art, logo</p>
+          </div>
+          <div className="bottom shadow">04</div>
+        </div>
+      </div>
+
+  );
+}

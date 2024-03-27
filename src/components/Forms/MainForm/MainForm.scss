@@ -1,0 +1,244 @@
+@import "/src/styles/global.scss";
+
+.main-form {
+  background-color: $g-100;
+  margin-top: 4vw;
+  padding: 5vw 3.2vw 7.4vw;
+  position: relative;
+  z-index: 10;
+
+  @include forVerticalTablet() {
+    padding: 8vw 5.2vw 15.4vw;
+  }
+
+  @include forMobile() {
+    padding: 10vw 5.2vw 15.4vw;
+  }
+
+  .super-text,
+  .socials {
+    text-align: center;
+
+    @include forVerticalTablet() {
+      margin: 2vw 0;
+    }
+
+    @include forMobile() {
+      margin: 6vw 0;
+    }
+
+    &__list {
+      @include forVerticalTablet() {
+        margin-top: 2vw;
+      }
+  
+      @include forMobile() {
+        margin-top: 4vw;
+      }
+  
+    }
+  }
+
+  &__content {
+    width: 100%;
+    position: relative;
+    border: 0.2vw solid $c-orange;
+    margin-top: 3vw;
+    padding-bottom: 2vw;
+
+    @include forVerticalTablet() {
+      margin-top: 6vw;
+    }
+    
+    @include forMobile() {
+      margin-top: 12vw;
+    }
+  }
+
+  &__line {
+    border: 0.2vw solid;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+
+  row-gap: 2.5vw;
+
+  border: 0.2vw solid $c-yellow;
+  margin: 1.6vw 5.2vw 0;
+  padding: 5vw 22vw;
+
+  @include forVerticalTablet() {
+    padding: 8vw 12vw;
+    row-gap: 5vw;
+  }
+
+  @include forMobile() {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    padding: 16vw 7vw 26vw;
+    row-gap: 8vw;
+  }
+
+  &--submited {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    row-gap: 0;
+    text-align: center;
+    padding: 8vw 10vw 12vw;
+    color: $c-yellow;
+
+    @include forVerticalTablet() {
+      row-gap: 5vw;
+    }
+
+    @include forMobile() {
+      row-gap: 10vw
+    }
+  }
+
+  &__input {
+    @extend %body-text;
+    background: none;
+    outline: none;
+    color: $w-100;
+    border-bottom: 0.1vw solid $w-100;
+    // -webkit-border-bottom: 0.1vw solid $w-100;
+    border-radius: 0;
+    padding-bottom: 0.5vw;
+    width: 100%;
+
+    &:-internal-autofill-selected {
+      color: red !important;
+      background-color: aqua !important;
+    }
+
+    @include forMobile() {
+      padding: 1.5vw 0;
+    }
+
+    &--textarea {
+      min-width: 100%;
+      max-width: 100%;
+      min-height: 100%;
+      max-height: 100%;
+      padding: 0.5vw;
+      margin-top: 0.5vw;
+      border: 0.1vw solid $w-100;
+
+      &::-webkit-scrollbar {
+        display: block;
+        width: 0.3vw;
+      }
+
+      &:-webkit-scrollbar-track {
+        background-color: $b-100;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $w-100;
+        cursor: grab;
+      }
+    }
+
+    &-wrapper {
+      width: 18vw;
+      height: 3.6vw;
+
+      @include forVerticalTablet() {
+        width: 25vw;
+      }
+
+      @include forMobile() {
+        width: 97%;
+        height: 6.6vw;
+      }
+
+      &--textarea {
+        width: 99%;
+        height: 10.2vw;
+        
+        @include forVerticalTablet() {
+          height: 20vw;
+        }
+
+        @include forMobile() {
+          height: 28vw;
+        }
+      }
+    }
+
+    &--error {
+      border-color: $c-red;
+    }
+
+    &-error-msg {
+      color: $c-red;
+    }
+  }
+
+  &__button {
+    margin: 3vw auto 0;
+    padding: 1vw 5vw;
+    border: 0.1vw solid $c-purple;
+
+    @include hoverForLinks();
+
+    &--disabled {
+      opacity: 0.4 !important;
+      cursor: not-allowed;
+    }
+
+    @include forVerticalTablet() {
+      padding: 2vw 12vw;
+    }
+
+    @include forMobile() {
+      padding: 3vw 20vw;
+    }
+  }
+
+  .bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vw;
+    margin: 0 auto;
+
+    @include forVerticalTablet() {
+      gap: 2.5vw;
+      margin-top: 3vw;
+    }
+
+    @include forMobile() {
+      margin-top: 6vw;
+      gap: 5vw;
+    }
+  }
+
+  &__terms {
+    display: inline-block;
+    text-align: center;
+    margin: 0 auto;
+
+    &-link {
+      font: inherit;
+      text-transform: none;
+      text-decoration: underline;
+
+      @include hoverForLinks();
+    }
+  }
+}

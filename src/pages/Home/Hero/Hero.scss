@@ -18,7 +18,8 @@
     width: 100%;
     height: 100lvh;
 
-    &-video {
+    &-canvas {
+      image-rendering: pixelated;
       object-fit: cover;
       width: 100%;
       height: 100%;
@@ -26,26 +27,48 @@
       mask-image: url("/public/media/logo-big.svg");
       mask-repeat: no-repeat;
       mask-size: 94%;
-      object-fit: cover;
-      mask-position: 50% 87%;
+      mask-position: 50% 91%;
+
+      @include forVerticalTablet() {
+        mask-position: 50% 95%;
+      }
+
+      @include forMobile() {
+        display: none;
+      }
     }
   }
 
   &__bottom {
     background-color: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(8vw);
+    backdrop-filter: blur(3.5vw);
+    -webkit-backdrop-filter: blur(3.5vw);
     width: 100vw;
-    height: 25vw;
+    height: 23.6vw;
     z-index: -1;
     position: absolute;
     bottom: 0;
-    color: $c-white;
+    color: $w-100;
+
+    @include forVerticalTablet() {
+      height: 30vw;
+    }
+
+    @include forMobile() {
+      height: 36vw;
+      backdrop-filter: blur(7vw);
+    -webkit-backdrop-filter: blur(7vw);
+    }
 
     .content {
       @include grid();
       row-gap: 36lvh;
       margin: 0.6vw 3.2vw;
       height: 100%;
+
+      @include forMobile() {
+        display: none;
+      }
     }
   }
 
@@ -55,10 +78,19 @@
     column-gap: 1vw;
     grid-column: 1/13;
     margin-bottom: 0.5vw;
+    // opacity: 0.4;
 
     &__name {
-      opacity: 0.4;
       padding-bottom: 0.4vw;
+    }
+
+    &__item {
+      position: relative;
+    }
+
+    &__category {
+      position: absolute;
+      bottom: 0;
     }
 
     &__line {

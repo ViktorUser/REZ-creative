@@ -2,16 +2,30 @@
 
 .slider {
   width: fit-content;
-	display: flex;
-	flex-wrap: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
   position: sticky;
   top: 40%;
 
+  @include forVerticalTablet() {
+    padding: 0 5.3vw;
+  }
+
+  @include forMobile() {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 10vw;
+    margin: 20vw 0;
+    padding: 0 5.2vw;
+  }
+
   &__wrapper {
-    height: 600lvh;
-    width: 100vw;
-    position: relative;
-    z-index: -1;
+    @include forDesktop() {
+      height: 400lvh;
+      width: 100vw;
+      position: relative;
+      z-index: -1;
+    }
   }
 
   &__item {
@@ -24,8 +38,30 @@
     border-bottom: 0.1vw solid $g-100;
     position: relative;
 
-    &:not(.slider__item:last-of-type) {
+    @include forVerticalTablet() {
+      padding: 0 2vw 5vw 0;
+      width: 20vw;
+      flex-direction: column;
+      justify-content: flex-start;
 
+      &:not(.slider__item:first-of-type) {
+        padding: 0 1vw 2vw 1.6vw;
+      }
+
+      &:last-of-type {
+        padding: 0 0 2vw 2vw !important;
+      }
+    }
+
+    @include forMobile() {
+      flex-direction: column;
+      justify-content: flex-start;
+      row-gap: 5vw;
+      width: 38%;
+      border: none;
+    }
+
+    &:not(.slider__item:last-of-type) {
       &::after {
         content: "";
         height: 50%;
@@ -34,17 +70,36 @@
         position: absolute;
         bottom: 0;
         right: 0;
+
+        @include forVerticalTablet() {
+          height: 24%;
+        }
+
+        @include forMobile() {
+          display: none;
+        }
       }
     }
 
     &:nth-of-type(1) {
       .top {
         width: 3.3vw;
+
+        @include forMobile() {
+          width: 10vw;
+          height: 11vw;
+        }
       }
     }
+
     .top {
       width: 3.5vw;
       height: 3.5vw;
+
+      @include forMobile() {
+        width: 10vw;
+        height: 10vw;
+      }
     }
 
     .main {
@@ -52,18 +107,55 @@
       align-items: center;
       justify-content: space-between;
 
+      @include forVerticalTablet() {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2vw;
+      }
+
+      @include forMobile() {
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-direction: column;
+        row-gap: 3vw;
+      }
+
       .shadow {
-        width: 40%;
+        @include forDesktop() {
+          width: 40%;
+        }
       }
     }
 
     .bottom {
       margin-top: 6vw;
+      color: $g-80;
+
+      @include forVerticalTablet() {
+        font-size: 1.5vw;
+        position: absolute;
+        bottom: 0;
+      }
+
+      @include forMobile() {
+        display: none;
+      }
     }
   }
 
   &__icon {
     width: 100%;
     height: 100%;
+  }
+
+  &.touch {
+    @include forDesktop() {
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      row-gap: 3vw;
+    }
   }
 }

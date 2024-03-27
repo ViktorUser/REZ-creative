@@ -5,8 +5,8 @@
 
 body {
   @extend %body-text;
-  color: $c-white;
-  background-color: $c-black;
+  color: $w-100;
+  background-color: $b-100;
   overflow-x: hidden;
   opacity: 1;
 }
@@ -22,4 +22,12 @@ body {
 
 .container {
   padding: 0 3.13vw;
+
+  @include forVerticalTablet() {
+    padding: 0 5.3vw;
+  }
+
+  @include forMobile() {
+    padding: 0 5.2vw;
+  }
 }

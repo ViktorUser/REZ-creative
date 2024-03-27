@@ -1,26 +1,40 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ScrollProvider } from "./helpers/scrollProvider";
 import Home from "./pages/Home/Home";
 import { Loader } from "./components/Loader/Loader";
 import { AnimatePresence } from "framer-motion";
+import { Footer } from "./components/Footer/Footer";
+import { Header } from "./components/Header/Header";
+import {
+  LoaderContext,
+  LoaderProvider,
+} from "./components/Loader/LoaderContext";
 
 function App() {
-  const [loaderFinished, setLoaderFinished] = useState(false);
-
   return (
     <main>
       <ScrollProvider>
-        <AnimatePresence mode="popLayout" initial={false}>
-          {!loaderFinished ? (
-            <Loader setLoaderFinished={setLoaderFinished} />
-          ) : (
-            <Home />
-            )}
-        </AnimatePresence>
+        <LoaderProvider>
+          <AnimatePresence mode="popLayout" initial={false}>
+            <Loader />
+            <Root />
+          </AnimatePresence>
+        </LoaderProvider>
       </ScrollProvider>
     </main>
   );
 }
 
-{/* <Home /> */}
+const Root = () => {
+  const { loaderFinished } = useContext(LoaderContext);
+
+  return loaderFinished && (
+    <>
+      <Header />
+      <Home />
+      <Footer />
+    </>
+  );
+};
+
 export default App;
