@@ -31,3 +31,29 @@ body {
     padding: 0 5.2vw;
   }
 }
+
+.link-with-arrow {
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+  gap: 0.4vw;
+  width: 8vw;
+  // text-wrap: nowrap;
+  
+  &::after {
+    display: block;
+    content: "";
+    background: url("/public/media/arrow.svg") no-repeat;
+    background-position: 0 -0.3vw;
+    height: 64%;
+    width: 13%;
+    transition: transform 1s $ExpoInOut;
+    overflow: hidden;
+  }
+
+  &:hover {
+    &::after {
+      transform: rotate(-360deg);
+    }
+  }
+}

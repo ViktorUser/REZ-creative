@@ -40,7 +40,7 @@ export const Nav = () => {
         <h1 className="navigation__link-wrapper super-text">
           <motion.a
             href="/"
-            className="navigation__link"
+            className="navigation__link link-with-arrow"
             {...anim(MenuAnim.links)}
             custom={[4 * 0.1, 4 * 0.01]}
           >

@@ -42,12 +42,12 @@ export const MainForm = () => {
 
     gsap.to(formContentRef.current, {
       scale: 1,
-      ease: 'power4.out',
+      ease: 'expo.out',
       scrollTrigger: {
         trigger: formRef.current,
-        start: '10% bottom',
-        end: '20% bottom',
-        scrub: 4,
+        start: '30% bottom',
+        end: '45% bottom',
+        scrub: 2,
       }
     })
 

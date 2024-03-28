@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Logo } from "../Logo/Logo";
 import "./Header.scss";
 import { useGSAP } from "@gsap/react";
@@ -10,23 +10,37 @@ import { AnimatePresence } from "framer-motion";
 import { LoaderContext } from "../Loader/LoaderContext";
 
 export const Header = () => {
-
   const headerRef = useRef();
   const logoRef = useRef();
-  const rightRef = useRef();
+  const rightRef = useRef([]);
   const leftRef = useRef();
 
   const [isActive, setisActive] = useState(false);
 
   gsap.registerPlugin(CustomEase)
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setisActive(false);
+    };
+  
+    window.addEventListener('scroll', handleScroll);
+  
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   useGSAP(() => {
     gsap.set(logoRef.current, {
       yPercent: 80,
       scale: 0.85,
     });
-    gsap.set(rightRef.current, { xPercent: 10, opacity: 0 });
     gsap.set(leftRef.current, { xPercent: -10, opacity: 0 });
+    
+    rightRef.current.forEach((currR) => {
+      gsap.set(currR, { xPercent: 10, opacity: 0 });
+    })
 
     const presenceEase = {
       ease: CustomEase.create("custom", "M0,0 C0.17,0 0.308,0.115 0.331,0.155 0.389,0.256 0.391,0.359 0.434,0.555 0.478,0.751 0.661,0.877 0.661,0.877 0.661,0.877 0.794,1 1,1 "),
@@ -73,13 +87,13 @@ export const Header = () => {
             <Logo />
           </div>
         </div>
-        <div className="right" ref={rightRef}>
-          <a href="/">Join our team</a>
+        <div className="right" ref={(el) => rightRef.current.push(el)}>
+          <a href="/" className="link-with-arrow">Join our team</a>
           <a href="/">Contact us</a>
         </div>
 
-        <div className="header__menu-button">
-          <HeaderButton isActive={isActive} setIsActive={setisActive}/>
+        <div className="header__menu-button" ref={(el) => rightRef.current.push(el)}>
+          <HeaderButton isActive={isActive} setIsActive={setisActive} />
         </div>
       </header>
 
@@ -98,7 +112,7 @@ export const Header = () => {
         </div>
 
         <div className="right">
-          <a href="/">Join our team</a>
+          <a href="/" className="link-with-arrow">Join our team</a>
           <a href="/">Contact us</a>
         </div>
 

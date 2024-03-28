@@ -107,6 +107,7 @@
   font-weight: bold;
   letter-spacing: -0.04vw;
   text-transform: uppercase;
+  text-wrap: nowrap;
 
   @include forMobile() {
     font-size: 4.1vw;

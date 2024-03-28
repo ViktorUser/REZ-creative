@@ -14,7 +14,3 @@
 "locomotive-scroll": "^5.0.0-beta.11",
 ```
 ### }
-
-<hr />
-
-![logo](public/media/LogoForReadMe.svg)
