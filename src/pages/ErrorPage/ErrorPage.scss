@@ -1,0 +1,39 @@
+@import '/src/styles/global.scss';
+
+.error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 2vw;
+
+  height: 100lvh;
+
+  .super-text {
+    @include forVerticalTablet {
+      padding: 0 4vw;
+    }
+    @include forMobile() {
+      font-size: 10.3vw;
+    }
+  }
+
+  &__button {
+    margin-top: 2vw;
+    padding: 0.8vw 5vw;
+    border: 0.1vw solid $c-purple;
+
+    @include forVerticalTablet() {
+      margin-top: 6vw;
+    }
+
+    @include forMobile() {
+      margin-top: 6vw;
+    }
+
+    text-transform: none;
+    @extend %body-text;
+    @include hoverForLinks()
+  }
+}

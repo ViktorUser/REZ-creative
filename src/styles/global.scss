@@ -43,9 +43,10 @@ body {
   &::after {
     display: block;
     content: "";
-    background: url("/public/media/arrow.svg") no-repeat;
-    background-position: 0 -0.3vw;
-    height: 64%;
+    background: url("/media/arrow.svg") no-repeat;
+    background-size: contain;
+    background-position: 0 0;
+    height: 90%;
     width: 13%;
     transition: transform 1s $ExpoInOut;
     overflow: hidden;
@@ -56,4 +57,8 @@ body {
       transform: rotate(-360deg);
     }
   }
+}
+
+[data-hidden] {
+  opacity: 0;
 }

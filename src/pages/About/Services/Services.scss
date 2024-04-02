@@ -1,0 +1,229 @@
+@import "/src/styles/global.scss";
+
+.services {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @include forVerticalTablet() {
+    margin-top: 8vw;
+  }
+
+  &__image {
+    width: 62vw;
+    height: 79vw;
+    transform: translateY(-10%);
+    position: relative;
+    z-index: -1;
+    margin: 0 auto;
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &-list {
+    &--top {
+      transition: all 1s $ExpoInOut;
+
+      &__title {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 1vw;
+        transition: gap 1s $ExpoInOut;
+
+        @include forMobile {
+          gap: 2vw;
+        }
+
+        &::before {
+          content: "";
+          display: block;
+          width: 0.7vw;
+          height: 0.7vw;
+          background: no-repeat center;
+          background-size: contain;
+          transition: transform 1s $ExpoInOut;
+
+          @include forVerticalTablet() {
+            width: 1.3vw;
+            height: 1.3vw;
+          }
+
+          @include forMobile {
+            width: 3vw;
+            height: 3vw;
+          }
+        }
+      }
+
+      &:nth-of-type(1) {
+        .services-list--top__title {
+          &::before {
+            background-image: url("/public/media/AboutPage/ServicesIcons/YTriangle.svg");
+          }
+        }
+      }
+
+      &:nth-of-type(2) {
+        .services-list--top__title {
+          &::before {
+            background-image: url("/public/media/AboutPage/ServicesIcons/Rectangle.svg");
+          }
+        }
+      }
+
+      &:nth-of-type(3) {
+        .services-list--top__title {
+          &::before {
+            background-image: url("/public/media/AboutPage/ServicesIcons/Elipse.svg");
+          }
+        }
+      }
+    }
+
+    &__wrapper {
+      margin-top: 7vw;
+      width: 50vw;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 13%;
+
+      @include forVerticalTablet() {
+        width: 80vw;
+      }
+
+      @include forMobile {
+        width: 100%;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      &--mobile {
+        display: none;
+
+        @include forMobile() {
+          display: flex !important;
+          flex-direction: column;
+        }
+      }
+
+      &--top {
+        @include forMobile {
+          display: none;
+        }
+
+        .services-list--top__title {
+          @include forMobile {
+            padding: 3vw 0;
+            border-top: 0.1vw solid $g-80;
+            border-bottom: 0.1vw solid $g-80;
+            position: relative;
+
+            &::after {
+              content: "";
+              background: url("/public/media/arrow.svg") no-repeat center;
+              width: 4vw;
+              height: 4vw;
+              background-size: contain;
+              position: absolute;
+              right: 0;
+              transform: rotate(90deg);
+              transition: transform .3s $ExpoInOut;
+            }
+
+            &--active {
+              gap: 4vw;
+              &::after {
+                transform: rotate(-90deg);
+              }
+
+              &::before {
+                transform: rotate(360deg);
+
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &__list {
+      margin-top: 2vw;
+      display: flex;
+      flex-direction: column;
+      gap: 1vw;
+      list-style: none;
+      counter-reset: li;
+
+      @include forMobile {
+        gap: 3vw;
+      }
+
+      & > li::before {
+        counter-increment: li;
+        content: counter(li, decimal-leading-zero);
+        color: $g-90;
+        margin-right: 1vw;
+        font-weight: 600;
+
+        @include forMobile {
+          margin-right: 4vw;
+        }
+      }
+    }
+
+    &--main {
+      row-gap: 4vw;
+
+      @include forVerticalTablet() {
+        row-gap: 8vw;
+        margin-top: 10vw;
+      }
+
+      @include forMobile {
+        row-gap: 10vw;
+        margin-top: 12vw;
+      }
+    }
+
+    &__service {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 1vw;
+      margin-top: 1.5vw;
+
+      @include forVerticalTablet() {
+        margin-top: 2vw;
+      }
+
+      @include forMobile {
+        gap: 2vw;
+      }
+
+      &::before {
+        content: "";
+        display: block;
+        width: 0.7vw;
+        height: 0.7vw;
+        background: url("/public/media/AboutPage/ServicesIcons/PTriangle.svg")
+          no-repeat center;
+        background-size: contain;
+
+        @include forVerticalTablet() {
+          width: 1.3vw;
+          height: 1.3vw;
+        }
+
+        @include forMobile {
+          width: 3vw;
+          height: 3vw;
+        }
+      }
+    }
+  }
+}

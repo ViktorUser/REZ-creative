@@ -7,6 +7,7 @@
   width: 100%;
   height: 100%;
   position: relative;
+  border: 0.1vw solid $c-orange;
 
   &.hover {
     &:hover {
@@ -61,28 +62,29 @@
     border: 0.1vw solid;
     // transition: all 1s $ExpoInOut;
 
-    &-1 {
-      width: 100%;
-      height: 100%;
-      border-color: $c-orange;
-      transition: all 1s 0.2s $ExpoInOut;
-      // transition: all 1s $ExpoInOut;
-    }
+    // &-1 {
+    //   width: 100%;
+    //   height: 100%;
+    //   border-color: $c-orange;
+    //   transition: all 1s 0.2s $ExpoInOut;
+    //   // transition: all 1s $ExpoInOut;
+    // }
     
-    &-2 {
+    &-1 {
       width: 92%;
       height: 72%;
       border-color: $c-yellow;
-      transition: all 1s 0.1s $ExpoInOut;
+      // transition: all 1s 0.1s $ExpoInOut;
+      transition: all 1s $ExpoInOut;
 
     }
     
-    &-3 {
+    &-2 {
       width: 72.5%;
       height: 34.1%;
       border-color: $c-blue;
-      transition: all 1s $ExpoInOut;
-      // transition: all 1s 0.2s $ExpoInOut;
+      // transition: all 1s $ExpoInOut;
+      transition: all 1s 0.08s $ExpoInOut;
 
     }
   }

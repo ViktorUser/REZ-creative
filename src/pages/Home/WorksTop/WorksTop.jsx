@@ -44,10 +44,6 @@ const WorksTopMobile = () => {
     });
 
     titlesRef.current.forEach((currT, i) => {
-      tl.set(currT, {
-        clipPath: "inset(0% 0 100% 0)",
-      });
-
       tl.fromTo(
         currT,
         {

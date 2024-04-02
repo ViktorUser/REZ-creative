@@ -1,0 +1,44 @@
+@import '/src/styles/global.scss';
+
+.about-section {
+  margin-top: 8vw;
+
+  .top {
+    display: flex;
+    flex-direction: column;
+    gap: 4vw;;
+    
+    width: 57%;
+    margin: 0 auto;
+    
+    @include forVerticalTablet() {
+      width: 89%;
+    }
+    
+    @include forMobile() {
+      width: 83%;
+      margin: 0;
+      padding: 0 5.2vw;
+    }
+  }
+
+  &__title {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 20vw;
+  
+    .word{
+      position: relative;
+      margin-right: 0.7vw;
+
+      @include forMobile() {
+        margin-right: 2vw;
+      }
+
+      &__shadow{
+        position: absolute;
+        opacity: 20%;
+      }
+    }
+  }
+}

@@ -28,13 +28,13 @@
 }
 
 @mixin forHorizontalTablet() {
-  @media screen and (min-aspect-ratio: 4/3) and (max-aspect-ratio: 16/9) {
+  @media screen and (min-aspect-ratio: 4/3) and (max-aspect-ratio: 15/9) {
     @content;
   }
 }
 
 @mixin forDesktop() {
-  @media (min-aspect-ratio: 16/9) {
+  @media screen and (min-aspect-ratio: 15/9) {
     @content;
   }
 }

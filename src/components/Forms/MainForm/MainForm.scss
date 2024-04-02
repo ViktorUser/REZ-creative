@@ -2,7 +2,6 @@
 
 .main-form {
   background-color: $g-100;
-  margin-top: 4vw;
   padding: 5vw 3.2vw 7.4vw;
   position: relative;
   z-index: 10;
@@ -120,11 +119,6 @@
     border-radius: 0;
     padding-bottom: 0.5vw;
     width: 100%;
-
-    &:-internal-autofill-selected {
-      color: red !important;
-      background-color: aqua !important;
-    }
 
     @include forMobile() {
       padding: 1.5vw 0;

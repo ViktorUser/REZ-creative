@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import worksList from "./worksList.json";
+import worksList from "@/data/worksList.json";
 
 import "./Works.scss";
 import { BorderButton } from "@/components/Button/BorderButton/BorderButton";

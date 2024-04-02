@@ -4,8 +4,17 @@ import App from "./App.jsx";
 import "./styles/global.scss";
 import "./styles/reset.scss";
 
+import {
+  Route,
+  Routes,
+  BrowserRouter as Router,
+} from 'react-router-dom';
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
+    <Router>
+        <Routes>
+          <Route path='/*' element={<App />} />
+        </Routes>
+      </Router>
   </React.StrictMode>
 );

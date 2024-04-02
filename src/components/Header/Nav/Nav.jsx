@@ -2,20 +2,23 @@ import React from "react";
 import "./Nav.scss";
 import { motion } from "framer-motion";
 import { MenuAnim, anim } from "@/helpers/anim";
+import { Link } from "react-router-dom";
 
-export const Nav = () => {
+export const Nav = ({ setisActive }) => {
   return (
     <motion.div className="navigation" {...anim(MenuAnim.presenceMenu)}>
       <nav className="navigation__list container">
         <h1 className="navigation__link-wrapper super-text">
-          <motion.a
+          <motion.span
             href="/"
             className="navigation__link"
             {...anim(MenuAnim.links)}
             custom={[1 * 0.1, 1 * 0.01]}
           >
-            Work
-          </motion.a>
+            <Link to="/work" className="navigation__link" onClick={() => setisActive(false)}>
+              Work
+            </Link>
+          </motion.span>
         </h1>
         <h1 className="navigation__link-wrapper super-text">
           <motion.a
@@ -24,7 +27,9 @@ export const Nav = () => {
             {...anim(MenuAnim.links)}
             custom={[2 * 0.1, 2 * 0.01]}
           >
-            About us
+            <Link to="/about" className="navigation__link" onClick={() => setisActive(false)}>
+              About us
+            </Link>
           </motion.a>
         </h1>
         <h1 className="navigation__link-wrapper super-text">
@@ -34,7 +39,9 @@ export const Nav = () => {
             {...anim(MenuAnim.links)}
             custom={[3 * 0.1, 3 * 0.01]}
           >
-            Contact us
+            <Link to="/contact" className="navigation__link" onClick={() => setisActive(false)}>
+              Contact us
+            </Link>
           </motion.a>
         </h1>
         <h1 className="navigation__link-wrapper super-text">
@@ -44,7 +51,9 @@ export const Nav = () => {
             {...anim(MenuAnim.links)}
             custom={[4 * 0.1, 4 * 0.01]}
           >
-            Join our team
+            <Link to="/join-our-team" className="navigation__link" onClick={() => setisActive(false)}>
+              Join our team
+            </Link>
           </motion.a>
         </h1>
       </nav>

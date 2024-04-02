@@ -1,24 +1,32 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import {
+  Navigate,
+  Routes,
+  Route,
+  useLocation,
+  useRoutes,
+} from "react-router-dom";
+
 import { ScrollProvider } from "./helpers/scrollProvider";
 import Home from "./pages/Home/Home";
 import { Loader } from "./components/Loader/Loader";
-import { AnimatePresence } from "framer-motion";
 import { Footer } from "./components/Footer/Footer";
 import { Header } from "./components/Header/Header";
 import {
   LoaderContext,
   LoaderProvider,
 } from "./components/Loader/LoaderContext";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
+import About from "./pages/About/About";
 
 function App() {
   return (
     <main>
       <ScrollProvider>
         <LoaderProvider>
-          <AnimatePresence mode="popLayout" initial={false}>
-            <Loader />
-            <Root />
-          </AnimatePresence>
+          <Loader />
+          <Root />
         </LoaderProvider>
       </ScrollProvider>
     </main>
@@ -28,12 +36,46 @@ function App() {
 const Root = () => {
   const { loaderFinished } = useContext(LoaderContext);
 
-  return loaderFinished && (
-    <>
-      <Header />
-      <Home />
-      <Footer />
-    </>
+  const element = useRoutes([
+    {
+      path: "/",
+      children: [
+        {
+          index: true,
+          element: <Home />,
+        },
+        {
+          path: 'about',
+          element: <About />,
+        },
+        // {
+        //   path: 'blogs',
+        //   children: [
+        //     {
+        //       path: ":blogId?",
+        //       element: <BlogDetails />,
+        //     },
+        //   ],
+        // }
+      ],
+    },
+    {
+      path: "*",
+      element: <ErrorPage />,
+    },
+  ]);
+
+  const location = useLocation();
+
+  return (
+    loaderFinished && (
+      <>
+        <Header />
+          <AnimatePresence mode="wait" initial={false}>
+            {React.cloneElement(element, { key: location.pathname })}
+          </AnimatePresence>
+      </>
+    )
   );
 };
 

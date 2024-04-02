@@ -18,7 +18,6 @@ export const BorderButton = ({ children, href }) => {
       <div className="border-button__lines">
         <span className="border-button__line border-button__line-1"></span>
         <span className="border-button__line border-button__line-2"></span>
-        <span className="border-button__line border-button__line-3"></span>
       </div>
     </a>
   );

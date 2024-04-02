@@ -13,7 +13,7 @@
   }
 
   @include forVerticalTablet() {
-    font-size: 9.7vw;
+    font-size: 8.7vw;
   }
 }
 
@@ -47,7 +47,7 @@
   }
 
   @include forVerticalTablet() {
-    font-size: 4.5vw;
+    font-size: 4.1vw;
   }
 }
 
@@ -97,7 +97,7 @@
   }
 
   @include forVerticalTablet() {
-    font-size: 2.3vw;
+    font-size: 2vw;
   }
 }
 
@@ -126,16 +126,20 @@
   line-height: 130%;
 
   @include forMobile() {
-    font-size: 4.1vw;
+    font-size: 3.6vw;
   }
 
   @include forVerticalTablet() {
-    font-size: 2.2vw;
+    font-size: 1.5vw;
   }
 }
 
 .semiBold {
   font-weight: bold;
+}
+
+.upperCase {
+  text-transform: uppercase
 }
 
 body {

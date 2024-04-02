@@ -1,13 +1,13 @@
 @import "/src/styles/global.scss";
 
 .partners {
-  margin-top: 10vw;
+  margin: 10vw 0 4vw;
   padding: 1vw 0;
   width: 100vw;
   overflow: hidden;
 
   @include forVerticalTablet() {
-    margin-top: 20vw;
+    margin-top: 20vw 0 5vw;
   }
   
   @include forMobile() {

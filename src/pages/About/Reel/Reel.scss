@@ -1,0 +1,133 @@
+@import "/src/styles/global.scss";
+
+.reel {
+  text-align: center;
+
+  padding: 10vw 3.13vw 0;
+
+  @include forVerticalTablet() {
+    padding: 13vw 5.3vw 0;
+  }
+
+  @include forMobile() {
+    padding: 20vw 5.2vw 0;
+  }
+
+  &__content {
+    margin-top: 9vw;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4vw;
+  }
+
+  &__button {
+    width: 100%;
+    height: 90lvh;
+  }
+
+  &__video {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    filter: brightness(0.8);
+    transition: filter 1s ease;
+
+    &--playing {
+      filter: brightness(1);
+    }
+
+    &-wrapper {
+      aspect-ratio: 16 / 9;
+      position: relative;
+      z-index: 9;
+    }
+
+    &--start {
+      border: 0.1vw solid $c-orange;
+    }
+
+    & > iframe {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .lines {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+
+    cursor: pointer;
+
+    &.hover {
+      &:hover {
+        .line {
+          width: 20%;
+          height: 7%;
+
+          @include forMobile {
+            width: 26%;
+            height: 15%;
+          }
+        }
+      }
+    }
+
+    .line {
+      position: absolute;
+      border: 0.1vw solid;
+      
+      &-1 {
+        border-color: $c-blue;
+        width: 100%;
+        height: 100%;
+        transition: all 1s $ExpoInOut;
+      }
+      
+      &-2 {
+        border-color: $c-orange;
+        width: 85%;
+        height: 80%;
+        transition: all 1s 0.1s $ExpoInOut;
+      }
+
+      &-3 {
+        border-color: $c-yellow;
+        width: 75%;
+        height: 60%;
+        transition: all 1s 0.2s $ExpoInOut;
+      }
+
+      &-4 {
+        border-color: $c-blue;
+        width: 45%;
+        height: 40%;
+        transition: all 1s 0.3s $ExpoInOut;
+      }
+
+      &.last-line {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-color: $c-purple;
+        width: 20%;
+        height: 7%;
+        background-color: $w-100;
+        color: $b-100;
+
+        @include forMobile {
+          width: 26%;
+          height: 15%;
+        }
+      }
+    }
+  }
+}
