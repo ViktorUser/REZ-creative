@@ -1,15 +1,17 @@
-import React, { useRef } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useRef, useState } from "react";
 import { Logo } from "../Logo/Logo";
 
 import "./Footer.scss";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
-import { MainForm } from "../Forms/MainForm/MainForm";
+import { FormSend } from "../Forms/Form/Form";
 
 export const Footer = () => {
   const footerRef = useRef();
   const footerMobileRef = useRef();
+  const footerListRef = useRef();
   const footerWrapperRef = useRef();
   const footerWrapperMobileRef = useRef();
 
@@ -50,6 +52,17 @@ export const Footer = () => {
       },
     });
 
+    gsap.set(footerListRef.current, { yPercent: 80 })
+    gsap.to(footerListRef.current, {
+      yPercent: 0,
+      scrollTrigger: {
+        trigger: footerRef.current,
+        start: "top bottom",
+        end: "bottom bottom",
+        scrub: true,
+      },
+    })
+
     gsap.set(footerWrapperMobileRef.current, { yPercent: -55, scale: 0.95 });
     gsap.to(footerWrapperMobileRef.current, {
       yPercent: 0,
@@ -61,14 +74,14 @@ export const Footer = () => {
         scrub: true,
       },
     });
-  }, []);
+  });
 
   return (
     <>
-      <MainForm />
+    <FormSend />
       <footer className="footer" ref={footerRef}>
         <div className="footer__wrapper container" ref={footerWrapperRef}>
-          <ul className="footer__top">
+          <ul className="footer__top" ref={footerListRef}>
             <a href="/" className="footer__link">
               Terms and conditions
             </a>

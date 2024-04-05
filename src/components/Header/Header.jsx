@@ -70,7 +70,7 @@ export const Header = () => {
           className="right"
           {...anim(HeaderAnim.navPresence)}
         >
-          <Link to="/join-our-team" className="link-with-arrow">
+          <Link to="/vacancies" className="link-with-arrow">
             Join our team
           </Link>
           <Link to="/contact">Contact us</Link>
@@ -111,7 +111,7 @@ export const Header = () => {
               className="right"
               {...anim(HeaderAnim.navPresence)}
             >
-              <Link to="/join-our-team" className="link-with-arrow">
+              <Link to="/vacancies" className="link-with-arrow">
                 Join our team
               </Link>
               <Link to="/contact">Contact us</Link>

@@ -7,11 +7,13 @@
 }
 
 @mixin hoverForLinks() {
-  opacity: 1;
-  transition: opacity .3s ease;
-
-  &:hover {
-    opacity: .5;
+  @media (hover: hover) {
+    opacity: 1;
+    transition: opacity .3s ease;
+  
+    &:hover {
+      opacity: .5;
+    }
   }
 }
 

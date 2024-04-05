@@ -1,14 +1,35 @@
 import { PageTransition, anim } from "@/helpers/anim";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 import "./InnerTransition.scss";
 import { useLocation } from "react-router-dom";
 
-export const InnerTransition = ({ children, slideColor }) => {
+const colors = ["#ff7215", "#82c5ff", "#feb200", "#d333ea", "#00A79D"];
+
+export const InnerTransition = ({ children }) => {
   const [isHomePage, setIsHomePage] = useState(false);
   const location = useLocation();
   const { pathname } = location;
+
+  const lastPickedColors = useRef([])
+
+  function getRandomColor() {
+    let color;
+    do {
+      color = colors[Math.floor(Math.random() * colors.length)];
+    } while (lastPickedColors.current.includes(color));
+  
+    // Update the last picked colors
+    lastPickedColors.current.push(color);
+    if (lastPickedColors.current.length > 2) { // or 3, if you want to ensure a color isn't repeated for 3 turns
+      lastPickedColors.current.shift(); // remove the oldest color
+    }
+  
+    return color;
+  }
+
+  const slideColor = getRandomColor();
 
   useEffect(() => {
     if (pathname === "/") {

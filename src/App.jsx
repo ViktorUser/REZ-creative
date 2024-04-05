@@ -1,9 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { AnimatePresence } from "framer-motion";
 import {
-  Navigate,
-  Routes,
-  Route,
   useLocation,
   useRoutes,
 } from "react-router-dom";
@@ -11,7 +8,6 @@ import {
 import { ScrollProvider } from "./helpers/scrollProvider";
 import Home from "./pages/Home/Home";
 import { Loader } from "./components/Loader/Loader";
-import { Footer } from "./components/Footer/Footer";
 import { Header } from "./components/Header/Header";
 import {
   LoaderContext,
@@ -19,6 +15,7 @@ import {
 } from "./components/Loader/LoaderContext";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import About from "./pages/About/About";
+import JoinTeam from "./pages/JoinTeam/JoinTeam";
 
 function App() {
   return (
@@ -48,15 +45,16 @@ const Root = () => {
           path: 'about',
           element: <About />,
         },
-        // {
-        //   path: 'blogs',
-        //   children: [
-        //     {
-        //       path: ":blogId?",
-        //       element: <BlogDetails />,
-        //     },
-        //   ],
-        // }
+        {
+          path: 'vacancies',
+          element: <JoinTeam />
+          // children: [
+          //   {
+          //     path: ":blogId?",
+          //     element: <BlogDetails />,
+          //   },
+          // ],
+        }
       ],
     },
     {

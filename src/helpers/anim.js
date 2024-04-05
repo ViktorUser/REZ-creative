@@ -275,3 +275,34 @@ export const servicesListAnim = {
     },
   },
 };
+
+export const VacancyAnim = {
+  vacancyContent: {
+    initial: {
+      x: "3%",
+      filter: 'brightness(0)'
+    },
+    enter: (i) => ({
+      x: "0",
+      filter: 'brightness(1)',
+      transition: {
+        duration: 1,
+        ease: [0.33, 1, 0.68, 1],
+        delay: 0.075 * i,
+      },
+    }),
+  },
+  line: {
+    initial: {
+      clipPath: "inset(0 100% 0 0)",
+    },
+    enter: (i) => ({
+      clipPath: "inset(0 0% 0 0)",
+      transition: {
+        duration: 1 ,
+        ease: [0.33, 1, 0.68, 1],
+        delay: 0.075 * i,
+      },
+    }),
+  },
+  }

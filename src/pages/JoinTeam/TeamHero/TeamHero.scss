@@ -1,0 +1,105 @@
+@import "/src/styles/global.scss";
+
+.team-hero {
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+
+  &__title {
+    padding: 0 11vw;
+  }
+
+  &__slider {
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
+    align-items: start;
+    gap: 1vw;
+
+    margin-top: 10vw;
+
+    &-presence-wrapper {
+      width: 100%;
+      position: relative;
+
+      @include forVerticalTablet {
+        left: -30%;
+      }
+      
+      @include forMobile {
+        left: -35%;
+      }
+    }
+  }
+
+  &__image {
+    background-repeat: no-repeat;
+    background-position: 0% center;
+    background-size: 115%;
+    
+    @include forVerticalTablet {
+      background-size: 125%;
+    }
+
+    &--1 {
+      background-image: url("/public/media/JoinTeam/1.png");
+      width: 26.5vw;
+      height: 36.2vw;
+
+      @include forVerticalTablet {
+        width: 46vw;
+        height: 65vw;
+      }
+
+      @include forMobile {
+        width: 47.5vw;
+        height: 76.2vw;
+      }
+    }
+    &--2 {
+      background-image: url("/public/media/JoinTeam/2.png");
+      width: 36.5vw;
+      height: 46.2vw;
+
+      @include forVerticalTablet {
+        width: 66vw;
+        height: 84vw;
+      }
+
+      @include forMobile {
+        width: 66.5vw;
+        height: 97.2vw;
+      }
+    }
+    &--3 {
+      background-image: url("/public/media/JoinTeam/3.png");
+      width: 26.5vw;
+      height: 36.2vw;
+
+      @include forVerticalTablet {
+        width: 46vw;
+        height: 65vw;
+      }
+
+      @include forMobile {
+        width: 47.5vw;
+        height: 76.2vw;
+      }
+    }
+    &--4 {
+      background-image: url("/public/media/JoinTeam/4.png");
+      width: 36.5vw;
+      height: 46.2vw;
+
+      @include forVerticalTablet {
+        width: 66vw;
+        height: 84vw;
+      }
+
+      @include forMobile {
+        width: 66.5vw;
+        height: 97.2vw;
+      } 
+    }
+  }
+}

@@ -1,0 +1,15 @@
+@import "/src/styles/global.scss";
+
+.join-team {
+  position: relative;
+  margin-bottom: 10vw;
+  padding-top: 9vw;
+
+  @include forVerticalTablet() {
+    padding-top: 13vw;
+  }
+
+  @include forMobile() {
+    padding-top: 20vw;
+  }
+}

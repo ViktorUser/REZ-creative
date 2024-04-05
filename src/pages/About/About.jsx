@@ -14,7 +14,7 @@ export default function About() {
   }, []);
 
   return (
-    <InnerTransition slideColor="#ff7215">
+    <InnerTransition>
       <main className="about-page">
         <Reel />
         <AboutSection />

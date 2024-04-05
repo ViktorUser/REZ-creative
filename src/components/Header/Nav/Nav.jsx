@@ -51,7 +51,7 @@ export const Nav = ({ setisActive }) => {
             {...anim(MenuAnim.links)}
             custom={[4 * 0.1, 4 * 0.01]}
           >
-            <Link to="/join-our-team" className="navigation__link" onClick={() => setisActive(false)}>
+            <Link to="/vacancies" className="navigation__link" onClick={() => setisActive(false)}>
               Join our team
             </Link>
           </motion.a>

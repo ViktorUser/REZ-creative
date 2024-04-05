@@ -49,7 +49,7 @@ export default function ErrorPage() {
     });
   });
   return (
-    <InnerTransition slideColor="#82c5ff">
+    <InnerTransition>
       <section className="error-page container">
         <p ref={(el) => presenceAnimRef.current.push(el)}>ERROR 404</p>
         <h1 className="super-text" ref={titleRef}>

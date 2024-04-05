@@ -5,6 +5,7 @@
   inset: 0;
   z-index: 100;
   background-color: $b-100;
+  cursor: wait;
 
   .progress {
     display: flex;

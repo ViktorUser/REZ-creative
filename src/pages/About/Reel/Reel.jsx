@@ -1,12 +1,10 @@
-import { BorderButton } from "@/components/Button/BorderButton/BorderButton";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 import "./Reel.scss";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { CustomEase } from "gsap/all";
 
-import Vimeo from "@u-wave/react-vimeo";
 import ReactPlayer from "react-player";
 import classNames from "classnames";
 import { useIsTouchDevice } from "@/helpers/isTouchDevice";

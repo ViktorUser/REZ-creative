@@ -14,7 +14,7 @@ export default function Home() {
   }, []);
 
   return (
-    <InnerTransition slideColor="#d333ea">
+    <InnerTransition>
       <main className="home">
         <Hero />
         <About />

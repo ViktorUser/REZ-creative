@@ -92,6 +92,11 @@
     height: 49lvh;
     position: relative;
 
+    @include forDesktop {
+      margin-top: 10vw; 
+      height: 79lvh;
+    }
+
     @include forMobile() {
       height: 70lvh;
     }
@@ -99,6 +104,10 @@
     &__title {
       position: static;
       transform: translate(0%, 0%);
+
+      @include forDesktop {
+        gap: 0;
+      }
 
       & > .super-text {
         height: 9.8vw;
@@ -117,6 +126,10 @@
       top: 0;
       transform: translateY(-25%);
 
+      @include forDesktop {
+        height: 79lvh;
+      }
+
       @include forMobile() {
         position: static;
         margin: 0 auto;
@@ -133,7 +146,7 @@
       position: absolute;
       bottom: 0;
       transform: translateX(-50%);
-      width: 100%;      
+      width: 100%;
     }
   }
 }
