@@ -1,20 +1,18 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef } from "react";
 
 import "./Reel.scss";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { CustomEase } from "gsap/all";
 
-import ReactPlayer from "react-player";
-import classNames from "classnames";
-import { useIsTouchDevice } from "@/helpers/isTouchDevice";
+import { DataContext } from "@/helpers/dataHelpers/dataProvider";
+import { VideoPlay } from "@/components/VideoPlay/VideoPlay";
 
 export default function Reel() {
   const titleRef = useRef();
   const presenceAnimRef = useRef();
-  const [isStarted, setIsStarted] = useState(false);
 
-  const isTouch = useIsTouchDevice();
+  const { data, isLoading } = useContext(DataContext);
 
   useGSAP(() => {
     const tl = gsap.timeline({ delay: 0.5 });
@@ -47,45 +45,25 @@ export default function Reel() {
       },
       "<50%"
     );
-  });
+  }, [isLoading]);
 
   return (
     <section className="reel">
-      <h1 className="super-text" ref={titleRef}>
-        Your brand. In Focus
-      </h1>
+      {data && !isLoading && (
+        <>
+          <h1 className="super-text" ref={titleRef}>
+            {data?.reel?.title}
+          </h1>
 
-      <div className="reel__content" ref={presenceAnimRef}>
-        <p>See our latest reel</p>
-        {/* {isStarted && <Vid isStarted={isStarted} />} */}
-        <div className="reel__video-wrapper">
-          <div className={classNames("reel__video", {
-            ["reel__video--playing"]: isStarted
-          })}>
-            <ReactPlayer
-              controls={true}
-              url="https://vimeo.com/911568333?color=000000"
-              playing={isStarted}
-              onPause={() => setIsStarted(false)}
-              wrapper="reel__video-wrapper"
+          <div className="reel__content" ref={presenceAnimRef}>
+            <p>{data?.reel?.video_title}</p>
+            <VideoPlay
+              linkUrl={data?.reel?.video}
+              buttonText={data?.reel?.play_button_text}
             />
           </div>
-          {!isStarted && (
-          <div
-            className={classNames("lines", {
-              ["hover"]: !isTouch,
-            })}
-            onClick={() => setIsStarted(true)}
-          >
-            <span className="line line-1" />
-            <span className="line line-2" />
-            <span className="line line-3" />
-            <span className="line line-4" />
-            <span className="line last-line">Play reel</span>
-          </div>
-          )}
-        </div>
-      </div>
+        </>
+      )}
     </section>
   );
 }

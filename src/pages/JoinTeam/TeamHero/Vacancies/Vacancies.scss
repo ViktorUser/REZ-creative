@@ -3,6 +3,10 @@
 .vacancies {
   margin-top: 14vw;
 
+  @include forVerticalTablet {
+    margin-top: 17vw;
+  }
+
   @include forMobile {
     margin-top: 20vw;
   }
@@ -153,14 +157,6 @@
       grid-column: 1/2;
       text-wrap: nowrap;
     }
-
-    &--cinematic-animation {
-      border-color: $c-orange;
-    }
-
-    &--post-production {
-      border-color: $c-blue;
-    }
   }
 
   &__line {
@@ -177,7 +173,7 @@
     }
 
     @include forMobile {
-      height: 1vw;
+      height: 0.6vw;
     }
   }
 }

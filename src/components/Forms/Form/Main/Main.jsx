@@ -5,6 +5,7 @@ import axios from "axios";
 import classNames from "classnames";
 
 import "../Form.scss";
+import { Link } from "react-router-dom";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("The field is required"),
@@ -24,10 +25,8 @@ export const MainForm = () => {
       onSubmit={(values, { setSubmitting }) => {
         axios({
           method: "post",
-          url: "https://stage.coreapi.tech/api/app/run?action=testing&mode=view",
-          data: {
-            values,
-          },
+          url: "http://2915880.cd416004.web.hosting-test.net/wp-json/rez/v1/form/say-hello",
+          data: values,
           headers: {
             "Content-Type": "application/json",
           },
@@ -111,9 +110,9 @@ export const MainForm = () => {
                 <p className="smallText shadow form__terms">
                   By clicking next, you agree to our
                   <br />
-                  <a href="/" className="form__terms-link">
+                  <Link to="/terms" className="form__terms-link">
                     Terms and Conditions
-                  </a>
+                  </Link>
                 </p>
               </div>
             </Form>

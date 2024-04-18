@@ -25,7 +25,7 @@
       @include forVerticalTablet {
         left: -30%;
       }
-      
+
       @include forMobile {
         left: -35%;
       }
@@ -36,13 +36,12 @@
     background-repeat: no-repeat;
     background-position: 0% center;
     background-size: 115%;
-    
+
     @include forVerticalTablet {
       background-size: 125%;
     }
 
-    &--1 {
-      background-image: url("/public/media/JoinTeam/1.png");
+    &:nth-of-type(odd) {
       width: 26.5vw;
       height: 36.2vw;
 
@@ -56,8 +55,8 @@
         height: 76.2vw;
       }
     }
-    &--2 {
-      background-image: url("/public/media/JoinTeam/2.png");
+
+    &:nth-of-type(even) {
       width: 36.5vw;
       height: 46.2vw;
 
@@ -70,36 +69,6 @@
         width: 66.5vw;
         height: 97.2vw;
       }
-    }
-    &--3 {
-      background-image: url("/public/media/JoinTeam/3.png");
-      width: 26.5vw;
-      height: 36.2vw;
-
-      @include forVerticalTablet {
-        width: 46vw;
-        height: 65vw;
-      }
-
-      @include forMobile {
-        width: 47.5vw;
-        height: 76.2vw;
-      }
-    }
-    &--4 {
-      background-image: url("/public/media/JoinTeam/4.png");
-      width: 36.5vw;
-      height: 46.2vw;
-
-      @include forVerticalTablet {
-        width: 66vw;
-        height: 84vw;
-      }
-
-      @include forMobile {
-        width: 66.5vw;
-        height: 97.2vw;
-      } 
     }
   }
 }

@@ -1,8 +1,9 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import "./CTA.scss";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
+import { DataContext } from "@/helpers/dataHelpers/dataProvider";
 
 export default function CTA() {
   const titleRef = useRef();
@@ -12,8 +13,11 @@ export default function CTA() {
 
   gsap.registerPlugin(ScrollTrigger);
 
+  const { data, isLoading } = useContext(DataContext);
+
   useGSAP(() => {
     const mediaQuery = window.matchMedia("(min-aspect-ratio: 16/9)");
+
 
     if (mediaQuery.matches) {
       gsap.fromTo(
@@ -76,7 +80,7 @@ export default function CTA() {
         }
       );
     });
-  });
+  }, [isLoading]);
 
   return (
     <section className="cta container" ref={wrapperRef}>
@@ -86,9 +90,6 @@ export default function CTA() {
           <p ref={(p) => titlesRef.current.push(p)}>extraordinary</p>
           <p ref={(p) => titlesRef.current.push(p)}>together</p>
         </h1>
-        {/* <h1 className="cta__title super-text" ref={titleRef}>
-          Let’s make something extraordinary together
-        </h1> */}
       </div>
       <div className="cta__lines">
         <span

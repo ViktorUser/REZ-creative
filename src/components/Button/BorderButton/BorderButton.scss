@@ -10,7 +10,8 @@
   border: 0.1vw solid $c-orange;
 
   &.hover {
-    &:hover {
+    @include hover()
+ {
       .border-button__line {
         width: 39%;
         height: 8%;

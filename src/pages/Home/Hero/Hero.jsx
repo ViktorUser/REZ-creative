@@ -4,6 +4,7 @@ import "./Hero.scss";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { LoaderContext } from "@/components/Loader/LoaderContext";
+import { DataContext } from "@/helpers/dataHelpers/dataProvider";
 
 const videos = [
   "/media/Video/AOT.mp4",
@@ -14,6 +15,7 @@ const videos = [
 export const Hero = () => {
   const { loaderFinished, setLoaderFinished } = useContext(LoaderContext);
 
+  const { data, isLoading } = useContext(DataContext);
 
   const [currentVideo, setCurrentVideo] = useState(0);
   const [loadedVideos, setLoadedVideos] = useState([]);
@@ -60,6 +62,7 @@ export const Hero = () => {
   // }, []);
 
   useEffect(() => {
+    if (!isLoading && videoRef) {
     const video = videoRef.current;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -86,7 +89,8 @@ export const Hero = () => {
     return () => {
       video.removeEventListener('play', loop);
     };
-  }, []);
+  }
+  }, [isLoading, videoRef]);
 
 
   // // Preload videos
@@ -113,7 +117,7 @@ export const Hero = () => {
   //   };
   // }, [currentVideo, loadedVideos]);
 
-  return (
+  return !isLoading && (
     <section className="hero">
       <video
         loop

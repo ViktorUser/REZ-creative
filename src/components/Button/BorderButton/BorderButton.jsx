@@ -3,13 +3,14 @@ import "./BorderButton.scss";
 import {} from "react-device-detect";
 import classNames from "classnames";
 import { useIsTouchDevice } from "@/helpers/isTouchDevice";
+import { Link } from "react-router-dom";
 
 export const BorderButton = ({ children, href }) => {
   const isTouch = useIsTouchDevice();
 
   return (
-    <a
-    href={href}
+    <Link
+    to={href}
     className={classNames("border-button", {
       ['hover']: !isTouch
     })}
@@ -19,6 +20,6 @@ export const BorderButton = ({ children, href }) => {
         <span className="border-button__line border-button__line-1"></span>
         <span className="border-button__line border-button__line-2"></span>
       </div>
-    </a>
+    </Link>
   );
 };

@@ -67,7 +67,8 @@
     cursor: pointer;
 
     &.hover {
-      &:hover {
+      @include hover()
+ {
         .line {
           width: 20%;
           height: 7%;

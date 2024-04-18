@@ -21,14 +21,17 @@ body {
 }
 
 .container {
-  padding: 0 3.13vw;
+  padding-right: 3.13vw;
+  padding-left: 3.13vw;
 
   @include forVerticalTablet() {
-    padding: 0 5.3vw;
+    padding-right: 5.3vw;
+    padding-left: 5.3vw;
   }
 
   @include forMobile() {
-    padding: 0 5.2vw;
+    padding-right: 5.2vw;
+    padding-left: 5.2vw;
   }
 }
 
@@ -52,7 +55,8 @@ body {
     overflow: hidden;
   }
 
-  &:hover {
+  @include hover()
+ {
     &::after {
       transform: rotate(-360deg);
     }

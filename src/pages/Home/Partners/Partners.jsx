@@ -1,42 +1,45 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import './Partners.scss';
 import { useGSAP } from "@gsap/react";
+import { DataContext } from "@/helpers/dataHelpers/dataProvider";
 
-const logos = ["ubisoft", "behaviour", "capcom", "kodansha"];
+// const logos = ["ubisoft", "behaviour", "capcom", "kodansha"];
 
 export default function Partners() {
-  return (
+  const { data, isLoading } = useContext(DataContext);
+
+  return !isLoading && (
     <section className="partners">
       <div className="partners__slider">
         <div className="partners__slider-wrapper">
-          {logos.map((currLogo, i) => (
+          {data.partners.logos.map((currLogo, i) => (
             <img
               alt=""
-              key={i}
+              key={`partners-logo--${i}`}
               className="partners__logo"
-              src={`/media/PartnersLogos/${currLogo}.png`}
+              src={currLogo}
             />
           ))}
         </div>
         <div className="partners__slider-wrapper">
-          {logos.map((currLogo, i) => (
+          {data.partners.logos.map((currLogo, i) => (
             <img
               alt=""
-              key={i}
+              key={`partners-logo--${i}`}
               className="partners__logo"
-              src={`/media/PartnersLogos/${currLogo}.png`}
+              src={currLogo}
             />
           ))}
         </div>
         <div className="partners__slider-wrapper">
-          {logos.map((currLogo, i) => (
+          {data.partners.logos.map((currLogo, i) => (
             <img
               alt=""
-              key={i}
+              key={`partners-logo--${i}`}
               className="partners__logo"
-              src={`/media/PartnersLogos/${currLogo}.png`}
+              src={currLogo}
             />
           ))}
         </div>

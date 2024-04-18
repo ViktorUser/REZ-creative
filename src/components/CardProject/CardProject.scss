@@ -17,7 +17,8 @@
     object-fit: cover;
   }
 
-  &:hover {
+  @include hover()
+ {
     outline: 0.2vw solid;
 
     &:nth-of-type(4n + 1) {

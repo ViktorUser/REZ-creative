@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { AnimatePresence } from "framer-motion";
+import { QueryClient, QueryClientProvider } from "react-query";
 import {
   useLocation,
   useRoutes,
@@ -16,16 +17,24 @@ import {
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import About from "./pages/About/About";
 import JoinTeam from "./pages/JoinTeam/JoinTeam";
+import Work from "./pages/Work/Work";
+import Terms from "./pages/Terms/Terms";
+import VacancyDetails from "./pages/VacancyDetails/VacancyDetails";
+import WorkDetails from "./pages/WorkDetails/WorkDetails";
+
+const queryC = new QueryClient();
 
 function App() {
   return (
     <main>
-      <ScrollProvider>
-        <LoaderProvider>
-          <Loader />
-          <Root />
-        </LoaderProvider>
-      </ScrollProvider>
+      <QueryClientProvider client={queryC}>
+        <ScrollProvider>
+          <LoaderProvider>
+            {/* <Loader /> */}
+            <Root />
+          </LoaderProvider>
+        </ScrollProvider>
+      </QueryClientProvider>
     </main>
   );
 }
@@ -46,14 +55,24 @@ const Root = () => {
           element: <About />,
         },
         {
+          path: 'work',
+          element: <Work />,
+        },
+        {
+          path: 'work/:workSlug',
+          element: <WorkDetails />,
+        },
+        {
           path: 'vacancies',
-          element: <JoinTeam />
-          // children: [
-          //   {
-          //     path: ":blogId?",
-          //     element: <BlogDetails />,
-          //   },
-          // ],
+          element: <JoinTeam />,
+        },
+        {
+          path: 'terms',
+          element: <Terms />,
+        },
+        {
+          path: 'vacancies/:vacancySlug',
+          element: <VacancyDetails />,
         }
       ],
     },
@@ -62,13 +81,13 @@ const Root = () => {
       element: <ErrorPage />,
     },
   ]);
-
+  
   const location = useLocation();
 
   return (
-    loaderFinished && (
+    !loaderFinished && (
       <>
-        <Header />
+        {/* <Header /> */}
           <AnimatePresence mode="wait" initial={false}>
             {React.cloneElement(element, { key: location.pathname })}
           </AnimatePresence>

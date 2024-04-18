@@ -9,10 +9,10 @@
 @mixin hoverForLinks() {
   @media (hover: hover) {
     opacity: 1;
-    transition: opacity .3s ease;
-  
-    &:hover {
-      opacity: .5;
+    transition: opacity 0.3s ease;
+
+    @include hover() {
+      opacity: 0.5;
     }
   }
 }
@@ -38,5 +38,17 @@
 @mixin forDesktop() {
   @media screen and (min-aspect-ratio: 15/9) {
     @content;
+  }
+}
+
+@function VW($px, $base: $desktop) {
+  @return calc(($px / $base) * 100vw);
+}
+
+@mixin hover {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
   }
 }

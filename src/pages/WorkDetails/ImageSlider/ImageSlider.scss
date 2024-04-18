@@ -1,0 +1,212 @@
+@import "/src/styles/global.scss";
+
+.works-slider {
+  margin-top: 14vw;
+
+  .splide {
+    padding: 0 !important;
+
+    &__track {
+      @include forVerticalTablet {
+        display: none !important;
+      }
+      
+      @include forMobile {
+        display: none !important;
+      }
+    }
+
+    .slide__image {
+      opacity: 0;
+    }
+
+    .is-visible {
+      .slide__image {
+        opacity: 1;
+      }
+    }
+
+    &__arrow {
+      width: 10vw !important;
+      height: 39.5vw !important;
+      top: 8vw !important;
+      border: 1px solid !important;
+      transform: translateY(0%) !important;
+      opacity: 0 !important;
+
+      &--prev {
+        left: 0 !important;
+      }
+
+      &--next {
+        right: 0 !important;
+      }
+    }
+
+    .drager-controller {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5vw;
+
+      width: fit-content;
+      z-index: 1;
+
+      &__arrows {
+        display: flex;
+        align-items: center;
+        gap: 0;
+
+        .left,
+        .right {
+          width: 3.7vw;
+        }
+
+        .right {
+          transform: translateX(-2%);
+        }
+
+        &--active {
+          opacity: 0.4;
+        }
+      }
+    }
+  }
+
+  .space {
+    padding-top: 20vw;
+  }
+
+  .slide {
+    height: 39.5vw;
+    position: relative;
+    display: flex !important;
+    gap: 0.5vw;
+    outline: none !important;
+    margin: 0 0.5vw;
+
+    &__image {
+      object-fit: contain;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+    }
+
+    & > canvas {
+      object-fit: contain;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+    }
+  }
+
+  .slider {
+    cursor: grab;
+
+    &__arrow {
+      width: 10vw;
+      height: 84%;
+      position: absolute;
+      z-index: 2;
+
+      & > svg {
+        display: none !important;
+      }
+
+      &--prev {
+        left: 0;
+      }
+
+      &--next {
+        right: 0;
+      }
+    }
+  }
+
+  .button {
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    width: 10vw;
+    height: 41vw;
+
+    &--next {
+      // background: #ff93933d;
+      right: 0;
+    }
+
+    &--prev {
+      // background: #ff93933d;
+      left: 0;
+    }
+  }
+
+  .bottom {
+    @include grid();
+    margin-top: 3vw;
+
+    .slider-description {
+      grid-column: 5/10;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8vw;
+
+      @include forVerticalTablet {
+        grid-column: 5/13;
+        gap: 3vw;
+      }
+
+      @include forMobile {
+        display: flex;
+        grid-column: 1/13;
+        gap: 4vw;
+        margin-top: 14  vw;
+      }
+    }
+  }
+
+  .slider-free {
+    width: 100vw;
+    overflow: scroll;
+    padding: 4vw 0;
+    gap: 1vw;
+    margin-bottom: 8vw;
+    
+    @include forMobile {
+      margin-bottom: 14vw;
+    }
+
+    &::-webkit-scrollbar {
+      display: block;
+      height: 0.3vw;
+    }
+
+    &:-webkit-scrollbar-track {
+      background-color: $b-100;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $w-100;
+      cursor: grab;
+    }
+
+    &__image {
+      width: VW(360, $tablet);
+      height: VW(315, $tablet);
+
+      &:nth-last-of-type(1) {
+        margin-right: 5.2vw;
+      }
+      &:nth-of-type(1) {
+        margin-left: 5.2vw;
+      }
+
+      @include forMobile {
+        width: VW(409, $mobile);
+        height: VW(354, $mobile);
+      }
+    }
+  }
+}

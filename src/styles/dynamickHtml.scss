@@ -1,0 +1,62 @@
+@import "./global.scss";
+
+.dynamickPage {
+  padding: 8vw 0;
+  width: 60%;
+
+  @include forVerticalTablet {
+    padding-top: 14vw;
+    width: 70%;
+  }
+  
+  @include forMobile {
+    padding-top: 20vw;
+    width: 100%;
+  }
+
+  &__title {
+    margin-bottom: 8vw;
+
+    @include forMobile {
+      margin-bottom: 12vw;
+    }
+  }
+
+  h2 {
+    font-weight: bold;
+    margin: 5vw 0 2vw;
+
+    @include forMobile {
+      margin: 8vw 0 4vw;
+    }
+  }
+
+  p {
+    margin-bottom: 1vw;
+
+    @include forMobile {
+      margin-bottom: 3vw;
+    }
+  }
+
+  ul {
+    list-style: disc;
+    padding-left: 1.3vw;
+  }
+
+  a {
+    @include hoverForLinks();
+  }
+
+  .link-with-arrow {
+    margin-bottom: 2vw;
+    width: 11vw;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+
+    &::after {
+      height: 0.9vw;
+      rotate: 180deg;
+    }
+  }
+}

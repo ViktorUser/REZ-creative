@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./ErrorPage.scss";
-import { InnerTransition } from "@/components/InnerTransition/InnerTransition";
+import { PageLayout } from "@/components/PageLayout/PageLayout";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { CustomEase } from "gsap/all";
@@ -49,7 +49,7 @@ export default function ErrorPage() {
     });
   });
   return (
-    <InnerTransition>
+    // <PageLayout>
       <section className="error-page container">
         <p ref={(el) => presenceAnimRef.current.push(el)}>ERROR 404</p>
         <h1 className="super-text" ref={titleRef}>
@@ -65,6 +65,6 @@ export default function ErrorPage() {
           Go homepage
         </Link>
       </section>
-    </InnerTransition>
+    // {/* </PageLayout> */}
   );
 }

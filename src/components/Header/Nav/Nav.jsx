@@ -3,6 +3,7 @@ import "./Nav.scss";
 import { motion } from "framer-motion";
 import { MenuAnim, anim } from "@/helpers/anim";
 import { Link } from "react-router-dom";
+import AnchorLink from "@/components/AnchorLink/AnchorLink";
 
 export const Nav = ({ setisActive }) => {
   return (
@@ -39,9 +40,13 @@ export const Nav = ({ setisActive }) => {
             {...anim(MenuAnim.links)}
             custom={[3 * 0.1, 3 * 0.01]}
           >
-            <Link to="/contact" className="navigation__link" onClick={() => setisActive(false)}>
+            
+            <AnchorLink toSection="#contact-us" className="navigation__link" onClick={() => setisActive(false)}>
               Contact us
-            </Link>
+            </AnchorLink>
+            {/* <Link to="/contact" className="navigation__link" onClick={() => setisActive(false)}>
+              Contact us
+            </Link> */}
           </motion.a>
         </h1>
         <h1 className="navigation__link-wrapper super-text">

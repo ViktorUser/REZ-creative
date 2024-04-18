@@ -1,0 +1,29 @@
+@import "/src/styles/global.scss";
+
+.work-page {
+  padding: VW(170) 0;
+
+  @include forVerticalTablet() {
+    padding: VW(126, $tablet) 0 VW(110, $tablet);
+  }
+
+  @include forMobile() {
+    padding: VW(126, $mobile) 0 VW(170, $mobile);
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__item {
+    .pixel-card {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  }
+
+  .works__list {
+    margin-top: 0;
+  }
+}

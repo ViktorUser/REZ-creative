@@ -1,40 +1,38 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 
-import sliderIcon1 from "./Icons/slider1.svg";
-import sliderIcon2 from "./Icons/slider2.svg";
-import sliderIcon3 from "./Icons/slider3.svg";
-import sliderIcon4 from "./Icons/slider4.svg";
-
 import { useIsTouchDevice } from "@/helpers/isTouchDevice";
 
 import "./Slider.scss";
+import { DataContext } from "@/helpers/dataHelpers/dataProvider";
 
 export const Slider = () => {
   const isTouch = useIsTouchDevice();
 
-  return (
-    <>
-      {isTouch ? (<SliderTouch />) : <SliderDesktop/>}
-    </>
-  )
-} 
+  return <>{isTouch ? <SliderTouch /> : <SliderDesktop />}</>;
+};
 
 const SliderDesktop = () => {
   const sliderRef = useRef();
   const iconRef = useRef();
   const wrapperRef = useRef();
 
+  const { data, isLoading } = useContext(DataContext);
+  
   gsap.registerPlugin(ScrollTrigger);
+  
+  useEffect(() => {
+    ScrollTrigger.refresh(true)
+  }, [isLoading])
 
   useGSAP(() => {
-    if ((sliderRef, wrapperRef)) {
+    if (!isLoading && sliderRef && wrapperRef) {
       gsap.set(sliderRef.current, {
         xPercent: 25,
       });
-
+      
       gsap.to(sliderRef.current, {
         xPercent: -46,
         scrollTrigger: {
@@ -45,10 +43,10 @@ const SliderDesktop = () => {
         },
       });
     }
-  }, []);
+  }, [isLoading, wrapperRef, sliderRef]);
 
   useGSAP(() => {
-    if (iconRef && wrapperRef) {
+    if (!isLoading && iconRef && wrapperRef) {
       gsap.set(iconRef.current, {
         yPercent: -670,
         rotate: 270,
@@ -67,100 +65,58 @@ const SliderDesktop = () => {
         },
       });
     }
-  }, [iconRef, wrapperRef]);
+  }, [iconRef, wrapperRef, isLoading]);
 
-  return (
+  return !isLoading && (
     <div className="slider__wrapper" ref={wrapperRef}>
-      <div className="slider" ref={sliderRef}>
-        <div className="slider__item">
-          <div className="top" ref={iconRef}>
-            <img src={sliderIcon1} className="slider__icon" />
+      {/* {!isLoading && ( */}
+        <div className="slider" ref={sliderRef}>
+          <div className="slider__item">
+            <div className="top" ref={iconRef}>
+              <img src={data.about.list[0].icon} className="slider__icon" />
+            </div>
+            <div className="main">
+              <h3 className="semiBold">{data.about.list[0].title}</h3>
+              <p className="shadow">{data.about.list[0].text}</p>
+            </div>
+            <div className="bottom shadow">{data.about.list[0].number}</div>
           </div>
-          <div className="main">
-            <h3 className="semiBold">Strategy</h3>
-            <p className="shadow">Integrated campaigns, social media, print</p>
-          </div>
-          <div className="bottom shadow">01</div>
+          {data.about.list.slice(1).map((currAb, i) => (
+            <div className="slider__item" key={`home_aboutList--${i}-item`}>
+              <div className="top">
+                <img src={currAb.icon} className="slider__icon" />
+              </div>
+              <div className="main">
+                <h3 className="semiBold">{currAb.title}</h3>
+                <p className="shadow">{currAb.text}</p>
+              </div>
+              <div className="bottom shadow">{currAb.number}</div>
+            </div>
+          ))}
         </div>
-        <div className="slider__item">
-          <div className="top">
-            <img src={sliderIcon2} className="slider__icon" />
-          </div>
-          <div className="main">
-            <h3 className="semiBold">Trailers</h3>
-            <p className="shadow">In-game & In-engine gameplay</p>
-          </div>
-          <div className="bottom shadow">02</div>
-        </div>
-        <div className="slider__item">
-          <div className="top">
-            <img src={sliderIcon3} className="slider__icon" />
-          </div>
-          <div className="main">
-            <h3 className="semiBold">Cinematics</h3>
-            <p className="shadow">CGI, 2D, 2.5D</p>
-          </div>
-          <div className="bottom shadow">03</div>
-        </div>
-        <div className="slider__item">
-          <div className="top">
-            <img src={sliderIcon4} className="slider__icon" />
-          </div>
-          <div className="main">
-            <h3 className="semiBold">Art</h3>
-            <p className="shadow">Key art, marketing art, logo</p>
-          </div>
-          <div className="bottom shadow">04</div>
-        </div>
-      </div>
+      {/* )} */}
     </div>
   );
 };
 
 const SliderTouch = () => {
-  return (
-      <div className="slider touch">
-        <div className="slider__item">
-          <div className="top">
-            <img src={sliderIcon1} className="slider__icon" />
-          </div>
-          <div className="main">
-            <h3 className="semiBold">Strategy</h3>
-            <p className="shadow">Integrated campaigns, social media, print</p>
-          </div>
-          <div className="bottom shadow">01</div>
-        </div>
-        <div className="slider__item">
-          <div className="top">
-            <img src={sliderIcon2} className="slider__icon" />
-          </div>
-          <div className="main">
-            <h3 className="semiBold">Trailers</h3>
-            <p className="shadow">In-game & In-engine gameplay</p>
-          </div>
-          <div className="bottom shadow">02</div>
-        </div>
-        <div className="slider__item">
-          <div className="top">
-            <img src={sliderIcon3} className="slider__icon" />
-          </div>
-          <div className="main">
-            <h3 className="semiBold">Cinematics</h3>
-            <p className="shadow">CGI, 2D, 2.5D</p>
-          </div>
-          <div className="bottom shadow">03</div>
-        </div>
-        <div className="slider__item">
-          <div className="top">
-            <img src={sliderIcon4} className="slider__icon" />
-          </div>
-          <div className="main">
-            <h3 className="semiBold">Art</h3>
-            <p className="shadow">Key art, marketing art, logo</p>
-          </div>
-          <div className="bottom shadow">04</div>
-        </div>
-      </div>
+  const { data, isLoading } = useContext(DataContext);
 
+  return (
+    <div className="slider touch">
+      {!isLoading &&
+        data.about.list.map((currAb, i) => (
+          <div className="slider__item" key={`home_aboutList--mobile-${i}-item`}>
+            <div className="top">
+              <img src={currAb.icon} className="slider__icon" />
+            </div>
+            <div className="main">
+              <h3 className="semiBold">{currAb.title}</h3>
+              <p className="shadow">{currAb.text}</p>
+            </div>
+            <div className="bottom shadow">{currAb.number}</div>
+          </div>
+      ))}
+      </div>
   );
-}
+};

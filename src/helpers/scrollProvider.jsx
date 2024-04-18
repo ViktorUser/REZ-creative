@@ -11,14 +11,28 @@ function easeInOutExpo(x) {
     : (2 - Math.pow(2, -20 * x + 10)) / 2;
 }
 
+function easeOutExpo(x) {
+  return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
+}
+
 export const ScrollProvider = ({ children }) => {
   const locomotiveScroll = useRef(null);
 
-  const scrollTo = (e, currentLink) => {
+  const scrollToSection = (e, currentLink) => {
     e.preventDefault();
     locomotiveScroll.current.scrollTo(currentLink, {
-      duration: 1.7,
+      duration: 3.7,
       easing: (x) => easeInOutExpo(x),
+      offset: -100,
+    });
+  };
+
+  const scrollToTop = (e) => {
+    e.preventDefault();
+    locomotiveScroll.current.scrollTo(0, {
+      duration: 1,
+      easing: (x) => easeOutExpo(x),
+      offset: 0,
     });
   };
 
@@ -37,6 +51,8 @@ export const ScrollProvider = ({ children }) => {
   }, []);
 
   return (
-    <ScrollContext.Provider value={scrollTo}>{children}</ScrollContext.Provider>
+    <ScrollContext.Provider value={{ scrollToSection, scrollToTop }}>
+      {children}
+    </ScrollContext.Provider>
   );
 };

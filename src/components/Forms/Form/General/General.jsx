@@ -5,6 +5,7 @@ import axios from "axios";
 import classNames from "classnames";
 
 import "../Form.scss";
+import { Link } from "react-router-dom";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("The field is required"),
@@ -32,23 +33,20 @@ export const GeneralEnquiresForm = () => {
         email: "",
         website: "",
         phone: "",
-        file: undefined,
-        about: "",
+        resume: undefined,
+        message: "",
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
         axios({
           method: "post",
-          url: "https://stage.coreapi.tech/api/app/run?action=testing&mode=view",
-          data: {
-            values,
-          },
+          url: "http://2915880.cd416004.web.hosting-test.net/wp-json/rez/v1/form/general-enquires",
+          data: values,
           headers: {
             "Content-Type": "application/json",
           },
         }).then((response) => {
           console.log(response);
-          console.log(values.file);
           setSubmitting(false);
           setSubmitted(true);
         });
@@ -137,23 +135,6 @@ export const GeneralEnquiresForm = () => {
                 />
               </div>
 
-              {/* <div className="form__input-wrapper">
-                <Field
-                  type="file"
-                  name="file"
-                  className={classNames("form__input", {
-                    "form__input--error":
-                      getIn(formik.errors, "file") &&
-                      getIn(formik.touched, "file"),
-                  })}
-                />
-                <ErrorMessage
-                  name="file"
-                  component="p"
-                  className="form__input-error-msg smallText"
-                />
-              </div> */}
-
               <UploadFile
                 data={formik.values}
                 errors={formik.errors}
@@ -164,7 +145,7 @@ export const GeneralEnquiresForm = () => {
                 <p>Tell us about yourself</p>
                 <Field
                   as="textarea"
-                  name="about"
+                  name="message"
                   className="form__input form__input--textarea"
                 />
               </div>
@@ -186,9 +167,9 @@ export const GeneralEnquiresForm = () => {
                 <p className="smallText shadow form__terms">
                   By clicking next, you agree to our
                   <br />
-                  <a href="/" className="form__terms-link">
+                  <Link to="/terms" className="form__terms-link">
                     Terms and Conditions
-                  </a>
+                  </Link>
                 </p>
               </div>
             </Form>
@@ -205,18 +186,18 @@ const UploadFile = ({ setFieldValue }) => {
   return (
     <div className="form__input-wrapper form__input-wrapper--file">
       <input
-        id="file"
-        name="file"
+        id="resume"
+        name="resume"
         type="file"
         style={{ display: 'none' }}
         onChange={(e) => {
           if (e.currentTarget.files.length > 0) {
-            setFieldValue("file", e.currentTarget.files[0]);
+            setFieldValue("resume", e.currentTarget.files[0]);
             setFilename(e.currentTarget.files[0].name);
           }
         }}
       />
-      <label htmlFor="file" className="form__input-file">
+      <label htmlFor="resume" className="form__input-file">
         Attach resume / CV
       </label>
       <p className="shadow smallText form__input-file-name">

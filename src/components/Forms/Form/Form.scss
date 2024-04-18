@@ -210,6 +210,7 @@
         flex-direction: row;
         justify-content: space-between;
         width: 100%;
+        text-align: center;
 
         @include forMobile {
           flex-direction: column;
@@ -245,6 +246,20 @@
 
     @include forMobile() {
       padding: 3vw 20vw;
+    }
+  }
+
+  &__files {
+    width: 47%;
+
+    &-wrapper {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .form__input-file-name {
+      width: 100%;
     }
   }
 

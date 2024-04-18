@@ -1,4 +1,4 @@
-import { InnerTransition } from "@/components/InnerTransition/InnerTransition";
+import { PageLayout } from "@/components/PageLayout/PageLayout";
 import React, { useEffect } from "react";
 import Reel from "./Reel/Reel";
 import "./About.scss";
@@ -7,6 +7,8 @@ import AboutSection from "./AboutSection/AboutSection";
 import Services from "./Services/Services";
 import Team from "./Team/Team";
 import CTA from "./CTA/CTA";
+import { DataContext, DataProvider } from "@/helpers/dataHelpers/dataProvider";
+import { URL_ABOUT } from "@/helpers/dataHelpers/linksAPI";
 
 export default function About() {
   useEffect(() => {
@@ -14,15 +16,16 @@ export default function About() {
   }, []);
 
   return (
-    <InnerTransition>
-      <main className="about-page">
-        <Reel />
-        <AboutSection />
-        <Services />
-        <Team />
-        <CTA />
-      </main>
-      <Footer />
-    </InnerTransition>
+    <DataProvider url={URL_ABOUT}>
+      <PageLayout>
+        <main className="about-page">
+          <Reel />
+          <AboutSection />
+          <Services />
+          <Team />
+          <CTA />
+        </main>
+      </PageLayout>
+    </DataProvider>
   );
 }

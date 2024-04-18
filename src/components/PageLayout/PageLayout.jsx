@@ -1,18 +1,28 @@
 import { PageTransition, anim } from "@/helpers/anim";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
-import "./InnerTransition.scss";
-import { useLocation } from "react-router-dom";
+import "./PageLayout.scss";
+import { useLocation, useSearchParams } from "react-router-dom";
+import { Header } from "../Header/Header";
+import { Footer } from "../Footer/Footer";
+import { DataContext } from "@/helpers/dataHelpers/dataProvider";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const colors = ["#ff7215", "#82c5ff", "#feb200", "#d333ea", "#00A79D"];
 
-export const InnerTransition = ({ children }) => {
+export const PageLayout = ({ children }) => {
   const [isHomePage, setIsHomePage] = useState(false);
   const location = useLocation();
   const { pathname } = location;
 
+  const { data, isLoading } = useContext(DataContext);
+
   const lastPickedColors = useRef([])
+
+  useEffect(() => {
+    ScrollTrigger.refresh(true)
+  }, [isLoading, pathname])
 
   function getRandomColor() {
     let color;
@@ -43,8 +53,9 @@ export const InnerTransition = ({ children }) => {
 
   return (
     <div className="inner">
+      <Header />
       <motion.div
-        className="slide"
+        className="page-slide"
         style={{ borderColor: slideColor }}
         {...anim(PageTransition.slide)}
         custom={isHomePage}
@@ -55,7 +66,7 @@ export const InnerTransition = ({ children }) => {
             muted
             webkit-playsinline="true"
             playsInline
-            className="slide__video"
+            className="page-slide__video"
           >
             <source src="/media/Video/Trailers.mp4" />
           </video>
@@ -63,6 +74,7 @@ export const InnerTransition = ({ children }) => {
       </motion.div>
       <motion.div className="page" {...anim(PageTransition.perspective)}>
         <motion.div {...anim(PageTransition.opacity)}>{children}</motion.div>
+        <Footer />
       </motion.div>
     </div>
   );

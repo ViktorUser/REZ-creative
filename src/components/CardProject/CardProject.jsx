@@ -1,43 +1,49 @@
 import React, { useState } from "react";
-import { Pixelify } from "react-pixelify";
+// import { Pixelify } from "react-pixelify";
 import { useIsTouchDevice } from "@/helpers/isTouchDevice";
 
 import "./CardProject.scss";
+import { Pixelify } from "react-pixelify";
+import { Link } from "react-router-dom";
 
-export const CardProject = ({ srcBg, srcBgZoomed, srcLogo }) => {
+export const CardProject = ({ project }) => {
   const isTouch = useIsTouchDevice();
 
   return (
-    <>
-      {isTouch ? (
-        <CardProjectMobile srcBg={srcBg} srcLogo={srcLogo} />
-      ) : (
-        <CardProjectDesktop
-          srcBg={srcBg}
-          srcBgZoomed={srcBgZoomed}
-          srcLogo={srcLogo}
-        />
-      )}
-    </>
+        <CardProjectMobile project={project} />
+    // <>
+    //   {isTouch ? (
+    //     <CardProjectMobile srcBg={srcBg} srcLogo={srcLogo} />
+    //   ) : (
+    //     <CardProjectDesktop
+    //       srcBg={srcBg}
+    //       srcBgZoomed={srcBgZoomed}
+    //       srcLogo={srcLogo}
+    //     />
+    //   )}
+    // </>
   );
 };
 
-const CardProjectMobile = ({ srcBg, srcLogo }) => {
+const CardProjectMobile = ({ project }) => {
+  const {slug, img, logo} = project
 
   return (
-    <div
+    <Link
+      to={`/work/${slug}`}
       className="pixel-card mobile"
     >
-      <img src={srcBg} alt="card-project" className="pixel-card__bg mobile"/>
+      <img src={img} alt="card-project" className="pixel-card__bg mobile"/>
       <div className="pixel-card__logo mobile">
-        <img src={srcLogo} alt="" className="pixel-card__logo-image" />
+        <img src={logo} alt="" className="pixel-card__logo-image" />
       </div>
-      dev
-    </div>
+    </Link>
   );
 };
 
-const CardProjectDesktop = ({ srcBg, srcBgZoomed, srcLogo }) => {
+const CardProjectDesktop = ({ project }) => {
+  const {slug, img: srcBg, img_hover: srcBgZoomed, logo} = project
+
   const [pixelSize, setPixelSize] = useState(0);
   const [image, setImage] = useState(srcBg);
 
@@ -69,15 +75,16 @@ const CardProjectDesktop = ({ srcBg, srcBgZoomed, srcLogo }) => {
   };
 
   return (
-    <div
+    <Link 
+      to={slug}
       className="pixel-card"
       onMouseEnter={() => animEnterStepsHandler()}
       onMouseLeave={() => animLeaveStepsHandler()}
     >
       <Pixelify src={image} pixelSize={pixelSize} />
       <div className="pixel-card__logo">
-        <img src={srcLogo} alt="" className="pixel-card__logo-image" />
+        <img src={logo} alt="" className="pixel-card__logo-image" />
       </div>
-    </div>
+    </Link>
   );
 };

@@ -1,0 +1,101 @@
+@import "/src/styles/global.scss";
+
+.works-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: VW(1355);
+  padding: 0 VW(77);
+  margin: 10vw auto 0;
+
+  @include forMobile() {
+    margin: 10vw 0 4vw;
+    overflow: scroll;
+    width: 90%;
+  }
+  
+  @include forVerticalTablet() {
+    margin: 10vw auto 4vw;
+    width: VW(630, 824);
+    padding: 0;
+  }
+
+  &--fixed {
+    position: sticky;
+    top: 95%;
+    left: 50%;
+    transform: translate(-9.6%, -50%);
+    background-color: $w-100;
+    z-index: 7;
+    margin: 0 auto;
+
+    .works-filter__item {
+      color: $g-60;
+
+      @include hover {
+        color: $b-100;
+      }
+
+      &--active {
+        color: $b-100;
+      }
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+
+    color: $g-90;
+    transition: color 0.5s ease;
+    position: relative;
+
+    @include hover {
+      color: $w-100;
+    }
+
+    &::before {
+      content: "";
+      display: block;
+      width: VW(8);
+      height: VW(8);
+      background-color: $c-purple;
+      transform: rotate(160deg) scale(0);
+      transition: transform 0.5s $ExpoInOut;
+
+      @include forMobile() {
+        width: VW(8, $mobile);
+        height: VW(8, $mobile);
+      }
+
+      @include forVerticalTablet() {
+        width: VW(8, $tablet);
+        height: VW(8, $tablet);
+      }
+    }
+
+    & > a {
+      @extend %small-text;
+      text-transform: none;
+      padding: 1vw 1vw 1vw 0.5vw;
+      
+      @include forMobile() {
+        padding: 2vw 5vw 2vw 1.5vw;
+        font-size: 4.1vw;
+      }
+
+      @include forVerticalTablet() {
+        font-size: 2vw;
+      }
+    }
+
+    &--active {
+      color: $w-100;
+
+      &::before {
+        transform: rotate(0deg) scale(1);
+      }
+    }
+  }
+}

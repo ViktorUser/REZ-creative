@@ -1,23 +1,25 @@
-import { Footer } from '@/components/Footer/Footer'
-import { InnerTransition } from '@/components/InnerTransition/InnerTransition'
-import React, { useEffect } from 'react'
-import TeamHero from './TeamHero/TeamHero'
-import './JoinTeam.scss';
-import Vacancies from './Vacancies/Vacancies';
+import { Footer } from "@/components/Footer/Footer";
+import { PageLayout } from "@/components/PageLayout/PageLayout";
+import React, { useEffect } from "react";
+import TeamHero from "./TeamHero/TeamHero";
+import "./JoinTeam.scss";
+import Vacancies from "./TeamHero/Vacancies/Vacancies";
+import { DataProvider } from "@/helpers/dataHelpers/dataProvider";
+import { URL_VACANCIES } from "@/helpers/dataHelpers/linksAPI";
 
 export default function JoinTeam() {
-
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
-    <InnerTransition>
-      <main className="join-team">
-        <TeamHero />
-        <Vacancies />
-      </main>
-    <Footer />
-    </InnerTransition>
-  )
+    <DataProvider url={URL_VACANCIES}>
+      <PageLayout>
+        <main className="join-team">
+          <TeamHero />
+          <Vacancies />
+        </main>
+      </PageLayout>
+    </DataProvider>
+  );
 }

@@ -1,3 +1,5 @@
+import { animate } from "framer-motion";
+
 export const anim = (variants) => {
   return {
     initial: "initial",
@@ -174,7 +176,7 @@ export const PageTransition = {
       scale: 0.9,
       display: "none",
     },
-    animate:  {
+    animate: {
       y: "100vh",
       scale: 1,
       display: "none",
@@ -256,9 +258,9 @@ export const servicesListAnim = {
         ease: [0.88, 0.05, 0.1, 0.97],
         opacity: {
           duration: 1,
-          delay: .4,
+          delay: 0.4,
           ease: [0.88, 0.05, 0.1, 0.97],
-        }
+        },
       },
     },
     exit: {
@@ -266,7 +268,7 @@ export const servicesListAnim = {
       height: "0vw",
       transition: {
         opacity: {
-          duration: .3,
+          duration: 0.3,
           ease: [0.88, 0.05, 0.1, 0.97],
         },
         duration: 1,
@@ -280,11 +282,11 @@ export const VacancyAnim = {
   vacancyContent: {
     initial: {
       x: "3%",
-      filter: 'brightness(0)'
+      filter: "brightness(0)",
     },
     enter: (i) => ({
       x: "0",
-      filter: 'brightness(1)',
+      filter: "brightness(1)",
       transition: {
         duration: 1,
         ease: [0.33, 1, 0.68, 1],
@@ -299,10 +301,48 @@ export const VacancyAnim = {
     enter: (i) => ({
       clipPath: "inset(0 0% 0 0)",
       transition: {
-        duration: 1 ,
+        duration: 1,
         ease: [0.33, 1, 0.68, 1],
         delay: 0.075 * i,
       },
     }),
   },
-  }
+};
+
+export const WorksListAnim = {
+  projectCard: {
+    initial: {
+      opacity: 0,
+    },
+    animate: (i) => ({
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        ease: [0.33, 1, 0.68, 1],
+        delay: 0.12 * i,
+      },
+    }),
+    exit: (i) => ({
+      opacity: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.33, 1, 0.68, 1],
+        delay: 0.03 * i,
+      },
+    }),
+  },
+  filterMenu: {
+    initial: {
+      opacity: 0,
+      transition,
+    },
+    animate: {
+      opacity: 1,
+      transition,
+    },
+    exit: {
+      opacity: 0,
+      transition,
+    },
+  },
+};

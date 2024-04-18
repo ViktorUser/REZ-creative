@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Logo } from "../Logo/Logo";
 
 import "./Footer.scss";
@@ -7,6 +7,8 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { FormSend } from "../Forms/Form/Form";
+import { Link } from "react-router-dom";
+import { DataContext } from "@/helpers/dataHelpers/dataProvider";
 
 export const Footer = () => {
   const footerRef = useRef();
@@ -15,9 +17,13 @@ export const Footer = () => {
   const footerWrapperRef = useRef();
   const footerWrapperMobileRef = useRef();
 
+  const { data, isLoading } = useContext(DataContext);
+
   gsap.registerPlugin(ScrollTrigger);
 
   useGSAP(() => {
+    ScrollTrigger.refresh()
+
     gsap.set(footerRef.current, { filter: "brightness(0.1)" });
     gsap.to(footerRef.current, {
       filter: "brightness(1)",
@@ -74,17 +80,17 @@ export const Footer = () => {
         scrub: true,
       },
     });
-  });
+  }, [isLoading]);
 
-  return (
+  return !isLoading && (
     <>
     <FormSend />
       <footer className="footer" ref={footerRef}>
         <div className="footer__wrapper container" ref={footerWrapperRef}>
           <ul className="footer__top" ref={footerListRef}>
-            <a href="/" className="footer__link">
+            <Link to="/terms" className="footer__link">
               Terms and conditions
-            </a>
+            </Link>
             <a className="footer__link">© 2024 Rez Creative Inc.</a>
             <a href="https://twid.studio/en/" className="footer__link">
               Mady by TWID

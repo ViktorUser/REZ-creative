@@ -1,17 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./Services.scss";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 
-import servicesData from "@/data/services.json";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
-import { anim, servicesListAnim } from "@/helpers/anim";
+import { servicesListAnim } from "@/helpers/anim";
+import { DataContext } from "@/helpers/dataHelpers/dataProvider";
 
 export default function Services() {
   const servicesRef = useRef();
   const servicesImageRef = useRef();
+
+  const { data, isLoading } = useContext(DataContext);
 
   const [openService, setOpenService] = useState({
     isActive: false,
@@ -34,7 +36,7 @@ export default function Services() {
         },
       }
     );
-  });
+  }, [isLoading]);
 
   const handlerClickedServ = (index) => {
     setOpenService({
@@ -52,92 +54,95 @@ export default function Services() {
 
   return (
     <section className="services container" ref={servicesRef}>
-      <img
-        src="/media/AboutPage/Services.jpg"
-        alt="top services"
-        className="services__image"
-        ref={servicesImageRef}
-      />
+      {data && !isLoading && (
+        <>
+          <img
+            src={data?.service?.image}
+            alt="top services"
+            className="services__image"
+            ref={servicesImageRef}
+          />
 
-      <div className="services__content">
-        <h1 className="super-text">Services</h1>
+          <div className="services__content">
+            <h1 className="super-text">{data?.service?.title}</h1>
 
-        <div className="services-list__wrapper services-list__wrapper--top">
-          {servicesData[0].top.map((curr, i) => (
-            <div
-              className="services-list services-list--top"
-              key={`services-list__${i}`}
-            >
-              <p
-                className={"semiBold services-list--top__title"}
-                onClick={() => handlerClickedServ(i)}
-              >
-                {curr.title}
-              </p>
-              <ul className="services-list__list smallText shadow">
-                {curr.services.map((currServ, index) => (
-                  <li key={`services-list__${i}-${index}-item`}>{currServ}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-        <div className="services-list__wrapper services-list__wrapper--mobile services-list__wrapper--top ">
-          {servicesData[0].top.map((curr, i) => (
-            <div
-              className="services-list services-list--top"
-              key={`services-list__${i}`}
-            >
-              <p
-                className={mobileServicesClassHandler(i)}
-                onClick={() => handlerClickedServ(i)}
-              >
-                {curr.title}
-              </p>
-              <AnimatePresence>
-                <motion.ul
-                  variants={servicesListAnim.listPresence}
-                  initial="initial"
-                  animate={
-                    openService.isActive && openService.indexActive === i
-                      ? "animate"
-                      : "exit"
-                  }
-                  className="services-list__list smallText shadow"
+            <div className="services-list__wrapper services-list__wrapper--top">
+              {data?.service?.list_1.map((curr, i) => (
+                <div
+                  className="services-list services-list--top"
+                  key={`services-list__${i}`}
                 >
-                  {curr.services.map((currServ, index) => (
-                    <li key={`services-list__${i}-${index}-item`}>{currServ}</li>
-                  ))}
-                </motion.ul>
-              </AnimatePresence>
-
-              {/* <AnimatePresence mode="wait">
-                {(openService.isActive && openService.indexActive === i) && (
-                  <motion.ul
-                    {...anim(servicesListAnim.listPresence)}
-                    className="services-list__list smallText shadow"
+                  <p
+                    className={"semiBold services-list--top__title"}
+                    onClick={() => handlerClickedServ(i)}
                   >
-                    {curr.services.map((currServ, index) => (
-                      <li key={`services-list__${i}-${index}-item`}>{currServ}</li>
+                    {curr.title}
+                  </p>
+                  <ul className="services-list__list smallText shadow">
+                    {curr.numeric_list.map((currServ, index) => (
+                      <li key={`services-list__${i}-${index}-item`}>
+                        {currServ.text}
+                      </li>
                     ))}
-                  </motion.ul>
-                )}
-              </AnimatePresence> */}
+                  </ul>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+            <div className="services-list__wrapper services-list__wrapper--mobile services-list__wrapper--top ">
+              {data?.service?.list_1.map((curr, i) => (
+                <div
+                  className="services-list services-list--top"
+                  key={`services-list__${i}`}
+                >
+                  <p
+                    className={mobileServicesClassHandler(i)}
+                    onClick={() => handlerClickedServ(i)}
+                  >
+                    {curr.title}
+                  </p>
+                  <AnimatePresence>
+                    <motion.ul
+                      variants={servicesListAnim.listPresence}
+                      initial="initial"
+                      animate={
+                        openService.isActive && openService.indexActive === i
+                          ? "animate"
+                          : "exit"
+                      }
+                      className="services-list__list smallText shadow"
+                    >
+                      {curr.numeric_list.map((currServ, index) => (
+                        <li key={`services-list__${i}-${index}-item`}>
+                          {currServ.text}
+                        </li>
+                      ))}
+                    </motion.ul>
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
 
-        <div className="services-list__wrapper services-list--main">
-          {servicesData[0].main.map((currServMain, ind) => (
-            <div className="services-list" key={`services-list--main-${ind}`}>
-              <p className="semiBold">{currServMain.title}</p>
-              <span className="smallText shadow services-list__service">
-                {currServMain.service}
-              </span>
+            <div className="services-list__wrapper services-list--main">
+              {data?.service?.list_2.map((currServMain, ind) => (
+                <div
+                  className="services-list"
+                  key={`services-list--main-${ind}`}
+                >
+                  <p className="semiBold">{currServMain.title}</p>
+                  {currServMain.sublist.map((currSubList, j) => (
+                    <span
+                      className="smallText shadow services-list__service"
+                      key={`${currServMain.title}-${j}`}
+                    >
+                      {currSubList.text}
+                    </span>
+                  ))}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
+        </>
+      )}
     </section>
   );
 }

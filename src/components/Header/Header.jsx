@@ -11,13 +11,9 @@ import { LoaderContext } from "../Loader/LoaderContext";
 import { Link, useLocation } from "react-router-dom";
 import { motionParametr } from "@/helpers/motionParametr";
 import { HeaderAnim, MenuAnim, anim } from "@/helpers/anim";
+import AnchorLink from "../AnchorLink/AnchorLink";
 
 export const Header = () => {
-  const headerRef = useRef();
-  const logoRef = useRef();
-  const rightRef = useRef([]);
-  const leftRef = useRef();
-
   const location = useLocation();
   const { pathname } = location;
 
@@ -38,7 +34,7 @@ export const Header = () => {
     };
   }, []);
 
-  useGSAP(() => {
+  useEffect(() => {
     ScrollTrigger.create({
       trigger: document.documentElement,
       start: `${window.innerHeight} top`,
@@ -46,7 +42,7 @@ export const Header = () => {
       onEnter: () => setisFixed(true),
       onLeaveBack: () => setisFixed(false),
     });
-  }, [window.innerHeight]);
+  }, [window.innerHeight, pathname]);
 
   return (
     <AnimatePresence mode="wait">
@@ -61,7 +57,11 @@ export const Header = () => {
         </motion.div>
 
         <Link to="/" className="header__logo-wrapper">
-          <motion.div {...anim(HeaderAnim.logo)} className="header__logo" onClick={() => setisActive(false)}>
+          <motion.div
+            {...anim(HeaderAnim.logo)}
+            className="header__logo"
+            onClick={() => setisActive(false)}
+          >
             <Logo />
           </motion.div>
         </Link>
@@ -73,7 +73,7 @@ export const Header = () => {
           <Link to="/vacancies" className="link-with-arrow">
             Join our team
           </Link>
-          <Link to="/contact">Contact us</Link>
+          <AnchorLink toSection="#contact-us">Contact us</AnchorLink>
         </motion.div>
 
         <motion.div
@@ -102,7 +102,11 @@ export const Header = () => {
             </motion.div>
 
             <Link to="/" className="header__logo-wrapper">
-              <motion.div {...anim(HeaderAnim.logo)} className="header__logo" onClick={() => setisActive(false)}>
+              <motion.div
+                {...anim(HeaderAnim.logo)}
+                className="header__logo"
+                onClick={() => setisActive(false)}
+              >
                 <Logo />
               </motion.div>
             </Link>
@@ -114,7 +118,7 @@ export const Header = () => {
               <Link to="/vacancies" className="link-with-arrow">
                 Join our team
               </Link>
-              <Link to="/contact">Contact us</Link>
+              <AnchorLink toSection="#contact-us">Contact us</AnchorLink>
             </motion.div>
 
             <motion.div
