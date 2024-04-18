@@ -4,7 +4,7 @@ import { URL_WORKS_DETAILS } from "@/helpers/dataHelpers/linksAPI";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import WorksHero from "./WorksHero/WorksHero";
-import WorkDescriptions from "./WorkDescriptions/workDescriptions";
+import WorkDescriptions from "./WorkDescriptions/WorkDescriptions";
 import { ImageSlider } from "./ImageSlider/ImageSlider";
 import { ScreenShots } from "./ScreenShots/ScreenShots";
 import RelatedWorks from "./RelatedWorks/RelatedWorks";
