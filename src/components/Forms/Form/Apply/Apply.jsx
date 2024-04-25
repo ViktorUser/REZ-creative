@@ -12,15 +12,32 @@ const validationSchema = Yup.object({
   email: Yup.string()
     .email("Please enter a valid email address")
     .required("Please enter a valid email address"),
-  phone: Yup.string(),
-  website: Yup.string(),
-  file: Yup.mixed(),
-  // .test(
-  //   "fileSize",
-  //   "File needs to be less than 2MB",
-  //   value => value && value.size <= FileSizeLimit
-  // ),
-  about: Yup.string(),
+  phone: Yup.string().required("The field is required"),
+  website: Yup.string().required("The field is required"),
+  resume: Yup.mixed()
+    .required("A file is required")
+    .test(
+      "fileSize",
+      "File needs to be less than 2MB",
+      (value) => value && value.size <= 2000000 // 2 MB
+    )
+    .test(
+      "fileFormat",
+      "Unsupported Format",
+      (value) => value && ["application/pdf"].includes(value.type)
+    ),
+  "cover-letter": Yup.mixed()
+    .required("A file is required")
+    .test(
+      "fileSize",
+      "File needs to be less than 2MB",
+      (value) => value && value.size <= 2000000 // 2 MB
+    )
+    .test(
+      "fileFormat",
+      "Unsupported Format",
+      (value) => value && ["application/pdf"].includes(value.type)
+    ),
 });
 
 export const ApplyVacancyForm = () => {
@@ -33,18 +50,26 @@ export const ApplyVacancyForm = () => {
         email: "",
         website: "",
         phone: "",
-        resume: undefined,
-        "cover-letter": undefined,
-        message: "",
+        resume: null,
+        "cover-letter": null,
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
+        const formData = new FormData();
+        Object.keys(values).forEach((key) => {
+          if (values[key] instanceof File) {
+            formData.append(key, values[key]);
+          } else {
+            formData.append(key, values[key]);
+          }
+        });
+
         axios({
           method: "post",
           url: "http://2915880.cd416004.web.hosting-test.net/wp-json/rez/v1/form/apply-now",
-          data: values,
+          data: formData,
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
         }).then((response) => {
           console.log(response);
@@ -120,7 +145,7 @@ export const ApplyVacancyForm = () => {
 
               <div className="form__input-wrapper">
                 <Field
-                  type="text"
+                  type="tel"
                   name="phone"
                   placeholder="Phone"
                   className={classNames("form__input", {
@@ -137,17 +162,9 @@ export const ApplyVacancyForm = () => {
               </div>
 
               <div className="form__files-wrapper">
-                <UploadFileCV
-                  data={formik.values}
-                  errors={formik.errors}
-                  setFieldValue={formik.setFieldValue}
-                />
+                <UploadFileCL setFieldValue={formik.setFieldValue} />
 
-                <UploadFileResume
-                  data={formik.values}
-                  errors={formik.errors}
-                  setFieldValue={formik.setFieldValue}
-                />
+                <UploadFileResume setFieldValue={formik.setFieldValue} />
               </div>
 
               <div className="bottom">
@@ -182,6 +199,20 @@ export const ApplyVacancyForm = () => {
 
 const UploadFileResume = ({ setFieldValue }) => {
   const [filename, setFilename] = useState("");
+  const [fileError, setFileError] = useState("");
+
+  const validateFile = (file) => {
+    if (file.size > 2000000) {
+      setFileError("File needs to be less than 2MB");
+      return false;
+    }
+    if (file.type !== "application/pdf") {
+      setFileError("Unsupported Format");
+      return false;
+    }
+    setFileError("");
+    return true;
+  };
 
   return (
     <div className="form__files form__input-wrapper form__input-wrapper--file">
@@ -189,30 +220,61 @@ const UploadFileResume = ({ setFieldValue }) => {
         id="resume"
         name="resume"
         type="file"
+        accept=".pdf"
         style={{ display: "none" }}
         onChange={(e) => {
           if (e.currentTarget.files.length > 0) {
-            setFieldValue("resume", e.currentTarget.files[0]);
-            setFilename(e.currentTarget.files[0].name);
+            const file = e.currentTarget.files[0];
+            if (validateFile(file)) {
+              setFieldValue("resume", file);
+              setFilename(file.name);
+            }
+          } else {
+            setFieldValue("resume", "");
+            setFilename("");
           }
         }}
       />
       <label
         htmlFor="resume"
-        className="form__input-file form__input-file-name smallText"
+        className={classNames(
+          "form__input-file form__input-file-name smallText",
+          {
+            "form__input--error": fileError,
+          }
+        )}
       >
         {filename ? (
-          <span className="shadow ">{filename}</span>
+          <span className="shadow">{filename}</span>
         ) : (
           "Attach resume / CV"
         )}
       </label>
+      {fileError && (
+        <p className="form__input-error-msg form__input-error-msg--file smallText">
+          {fileError}
+        </p>
+      )}
     </div>
   );
 };
 
-const UploadFileCV = ({ setFieldValue }) => {
+const UploadFileCL = ({ setFieldValue }) => {
   const [filename, setFilename] = useState("");
+  const [fileError, setFileError] = useState("");
+
+  const validateFile = (file) => {
+    if (file.size > 2000000) {
+      setFileError("File needs to be less than 2MB");
+      return false;
+    }
+    if (file.type !== "application/pdf") {
+      setFileError("Unsupported Format");
+      return false;
+    }
+    setFileError("");
+    return true;
+  };
 
   return (
     <div className="form__files form__input-wrapper form__input-wrapper--file">
@@ -223,21 +285,37 @@ const UploadFileCV = ({ setFieldValue }) => {
         style={{ display: "none" }}
         onChange={(e) => {
           if (e.currentTarget.files.length > 0) {
-            setFieldValue("cover-letter", e.currentTarget.files[0]);
-            setFilename(e.currentTarget.files[0].name);
+            const file = e.currentTarget.files[0];
+            if (validateFile(file)) {
+              setFieldValue("cover-letter", file);
+              setFilename(file.name);
+            }
+          } else {
+            setFieldValue("cover-letter", "");
+            setFilename("");
           }
         }}
       />
       <label
         htmlFor="cover-letter"
-        className="form__input-file form__input-file-name smallText"
+        className={classNames(
+          "form__input-file form__input-file-name smallText",
+          {
+            "form__input--error": fileError,
+          }
+        )}
       >
         {filename ? (
-          <span className="shadow ">{filename}</span>
+          <span className="shadow">{filename}</span>
         ) : (
           "Upload a cover letter"
         )}
       </label>
+      {fileError && (
+        <p className="form__input-error-msg form__input-error-msg--file smallText">
+          {fileError}
+        </p>
+      )}
     </div>
   );
 };

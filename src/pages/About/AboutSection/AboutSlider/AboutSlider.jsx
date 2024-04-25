@@ -6,21 +6,39 @@ import { useIsTouchDevice } from "@/helpers/isTouchDevice";
 
 import "./AboutSlider.scss";
 import { DataContext } from "@/helpers/dataHelpers/dataProvider";
+import ReactLenis from "@studio-freight/react-lenis";
+import { useDrag } from "react-use-gesture";
 
 export const AboutSlider = () => {
-  const isTouch = useIsTouchDevice();
+  // const isTouch = useIsTouchDevice();
 
-  return <>{isTouch ? <AboutSliderMobile /> : <AboutSliderDesktop />}</>;
+  // return <>{isTouch ? <AboutSliderMobile /> : <AboutSliderDesktop />}</>;
+  return (
+    <>
+      <div data-touch-element>
+        <AboutSliderMobile />
+      </div>
+      <div data-desktop-element>
+        <AboutSliderDesktop />
+      </div>
+    </>
+  );
 };
 
 const AboutSliderMobile = () => {
   const { data, isLoading } = useContext(DataContext);
+  const sliderRef = useRef();
+
+  const bind = useDrag(({ down, movement: [mx] }) => {
+    const slider = sliderRef.current;
+    slider.scrollLeft = slider.scrollLeft - mx / 10;
+  });
 
   return (
     <>
       {data && !isLoading && (
         <>
-          <div className="about-slider__wrapper touch">
+          <div className="about-slider__wrapper touch" {...bind()} ref={sliderRef}>
             <div className="about-slider">
               {data?.about?.slider?.map((currSlide, i) => (
                 <div
@@ -64,13 +82,10 @@ const AboutSliderDesktop = () => {
 
   gsap.registerPlugin(ScrollTrigger);
 
-  useEffect(() => {
-  }, [isLoading])
-  
+  useEffect(() => {}, [isLoading]);
+
   useGSAP(() => {
     const tl = gsap.timeline();
-    
-
 
     if (!isLoading && sliderImageRef) {
       tl.fromTo(
@@ -101,7 +116,7 @@ const AboutSliderDesktop = () => {
           },
           0
         );
-      })
+      });
 
       tl.fromTo(
         sliderStickyTitleRef.current,

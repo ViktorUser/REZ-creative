@@ -28,6 +28,10 @@
     left: 50%;
     transform: translate(-50%, -125%);
 
+    @include forHorizontalTablet {
+      transform: translate(-50%, -164%);
+    }
+
     & > .super-text {
       display: flex;
       align-items: flex-end;
@@ -88,17 +92,21 @@
 
 .mobile {
   &.works-top {
-    margin-top: 29vw;
-    height: 49lvh;
+    margin-top: 20vw;
+    height: 52vw;
     position: relative;
 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+
     @include forDesktop {
-      margin-top: 10vw; 
       height: 79lvh;
     }
-
+  
     @include forMobile() {
-      height: 70lvh;
+      height: 144vw;
     }
 
     &__title {
@@ -121,10 +129,14 @@
     &__lines {
       position: absolute;
       width: 90%;
-      height: 36lvh;
+      height: 43vw;
       left: 5.3vw;
       top: 0;
       transform: translateY(-25%);
+
+      // @media screen and (min-aspect-ratio: 2/3) and (max-aspect-ratio: 3/2) {
+      //   height: 60lvh;
+      // }
 
       @include forDesktop {
         height: 79lvh;
@@ -143,9 +155,9 @@
       align-items: end;
       justify-content: center;
 
-      position: absolute;
-      bottom: 0;
-      transform: translateX(-50%);
+      // position: absolute;
+      // bottom: 0;
+      // transform: translateX(-50%);
       width: 100%;
     }
   }

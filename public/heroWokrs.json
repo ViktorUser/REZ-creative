@@ -1,0 +1,19 @@
+{
+  "hero": [
+    {
+      "name": "Attack on Titan",
+      "category": "Team Deathmatch Trailer",
+      "video": "/media/Video/AOT.mp4"
+    },
+    {
+      "name": "Rainbow Six Siege",
+      "category": "Cinematic Trailer",
+      "video": "/media/Video/Rainbow_six.mp4"
+    },
+    {
+      "name": "Alien",
+      "category": "CGI Trailer",
+      "video": "/media/Video/Alien.mp4"
+    }
+  ]
+}

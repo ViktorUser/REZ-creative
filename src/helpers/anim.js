@@ -239,6 +239,21 @@ export const PageTransition = {
   },
 };
 
+export const TimelineAnim = {
+  lines: {
+    initial: {
+      clipPath: 'inset(0 100% 0 0)',
+    },
+    aninate: (time) => ({
+      clipPath: 'inset(0 0% 0 0)',
+      transition: {
+        duration: time + 0.2,
+        ease: 0
+      }
+    }),
+  }
+}
+
 export const servicesListAnim = {
   listPresence: {
     initial: {

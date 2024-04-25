@@ -42,7 +42,7 @@ body {
   gap: 0.4vw;
   width: 8vw;
   // text-wrap: nowrap;
-  
+
   &::after {
     display: block;
     content: "";
@@ -55,8 +55,7 @@ body {
     overflow: hidden;
   }
 
-  @include hover()
- {
+  @include hover() {
     &::after {
       transform: rotate(-360deg);
     }
@@ -109,8 +108,46 @@ body {
 
 [data-only-mobile] {
   display: none;
-  
+
   @include forMobile() {
+    display: block;
+  }
+}
+
+[data-touch-element] {
+  display: block;
+
+  @include forDesktop {
+    display: none;
+  }
+
+  @include forHorizontalTablet {
+    display: none;
+  }
+
+  @media (hover: none) and (min-aspect-ratio: 2/3) {
+    display: block !important;
+  }
+}
+
+[data-desktop-element] {
+  @media (hover: none) {
+    display: none !important;
+  }
+
+  @include forMobile {
+    display: none;
+  }
+
+  @include forVerticalTablet {
+    display: none;
+  }
+
+  @include forDesktop {
+    display: block;
+  }
+
+  @include forHorizontalTablet {
     display: block;
   }
 }

@@ -77,7 +77,6 @@ export const FormSend = () => {
         </h1>
 
         <div className="main-form__content" ref={formContentRef}>
-          {/* {pathname !== "/vacancies" && <MainForm />} */}
           {pathVacancy[1] === "vacancies" ? (
             pathVacancy[2] ? (
               <ApplyVacancyForm />

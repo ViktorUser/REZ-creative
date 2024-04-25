@@ -38,6 +38,10 @@
         animation-name: spinDesktop;
       }
 
+      @include forHorizontalTablet {
+        animation-name: spinDesktop;
+      }
+
       @include forVerticalTablet() {
         animation-name: spinTablet;
       }

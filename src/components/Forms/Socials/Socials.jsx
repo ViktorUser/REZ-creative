@@ -1,34 +1,24 @@
-import React from 'react';
+import React, { useContext } from "react";
 
-import './Socials.scss';
+import "./Socials.scss";
+import { DataContext } from "@/helpers/dataHelpers/dataProvider";
 
 export const Socials = () => {
-  return (
+  const { data, isLoading } = useContext(DataContext);
+
+  return !isLoading && (
     <div className="socials">
-      <h4>Follow us</h4>
+      <h4>{data.socials.title}</h4>
 
       <ul className="socials__list">
-        <li className="socials__item">
-          <a href="https://vimeo.com/rezcreative">
-            <img src="/media/Socials/Vimeo.svg" alt="" />
-          </a>
-        </li>
-        <li className="socials__item">
-          <a href="https://www.instagram.com/rezcreative/">
-            <img src="/media/Socials/Instagram.svg" alt="" />
-          </a>
-        </li>
-        <li className="socials__item">
-          <a href="https://www.facebook.com/Rezcreative/">
-            <img src="/media/Socials/FB.svg" alt="" />
-          </a>
-        </li>
-        <li className="socials__item">
-          <a href="https://www.linkedin.com/company/rez-creative/?originalSubdomain=ca">
-            <img src="/media/Socials/Linkedin.svg" alt="" />
-          </a>
-        </li>
+        {data.socials.links.map((currSocial, i) => (
+          <li className="socials__item" key={`socials__item-${i}`}>
+            <a href={currSocial.link}>
+              <img src={currSocial.icon} alt="socials" />
+            </a>
+          </li>
+        ))}
       </ul>
     </div>
-  )
-}
+  );
+};

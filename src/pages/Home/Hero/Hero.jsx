@@ -5,12 +5,9 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { LoaderContext } from "@/components/Loader/LoaderContext";
 import { DataContext } from "@/helpers/dataHelpers/dataProvider";
-
-const videos = [
-  "/media/Video/AOT.mp4",
-  "/media/Video/Alien.mp4",
-  "/media/Video/Rainbow_six.mp4",
-];
+import classNames from "classnames";
+import { motion } from "framer-motion";
+import { TimelineAnim } from "@/helpers/anim";
 
 export const Hero = () => {
   const { loaderFinished, setLoaderFinished } = useContext(LoaderContext);
@@ -63,143 +60,192 @@ export const Hero = () => {
 
   useEffect(() => {
     if (!isLoading && videoRef) {
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
 
-    ctx.imageSmoothingEnabled = false;
+      ctx.imageSmoothingEnabled = false;
 
-    const loop = () => {
-      if (!video.paused && !video.ended) {
-        const scaleWidth = 80;
-        const scaleHeight = 45;
+      const loop = () => {
+        if (!video.paused && !video.ended) {
+          const scaleWidth = 80;
+          const scaleHeight = 45;
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        ctx.drawImage(video, 0, 0, scaleWidth, scaleHeight);
+          ctx.drawImage(video, 0, 0, scaleWidth, scaleHeight);
 
-        ctx.drawImage(canvas, 0, 0, scaleWidth, scaleHeight, 0, 0, canvas.width, canvas.height);
+          ctx.drawImage(
+            canvas,
+            0,
+            0,
+            scaleWidth,
+            scaleHeight,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
 
-        setTimeout(loop, 1000 / 60);
-      }
-    };
+          setTimeout(loop, 1000 / 60);
+        }
+      };
 
-    video.addEventListener('play', loop, 0);
+      video.addEventListener("play", loop, 0);
 
-    return () => {
-      video.removeEventListener('play', loop);
-    };
-  }
+      return () => {
+        video.removeEventListener("play", loop);
+      };
+    }
   }, [isLoading, videoRef]);
 
-
   // // Preload videos
-  // useEffect(() => {
-  //   const loadVideos = videos.map(videoUrl => {
-  //     const video = document.createElement('video');
-  //     video.src = videoUrl;
-  //     return video;
-  //   });
-  //   setLoadedVideos(loadVideos);
-  // }, [videos]);
+  useEffect(() => {
+    const loadVideos = data.hero.map((videoUrl) => {
+      const video = document.createElement("video");
+      video.src = videoUrl.video;
+      return video;
+    });
+    setLoadedVideos(loadVideos);
+  }, [data]);
 
-  // useEffect(() => {
-  //   const video = videoRef.current;
-  //   video.src = loadedVideos[currentVideo]?.src;
+  useEffect(() => {
+    const video = videoRef.current;
+    video.src = loadedVideos[currentVideo]?.src;
 
-  //   const handleEnded = () => {
-  //     setCurrentVideo((currentVideo + 1) % loadedVideos.length);
-  //   };
+    const handleEnded = () => {
+      setCurrentVideo((currentVideo + 1) % loadedVideos.length);
+    };
 
-  //   video.addEventListener("ended", handleEnded);
-  //   return () => {
-  //     video.removeEventListener("ended", handleEnded);
-  //   };
-  // }, [currentVideo, loadedVideos]);
+    video.addEventListener("ended", handleEnded);
+    return () => {
+      video.removeEventListener("ended", handleEnded);
+    };
+  }, [currentVideo, loadedVideos, isLoading]);
 
-  return !isLoading && (
-    <section className="hero">
-      <video
-        loop
-        muted
-        autoPlay
-        webkit-playsinline="true"
-        playsInline
-        ref={videoRef}
-        className="hero__video-bg"
-      >
-        <source src="/media/Video/Trailers.mp4" />
-      </video>
+  // console.log(loadedVideos[currentVideo].duration);
 
-      <div className="hero__logo">
-        {/* <video
-          loop
+  useEffect(() => {
+    console.log(loadedVideos[currentVideo]?.src.split("http://localhost:5173")[1] + " -------- " + data.hero[currentVideo].video);
+    console.log(loadedVideos[currentVideo]?.duration);
+  }, [currentVideo])
+
+  return (
+    !isLoading && (
+      <section className="hero">
+        <video
+          // loop
           muted
           autoPlay
           webkit-playsinline="true"
           playsInline
           ref={videoRef}
-          className="hero__logo-video"
+          className="hero__video-bg"
         >
-          <source src={VideoTrailerPixels} />
-        </video> */}
-        <canvas id="canvasElement" className="hero__logo-canvas" ref={canvasRef}></canvas>
-      </div>
+          {/* <source src="/media/Video/Trailers.mp4" /> */}
+        </video>
 
-      <div className="hero__bottom">
-        <div className="content">
-          <div className="timelines">
-            <div className="timelines__item"
-              ref={(n) => timelineName.current.push(n)}
-            >
-              <p
-                className="timelines__name"
-                // ref={(n) => timelineName.current.push(n)}
-                id="timelinesId1"
-              >
-                Attack on Titan
-              </p>
-              <span
-                className="timelines__line"
-                ref={(n) => timelineLine.current.push(n)}
-              />
-            <p className="timelines__name timelines__category">Team Deathmatch Trailer</p>
-            </div>
-            <div className="timelines__item"
-              ref={(n) => timelineName.current.push(n)}
-            >
-              <p
-                className="timelines__name"
-                // ref={(n) => timelineName.current.push(n)}
-              >
-                Alien
-              </p>
-              <span
-                className="timelines__line"
-                ref={(n) => timelineLine.current.push(n)}
-              />
-            <p className="timelines__name timelines__category">CGI Trailer</p>
+        <div className="hero__logo">
+          <canvas
+            id="canvasElement"
+            className="hero__logo-canvas"
+            ref={canvasRef}
+          ></canvas>
+        </div>
 
-            </div>
-            <div className="timelines__item"
-              ref={(n) => timelineName.current.push(n)}
-            >
-              <p
-                className="timelines__name"
-                // ref={(n) => timelineName.current.push(n)}
+        <div className="hero__bottom">
+          <div className="content">
+            <div className="timelines">
+              {data.hero.map((currV, i) => (
+                <div
+                  className="timelines__item"
+                  key={`timeline-${currV.name}--${i}`}
+                  ref={(n) => timelineName.current.push(n)}
+                >
+                  <p
+                    className="timelines__name"
+                    // ref={(n) => timelineName.current.push(n)}
+                  >
+                    {currV.name}
+                  </p>
+                  <motion.span
+                    className="timelines__line"
+                    variants={TimelineAnim.lines}
+                    initial="initial"
+                    animate={loadedVideos[currentVideo]?.src.split("http://localhost:5173")[1] === currV.video ? "aninate" : "initial"} 
+                    custom={loadedVideos[currentVideo]?.duration}
+                    // ref={(n) => timelineLine.current.push(n)}
+                  />
+                  {/* <span
+                    className={classNames("timelines__line", {
+                      "timelines__line--active": loadedVideos[currentVideo]?.src.split("http://localhost:5173")[1] === currV.video
+                    })}
+                    ref={(n) => timelineLine.current.push(n)}
+                  /> */}
+                  <p className="timelines__name timelines__category">
+                    {currV.category}
+                  </p>
+                </div>
+              ))}
+              {/* <div
+                className="timelines__item"
+                ref={(n) => timelineName.current.push(n)}
               >
-                Rainbow Six Siege
-              </p>
-              <span
-                className="timelines__line"
-                ref={(n) => timelineLine.current.push(n)}
-              />
-            <p className="timelines__name timelines__category">Cinematic Trailer</p>
-
+                <p
+                  className="timelines__name"
+                  // ref={(n) => timelineName.current.push(n)}
+                  id="timelinesId1"
+                >
+                  Attack on Titan
+                </p>
+                <span
+                  className="timelines__line"
+                  ref={(n) => timelineLine.current.push(n)}
+                />
+                <p className="timelines__name timelines__category">
+                  Team Deathmatch Trailer
+                </p>
+              </div>
+              <div
+                className="timelines__item"
+                ref={(n) => timelineName.current.push(n)}
+              >
+                <p
+                  className="timelines__name"
+                  // ref={(n) => timelineName.current.push(n)}
+                >
+                  Alien
+                </p>
+                <span
+                  className="timelines__line"
+                  ref={(n) => timelineLine.current.push(n)}
+                />
+                <p className="timelines__name timelines__category">
+                  CGI Trailer
+                </p>
+              </div>
+              <div
+                className="timelines__item"
+                ref={(n) => timelineName.current.push(n)}
+              >
+                <p
+                  className="timelines__name"
+                  // ref={(n) => timelineName.current.push(n)}
+                >
+                  Rainbow Six Siege
+                </p>
+                <span
+                  className="timelines__line"
+                  ref={(n) => timelineLine.current.push(n)}
+                />
+                <p className="timelines__name timelines__category">
+                  Cinematic Trailer
+                </p>
+              </div> */}
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    )
   );
 };

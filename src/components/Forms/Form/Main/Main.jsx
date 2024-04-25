@@ -12,7 +12,7 @@ const validationSchema = Yup.object({
   email: Yup.string()
     .email("Please enter a valid email address")
     .required("Please enter a valid email address"),
-  message: Yup.string(),
+  message: Yup.string().required("The field is required"),
 });
 
 export const MainForm = () => {
@@ -89,7 +89,16 @@ export const MainForm = () => {
                 <Field
                   as="textarea"
                   name="message"
-                  className="form__input form__input--textarea"
+                  className={classNames("form__input form__input--textarea", {
+                    "form__input--error":
+                      getIn(formik.errors, "message") &&
+                      getIn(formik.touched, "message"),
+                  })}
+                />
+                <ErrorMessage
+                  name="message"
+                  component="p"
+                  className="form__input-error-msg smallText"
                 />
               </div>
 

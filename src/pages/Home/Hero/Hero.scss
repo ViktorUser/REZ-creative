@@ -98,7 +98,11 @@
       width: 100%;
       height: 0.1vw;
       background-color: #fff;
-      clip-path: inset(0 100% 0 0);
+      // clip-path: inset(0 100% 0 0);
+
+      &--active {
+        background: red;
+      }
     }
   }
 }

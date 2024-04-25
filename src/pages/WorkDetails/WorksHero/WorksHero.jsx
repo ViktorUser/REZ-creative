@@ -63,11 +63,9 @@ export default function WorksHero() {
         gsap.fromTo(
           backgroundRef.current,
           {
-            // backgroundSize: "102%",
             scale: 1,
           },
           {
-            // backgroundSize: "110%",
             scale: 1.1,
             duration: 0.7,
             delay: 0.7,

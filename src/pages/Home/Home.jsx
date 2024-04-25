@@ -19,7 +19,9 @@ export default function Home() {
     <DataProvider url={URL_HOME_DATA}>
       <PageLayout>
         <main className="home">
-          <Hero />
+          <DataProvider url={"/heroWokrs.json"}>
+            <Hero />
+          </DataProvider>
           <About />
           <WorksTop />
           <Works />

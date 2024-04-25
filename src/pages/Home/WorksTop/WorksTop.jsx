@@ -8,9 +8,16 @@ import { useIsTouchDevice } from "@/helpers/isTouchDevice";
 import { DataContext } from "@/helpers/dataHelpers/dataProvider";
 
 export default function WorksTop() {
-  const isTouch = useIsTouchDevice();
-
-  return <>{isTouch ? <WorksTopMobile /> : <WorksTopDesktop />}</>;
+  return (
+    <>
+      <div data-touch-element>
+        <WorksTopMobile />
+      </div>
+      <div data-desktop-element>
+        <WorksTopDesktop />
+      </div>
+    </>
+  )
 }
 
 const WorksTopMobile = () => {
@@ -26,7 +33,7 @@ const WorksTopMobile = () => {
     const tl = gsap.timeline();
 
     ScrollTrigger.refresh(true)
-
+    
     if (!isLoading) {
       lineRef.current.forEach((currLine, i) => {
         tl.set(currLine, { scale: 0.2 });
@@ -71,7 +78,7 @@ const WorksTopMobile = () => {
       });
     }
 
-  }, [isLoading, titlesRef]);
+  }, [isLoading, titlesRef, mainRef]);
 
   return (
     <>

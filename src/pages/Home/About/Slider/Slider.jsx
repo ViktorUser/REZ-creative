@@ -9,9 +9,16 @@ import "./Slider.scss";
 import { DataContext } from "@/helpers/dataHelpers/dataProvider";
 
 export const Slider = () => {
-  const isTouch = useIsTouchDevice();
-
-  return <>{isTouch ? <SliderTouch /> : <SliderDesktop />}</>;
+  return (
+    <>
+      <div data-touch-element>
+        <SliderTouch />
+      </div>
+      <div data-desktop-element>
+        <SliderDesktop />
+      </div>
+    </>
+  );
 };
 
 const SliderDesktop = () => {
@@ -20,25 +27,25 @@ const SliderDesktop = () => {
   const wrapperRef = useRef();
 
   const { data, isLoading } = useContext(DataContext);
-  
+
   gsap.registerPlugin(ScrollTrigger);
-  
+
   useEffect(() => {
-    ScrollTrigger.refresh(true)
-  }, [isLoading])
+    ScrollTrigger.refresh(true);
+  }, [isLoading]);
 
   useGSAP(() => {
     if (!isLoading && sliderRef && wrapperRef) {
       gsap.set(sliderRef.current, {
         xPercent: 25,
       });
-      
+
       gsap.to(sliderRef.current, {
         xPercent: -46,
         scrollTrigger: {
           trigger: wrapperRef.current,
           start: "top 30%",
-          end: 'bottom bottom',
+          end: "bottom bottom",
           scrub: 2,
         },
       });
@@ -67,9 +74,9 @@ const SliderDesktop = () => {
     }
   }, [iconRef, wrapperRef, isLoading]);
 
-  return !isLoading && (
-    <div className="slider__wrapper" ref={wrapperRef}>
-      {/* {!isLoading && ( */}
+  return (
+    !isLoading && (
+      <div className="slider__wrapper" ref={wrapperRef}>
         <div className="slider" ref={sliderRef}>
           <div className="slider__item">
             <div className="top" ref={iconRef}>
@@ -94,8 +101,9 @@ const SliderDesktop = () => {
             </div>
           ))}
         </div>
-      {/* )} */}
-    </div>
+        {/* )} */}
+      </div>
+    )
   );
 };
 
@@ -106,7 +114,10 @@ const SliderTouch = () => {
     <div className="slider touch">
       {!isLoading &&
         data.about.list.map((currAb, i) => (
-          <div className="slider__item" key={`home_aboutList--mobile-${i}-item`}>
+          <div
+            className="slider__item"
+            key={`home_aboutList--mobile-${i}-item`}
+          >
             <div className="top">
               <img src={currAb.icon} className="slider__icon" />
             </div>
@@ -116,7 +127,7 @@ const SliderTouch = () => {
             </div>
             <div className="bottom shadow">{currAb.number}</div>
           </div>
-      ))}
-      </div>
+        ))}
+    </div>
   );
 };

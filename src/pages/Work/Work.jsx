@@ -9,10 +9,10 @@ import { WorkFilter } from "./WorkFilter/WorkFilter";
 import { AnimatePresence, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
-import { WorksListAnim, anim } from "@/helpers/anim";
+import { WorksListAnim } from "@/helpers/anim";
 import classNames from "classnames";
 import { useIsTouchDevice } from "@/helpers/isTouchDevice";
-import { CustomEase, ScrollTrigger } from "gsap/all";
+import { CustomEase } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
@@ -87,19 +87,6 @@ const WorksList = () => {
         <ul className="works__list">
           <AnimatePresence mode="wait">
             {worksList.map((currWork, i) => (
-              // <motion.div
-              //   key={`work-page-list-${i}--${currWork.id}`}
-              //   variants={WorksListAnim.projectCard}
-              //   initial="initial"
-              //   animate={inView ? "animate" : "exit"}
-              //   custom={i}
-              //   className={classNames("work-page__item pixel-card mobile", {
-              //     ["mobile"]: isTouch,
-              //   })}
-              //   ref={ref}
-              // >
-              //   <CardProject project={currWork} />
-              // </motion.div>
               <ProjWrapper
                 currWork={currWork}
                 i={i}

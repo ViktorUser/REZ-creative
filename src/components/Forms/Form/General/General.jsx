@@ -6,21 +6,28 @@ import classNames from "classnames";
 
 import "../Form.scss";
 import { Link } from "react-router-dom";
+import { ScrollTrigger } from "gsap/all";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("The field is required"),
   email: Yup.string()
     .email("Please enter a valid email address")
     .required("Please enter a valid email address"),
-  phone: Yup.string(),
-  website: Yup.string(),
-  file: Yup.mixed(),
-  // .test(
-  //   "fileSize",
-  //   "File needs to be less than 2MB",
-  //   value => value && value.size <= FileSizeLimit
-  // ),
-  about: Yup.string(),
+  phone: Yup.string().required("The field is required"),
+  website: Yup.string().required("The field is required"),
+  about: Yup.string().required("The field is required"),
+  resume: Yup.mixed()
+    .required("A file is required")
+    .test(
+      "fileSize",
+      "File needs to be less than 2MB",
+      (value) => value && value.size <= 2000000 // 2 MB
+    )
+    .test(
+      "fileFormat",
+      "Unsupported Format",
+      (value) => value && ["application/pdf"].includes(value.type)
+    ),
 });
 
 export const GeneralEnquiresForm = () => {
@@ -33,22 +40,31 @@ export const GeneralEnquiresForm = () => {
         email: "",
         website: "",
         phone: "",
-        resume: undefined,
+        resume: null,
         message: "",
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
+        const formData = new FormData();
+        Object.keys(values).forEach((key) => {
+          formData.append(key, values[key]);
+        });
+
+        formData.append("resume", values.resume);
+
         axios({
           method: "post",
           url: "http://2915880.cd416004.web.hosting-test.net/wp-json/rez/v1/form/general-enquires",
-          data: values,
+          data: formData,
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
         }).then((response) => {
           console.log(response);
+          console.log(values.resume);
           setSubmitting(false);
           setSubmitted(true);
+          ScrollTrigger.refresh(true);
         });
       }}
     >
@@ -119,7 +135,7 @@ export const GeneralEnquiresForm = () => {
 
               <div className="form__input-wrapper">
                 <Field
-                  type="text"
+                  type="tel"
                   name="phone"
                   placeholder="Phone"
                   className={classNames("form__input", {
@@ -136,8 +152,7 @@ export const GeneralEnquiresForm = () => {
               </div>
 
               <UploadFile
-                data={formik.values}
-                errors={formik.errors}
+                formik={formik}
                 setFieldValue={formik.setFieldValue}
               />
 
@@ -145,8 +160,17 @@ export const GeneralEnquiresForm = () => {
                 <p>Tell us about yourself</p>
                 <Field
                   as="textarea"
-                  name="message"
-                  className="form__input form__input--textarea"
+                  name="about"
+                  className={classNames("form__input form__input--textarea", {
+                    "form__input--error":
+                      getIn(formik.errors, "about") &&
+                      getIn(formik.touched, "about"),
+                  })}
+                />
+                <ErrorMessage
+                  name="about"
+                  component="p"
+                  className="form__input-error-msg smallText"
                 />
               </div>
 
@@ -182,6 +206,20 @@ export const GeneralEnquiresForm = () => {
 
 const UploadFile = ({ setFieldValue }) => {
   const [filename, setFilename] = useState("");
+  const [fileError, setFileError] = useState("");
+
+  const validateFile = (file) => {
+    if (file.size > 2000000) {
+      setFileError("File needs to be less than 2MB");
+      return false;
+    }
+    if (file.type !== "application/pdf") {
+      setFileError("Unsupported Format");
+      return false;
+    }
+    setFileError("");
+    return true;
+  };
 
   return (
     <div className="form__input-wrapper form__input-wrapper--file">
@@ -189,20 +227,37 @@ const UploadFile = ({ setFieldValue }) => {
         id="resume"
         name="resume"
         type="file"
-        style={{ display: 'none' }}
+        accept=".pdf"
+        style={{ display: "none" }}
         onChange={(e) => {
           if (e.currentTarget.files.length > 0) {
-            setFieldValue("resume", e.currentTarget.files[0]);
-            setFilename(e.currentTarget.files[0].name);
+            const file = e.currentTarget.files[0];
+            if (validateFile(file)) {
+              setFieldValue("resume", file);
+              setFilename(file.name);
+            }
+          } else {
+            setFieldValue("resume", "");
+            setFilename("");
           }
         }}
       />
-      <label htmlFor="resume" className="form__input-file">
+      <label
+        htmlFor="resume"
+        className={classNames("form__input-file", {
+          "form__input--error": fileError,
+        })}
+      >
         Attach resume / CV
       </label>
       <p className="shadow smallText form__input-file-name">
-        {filename || ""}
+        {(!fileError && filename) || ""}
       </p>
+      {fileError && (
+        <p className="form__input-error-msg form__input-error-msg--file smallText">
+          {fileError}
+        </p>
+      )}
     </div>
   );
 };
