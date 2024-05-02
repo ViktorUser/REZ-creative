@@ -34,14 +34,14 @@ export const ImageSlider = () => {
           hasTrack={false}
         >
           <SplideTrack>
-            {[...Array(4)].map((_, index) => (
+            {data.slider.map((currImg, index) => (
               <SplideSlide key={index} className="slide">
                 <img
-                  src={`/media/Work/Slider/${index + 1}.jpg`}
+                  src={currImg}
                   className="slide__image"
                 />
                 <Pixelify
-                  src={`/media/Work/Slider/${index + 1}.jpg`}
+                  src={currImg}
                   pixelSize={20}
                 />
               </SplideSlide>

@@ -14,6 +14,7 @@ export const URL_HEADER =
   "https://app.rezcreative.com/wp-json/rez/v1/header";
 export const URL_WORKS_DETAILS =
   "https://app.rezcreative.com/wp-json/rez/v1/works/";
+  
 // export const URL_HOME_DATA =
 //   "http://2915880.cd416004.web.hosting-test.net/wp-json/rez/v1/home";
 // export const URL_WORKS_DATA =

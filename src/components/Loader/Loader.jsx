@@ -89,11 +89,7 @@ export const Loader = () => {
               {/* <img src="/media/loaderImage.webp" alt="" ref={imageRef} /> */}
               <div ref={imageRef} className="line__image-wrapper">
                 {isHomePage && (
-                  <img
-                    src="/media/loaderImage.webp"
-                    alt=""
-                    className="line__image"
-                  />
+                  <video ></video>
                 )}
               </div>
               {/* <video

@@ -10,7 +10,25 @@
     z-index: -1;
     width: 100vw;
     height: 100lvh;
-    object-fit: cover;
+
+    .video-bg {
+      &__wrapper {
+        // position: relative;
+        // z-index: -1;
+        opacity: 0;
+
+        &--active {
+          // z-index: 2;
+          opacity: 1;
+        }
+      }
+
+      & > video {
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+      }
+    }
   }
 
   &__logo {
@@ -44,25 +62,27 @@
     backdrop-filter: blur(3.5vw);
     -webkit-backdrop-filter: blur(3.5vw);
     width: 100vw;
-    height: 23.6vw;
+    // height: 23.6vw;
     z-index: -1;
     position: absolute;
     bottom: 0;
     color: $w-100;
 
-    @include forVerticalTablet() {
-      height: 30vw;
+    // @include forVerticalTablet() {
+    //   height: 30vw;
+    // }
+
+    &--empty {
+      height: 23.6vw;
     }
 
     @include forMobile() {
-      height: 36vw;
+      height: auto;
       backdrop-filter: blur(7vw);
-    -webkit-backdrop-filter: blur(7vw);
+      -webkit-backdrop-filter: blur(7vw);
     }
 
     .content {
-      @include grid();
-      row-gap: 36lvh;
       margin: 0.6vw 3.2vw;
       height: 100%;
 
@@ -70,11 +90,34 @@
         display: none;
       }
     }
+
+    .mobile {
+      display: none;
+
+      @include forMobile {
+        display: block;
+      }
+
+      .timelines {
+        display: flex;
+        flex-direction: column;
+        gap: VW(10, $mobile);
+        padding-top: VW(35, $mobile);
+        padding-bottom: 20dvh;
+
+        &__lines {
+          display: flex;
+          justify-content: space-between;
+          column-gap: 1vw;
+          margin-top: VW(10, $mobile);
+        }
+      }
+    }
   }
 
   .timelines {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    justify-content: space-between;
     column-gap: 1vw;
     grid-column: 1/13;
     margin-bottom: 0.5vw;
@@ -82,15 +125,33 @@
 
     &__name {
       padding-bottom: 0.4vw;
+      opacity: 0.4;
+      transition: opacity .5s .2s ease;
+
+      @include forMobile {
+        opacity: 1;
+      }
+
+      &--active {
+        opacity: 1;
+      }
     }
 
     &__item {
       position: relative;
+      width: 100%;
     }
 
     &__category {
-      position: absolute;
-      bottom: 0;
+      margin-top: 36vh;
+
+      @include forHorizontalTablet {
+        margin-top: 20.5vw;
+      }
+
+      @include forVerticalTablet {
+        margin-top: 21vw;
+      }
     }
 
     &__line {
@@ -98,11 +159,32 @@
       width: 100%;
       height: 0.1vw;
       background-color: #fff;
-      // clip-path: inset(0 100% 0 0);
 
-      &--active {
-        background: red;
+      @include forVerticalTablet {
+        height: 0.2vw;
       }
+
+      &--mobile {
+        position: relative;
+        z-index: 3;
+        height: 100%;
+        width: 100%;
+      }
+
+      &--empty {
+        display: block;
+        height: 100%;
+        width: 100%;
+        background-color: $g-70;
+        position: absolute;
+        top: 0;
+      }
+    }
+
+    &__wrapper {
+      width: 100%;
+      height: 0.5vw;
+      position: relative;
     }
   }
 }

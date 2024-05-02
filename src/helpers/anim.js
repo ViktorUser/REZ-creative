@@ -1,4 +1,4 @@
-import { animate } from "framer-motion";
+import { animate, delay } from "framer-motion";
 
 export const anim = (variants) => {
   return {
@@ -243,14 +243,51 @@ export const TimelineAnim = {
   lines: {
     initial: {
       clipPath: 'inset(0 100% 0 0)',
+      transition: {
+        duration: 0.1,
+        ease: 0
+      }
     },
     aninate: (time) => ({
       clipPath: 'inset(0 0% 0 0)',
       transition: {
-        duration: time + 0.2,
+        duration: time - 0.1,
         ease: 0
       }
     }),
+    exit: {
+      clipPath: 'inset(0 0% 0 0)',
+      transition: {
+        duration: 0.1,
+        ease: 0
+      }
+    }
+  },
+  names: {
+    Mobile: {
+      initial: {
+        y: "50%",
+        opacity: 0
+      },
+      animate: (d = 0) => ({
+        y: "0%",
+        opacity: 1,
+        transition: {
+          ...transition,
+          duration: .6,
+          delay: d
+        }
+      }),
+      exit: (d = 0) => ({
+        y: "-50%",
+        opacity: 0,
+        transition: {
+          ...transition,
+          duration: .6,
+          delay: d
+        }
+      })
+    },
   }
 }
 

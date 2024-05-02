@@ -115,7 +115,7 @@ const ProjWrapper = ({ currWork, i }) => {
       initial="initial"
       animate={inView ? "animate" : "exit"}
       custom={i}
-      className={classNames("work-page__item pixel-card mobile", {
+      className={classNames("work-page__item pixel-card", {
         ["mobile"]: isTouch,
       })}
       ref={ref}

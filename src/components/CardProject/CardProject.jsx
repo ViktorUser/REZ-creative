@@ -9,14 +9,13 @@ export const CardProject = ({ project }) => {
   const isTouch = useIsTouchDevice();
 
   return (
-    <CardProjectMobile project={project} />
-    // <>
-    //   {isTouch ? (
-    //     <CardProjectMobile project={project} />
-    //   ) : (
-    //     <CardProjectDesktop project={project} />
-    //   )}
-    // </>
+    <>
+      {isTouch ? (
+        <CardProjectMobile project={project} />
+      ) : (
+        <CardProjectDesktop project={project} />
+      )}
+    </>
   );
 };
 

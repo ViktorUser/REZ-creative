@@ -23,9 +23,9 @@
 
   &--fixed {
     position: sticky;
-    top: 95%;
+    top: 85%;
     left: 50%;
-    transform: translate(-9.6%, -50%);
+    transform: translate(-9.6%, 110%);
     background-color: $w-100;
     z-index: 7;
     margin: 0 auto;

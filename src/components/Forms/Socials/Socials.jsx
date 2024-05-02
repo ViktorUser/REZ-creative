@@ -8,10 +8,10 @@ export const Socials = () => {
 
   return !isLoading && (
     <div className="socials">
-      <h4>{data.socials.title}</h4>
+      <h4>{data?.socials?.title}</h4>
 
       <ul className="socials__list">
-        {data.socials.links.map((currSocial, i) => (
+        {data?.socials && data?.socials?.links.map((currSocial, i) => (
           <li className="socials__item" key={`socials__item-${i}`}>
             <a href={currSocial.link}>
               <img src={currSocial.icon} alt="socials" />
