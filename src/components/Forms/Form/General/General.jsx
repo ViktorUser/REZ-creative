@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Formik, Field, Form, ErrorMessage, getIn } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -7,6 +7,8 @@ import classNames from "classnames";
 import "../Form.scss";
 import { Link } from "react-router-dom";
 import { ScrollTrigger } from "gsap/all";
+import { URL_FORM_GENERAL } from "@/helpers/dataHelpers/linksAPI";
+import { DataContext } from "@/helpers/dataHelpers/dataProvider";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("The field is required"),
@@ -14,8 +16,8 @@ const validationSchema = Yup.object({
     .email("Please enter a valid email address")
     .required("Please enter a valid email address"),
   phone: Yup.string().required("The field is required"),
-  website: Yup.string().required("The field is required"),
-  about: Yup.string().required("The field is required"),
+  website: Yup.string(),
+  message: Yup.string().required("The field is required"),
   resume: Yup.mixed()
     .required("A file is required")
     .test(
@@ -32,6 +34,8 @@ const validationSchema = Yup.object({
 
 export const GeneralEnquiresForm = () => {
   const [submitted, setSubmitted] = useState(false);
+
+  const { data } = useContext(DataContext);
 
   return (
     <Formik
@@ -54,14 +58,12 @@ export const GeneralEnquiresForm = () => {
 
         axios({
           method: "post",
-          url: "http://2915880.cd416004.web.hosting-test.net/wp-json/rez/v1/form/general-enquires",
+          url: URL_FORM_GENERAL,
           data: formData,
           headers: {
             "Content-Type": "multipart/form-data",
           },
         }).then((response) => {
-          console.log(response);
-          console.log(values.resume);
           setSubmitting(false);
           setSubmitted(true);
           ScrollTrigger.refresh(true);
@@ -71,11 +73,8 @@ export const GeneralEnquiresForm = () => {
       {(formik) => (
         <div>
           {submitted && (
-            <div className="form form--submited">
-              <h2>Thank you!</h2>
-              <h2>We’re happy to receive your application.</h2>
-              <h2>We’ll reach out to you in 1-3 working days via email</h2>
-            </div>
+                        <div className="form form--submited" dangerouslySetInnerHTML={{ __html: data?.form?.message_after_form_submit }}/>
+
           )}
           {!submitted && (
             <Form className="form form--general">
@@ -160,15 +159,15 @@ export const GeneralEnquiresForm = () => {
                 <p>Tell us about yourself</p>
                 <Field
                   as="textarea"
-                  name="about"
+                  name="message"
                   className={classNames("form__input form__input--textarea", {
                     "form__input--error":
-                      getIn(formik.errors, "about") &&
-                      getIn(formik.touched, "about"),
+                      getIn(formik.errors, "message") &&
+                      getIn(formik.touched, "message"),
                   })}
                 />
                 <ErrorMessage
-                  name="about"
+                  name="message"
                   component="p"
                   className="form__input-error-msg smallText"
                 />

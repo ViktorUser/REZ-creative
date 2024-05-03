@@ -9,17 +9,29 @@ import { LoaderContext } from "./LoaderContext";
 import { useLocation } from "react-router-dom";
 import { useLayoutEffect } from "react";
 import { endingAnim, linesAnim, numAnim } from "./LoaderAnim";
+import { DataContext, DataProvider } from "@/helpers/dataHelpers/dataProvider";
+import { URL_HOME_DATA, URL_WORKS_DETAILS } from "@/helpers/dataHelpers/linksAPI";
+import ReactPlayer from "react-player";
+import WorksHero from "@/pages/WorkDetails/WorksHero/WorksHero";
+import { CustomEase } from "gsap/all";
 
 export const Loader = () => {
   const { loaderFinished, setLoaderFinished } = useContext(LoaderContext);
 
   const [isHomePage, setIsHomePage] = useState(false);
+  const [isWorkDetails, setIsWorkDetails] = useState(false);
+  const [urlWorks, setUrlWorks] = useState();
   const location = useLocation();
   const { pathname } = location;
+
+  const pathWorks = pathname.split("/");
 
   useLayoutEffect(() => {
     if (pathname === "/") {
       setIsHomePage(true);
+    } else if (pathname.startsWith("/work/") && pathname !== "/work") {
+      setIsWorkDetails(true);
+      setUrlWorks(URL_WORKS_DETAILS + pathWorks[2])
     }
   }, [location]);
 
@@ -55,7 +67,7 @@ export const Loader = () => {
 
   return (
     <AnimatePresence>
-    {!loaderFinished && (
+      {!loaderFinished && (
         <motion.section {...motionParametr} className="loader" ref={loaderRef}>
           <div className="progress" ref={progressWrapperRef}>
             <div className="progress__num-wrapper">
@@ -78,7 +90,7 @@ export const Loader = () => {
             </div>
             <div className="progress__num">%</div>
           </div>
-          <div className="lines">
+          <div className="loader__lines">
             <span className="line" ref={(l) => linesRef.current.push(l)} />
             <span className="line" ref={(l) => linesRef.current.push(l)} />
             <span className="line" ref={(l) => linesRef.current.push(l)} />
@@ -86,25 +98,59 @@ export const Loader = () => {
               className="line line--last"
               ref={(l) => linesRef.current.push(l)}
             >
-              {/* <img src="/media/loaderImage.webp" alt="" ref={imageRef} /> */}
               <div ref={imageRef} className="line__image-wrapper">
                 {isHomePage && (
-                  <video ></video>
+                  <DataProvider url={URL_HOME_DATA}>
+                    <ScreenShotVideo />
+                  </DataProvider>
+                )}
+                {isWorkDetails && (
+                  <DataProvider url={urlWorks}>
+                    <WorksHeroPrepered />
+                  </DataProvider>
                 )}
               </div>
-              {/* <video
-                  loop
-                  muted
-                  webkit-playsinline="true"
-                  playsInline
-                  ref={imageRef}
-                >
-                  <source src="/media/Video/Trailers.mp4" />
-                </video> */}
             </span>
           </div>
-        </motion.section>)}
-    
+        </motion.section>
+      )}
     </AnimatePresence>
   );
 };
+
+const ScreenShotVideo = () => {
+  const { data, isLoading } = useContext(DataContext);
+
+  return (
+    !isLoading && (
+      <ReactPlayer
+        autoPlay
+        muted
+        playsinline
+        width="100%"
+        height="100%"
+        className="video-bg"
+        controls={false}
+        url={data.hero.timeline_list[0].video}
+      />
+    )
+  );
+};
+
+const WorksHeroPrepered = () => {
+  const { data, isLoading } = useContext(DataContext);
+
+  return (
+    !isLoading && (
+      <section className="works-hero works-hero--loader">
+        <div className="top">
+          <h1 className="super-text top__title">
+            {data.main.title}
+          </h1>
+        </div>
+        <img src={data.main.image} alt="works-hero" className="works-hero__bg" />
+      </section>
+    )
+  );
+
+}

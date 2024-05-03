@@ -15,16 +15,19 @@ import { useIsTouchDevice } from "@/helpers/isTouchDevice";
 import { CustomEase } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { LoaderContext } from "@/components/Loader/LoaderContext";
 
 export default function Work() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  const { loaderFinished } = useContext(LoaderContext);
+
   return (
     <DataProvider url={URL_WORKS_DATA}>
       <PageLayout>
-        <WorksList />
+        {loaderFinished && <WorksList />}
       </PageLayout>
     </DataProvider>
   );

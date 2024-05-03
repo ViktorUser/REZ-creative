@@ -16,11 +16,11 @@ export default function WorkDetails() {
   const location = useLocation();
   const { pathname } = location;
 
-  const pathVacancy = pathname.split("/");
+  const pathWorks = pathname.split("/");
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setUrlDetails(URL_WORKS_DETAILS + pathVacancy[2]);
+    setUrlDetails(URL_WORKS_DETAILS + pathWorks[2]);
   }, []);
 
   return (

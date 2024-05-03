@@ -5,9 +5,11 @@ import "./WorksHero.scss";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { CustomEase, ScrollTrigger } from "gsap/all";
+import { LoaderContext } from "@/components/Loader/LoaderContext";
 
 export default function WorksHero() {
   const { data, isLoading } = useContext(DataContext);
+  const { loaderFinished } = useContext(LoaderContext);
 
   const backgroundRef = useRef();
   const titleRef = useRef();
@@ -18,7 +20,7 @@ export default function WorksHero() {
   useGSAP(() => {
     const tl = gsap.timeline();
 
-    if (!isLoading) {
+    if (!isLoading && loaderFinished) {
       tl.add(
         gsap.fromTo(
           topRef.current,
@@ -88,7 +90,7 @@ export default function WorksHero() {
         }
       })
     }
-  }, [isLoading]);
+  }, [isLoading, loaderFinished]);
 
   return (
     !isLoading && (
@@ -96,15 +98,8 @@ export default function WorksHero() {
         <div className="top" ref={topRef}>
           <h1 className="super-text top__title" ref={titleRef}>
             {data.main.title}
-            {/* {data.main.title}
-            {data.main.title} */}
           </h1>
         </div>
-        {/* <div
-          className="works-hero__bg"
-          style={{ backgroundImage: `url(${data.main.image})` }}
-          ref={backgroundRef}
-        /> */}
         <img src={data.main.image} alt="works-hero" className="works-hero__bg" ref={backgroundRef}/>
       </section>
     )

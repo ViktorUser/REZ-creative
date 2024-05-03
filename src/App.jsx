@@ -1,10 +1,7 @@
 import React, { useContext } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { QueryClient, QueryClientProvider } from "react-query";
-import {
-  useLocation,
-  useRoutes,
-} from "react-router-dom";
+import { useLocation, useRoutes } from "react-router-dom";
 
 import { ScrollProvider } from "./helpers/scrollProvider";
 import Home from "./pages/Home/Home";
@@ -21,21 +18,20 @@ import Work from "./pages/Work/Work";
 import Terms from "./pages/Terms/Terms";
 import VacancyDetails from "./pages/VacancyDetails/VacancyDetails";
 import WorkDetails from "./pages/WorkDetails/WorkDetails";
+import classNames from "classnames";
 
 const queryC = new QueryClient();
 
 function App() {
   return (
-    <main>
-      <QueryClientProvider client={queryC}>
-        <ScrollProvider>
-          <LoaderProvider>
-            {/* <Loader /> */}
-            <Root />
-          </LoaderProvider>
-        </ScrollProvider>
-      </QueryClientProvider>
-    </main>
+    <QueryClientProvider client={queryC}>
+      <ScrollProvider>
+        <LoaderProvider>
+          <Loader />
+          <Root />
+        </LoaderProvider>
+      </ScrollProvider>
+    </QueryClientProvider>
   );
 }
 
@@ -51,29 +47,29 @@ const Root = () => {
           element: <Home />,
         },
         {
-          path: 'about',
+          path: "about",
           element: <About />,
         },
         {
-          path: 'work',
+          path: "work",
           element: <Work />,
         },
         {
-          path: 'work/:workSlug',
+          path: "work/:workSlug",
           element: <WorkDetails />,
         },
         {
-          path: 'vacancies',
+          path: "vacancies",
           element: <JoinTeam />,
         },
         {
-          path: 'terms',
+          path: "terms",
           element: <Terms />,
         },
         {
-          path: 'vacancies/:vacancySlug',
+          path: "vacancies/:vacancySlug",
           element: <VacancyDetails />,
-        }
+        },
       ],
     },
     {
@@ -81,18 +77,23 @@ const Root = () => {
       element: <ErrorPage />,
     },
   ]);
-  
+
   const location = useLocation();
 
   return (
-    !loaderFinished && (
-      <>
-        {/* <Header /> */}
-          <AnimatePresence mode="wait" initial={false}>
-            {React.cloneElement(element, { key: location.pathname })}
-          </AnimatePresence>
-      </>
-    )
+    <AnimatePresence mode="wait">
+      <motion.main
+        className={classNames("main", {
+          "main--loading": !loaderFinished,
+        })}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: loaderFinished ? 1 : 0 }}
+      >
+        <AnimatePresence mode="wait">
+          {React.cloneElement(element, { key: location.pathname })}
+        </AnimatePresence>
+      </motion.main>
+    </AnimatePresence>
   );
 };
 

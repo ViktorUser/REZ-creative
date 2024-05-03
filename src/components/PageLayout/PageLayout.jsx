@@ -6,36 +6,42 @@ import "./PageLayout.scss";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Header } from "../Header/Header";
 import { Footer } from "../Footer/Footer";
-import { DataContext } from "@/helpers/dataHelpers/dataProvider";
+import { DataContext, DataProvider } from "@/helpers/dataHelpers/dataProvider";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ReactPlayer from "react-player";
+import { URL_HOME_DATA, URL_WORKS_DETAILS } from "@/helpers/dataHelpers/linksAPI";
 
 const colors = ["#ff7215", "#82c5ff", "#feb200", "#d333ea", "#00A79D"];
 
 export const PageLayout = ({ children }) => {
   const [isHomePage, setIsHomePage] = useState(false);
+  const [isWorkDetails, setIsWorkDetails] = useState(false);
+  const [urlWorks, setUrlWorks] = useState();
+
   const location = useLocation();
   const { pathname } = location;
 
+  const pathWorks = pathname.split("/");
+
   const { data, isLoading } = useContext(DataContext);
 
-  const lastPickedColors = useRef([])
+  const lastPickedColors = useRef([]);
 
   useEffect(() => {
-    ScrollTrigger.refresh(true)
-  }, [isLoading, pathname])
+    ScrollTrigger.refresh(true);
+  }, [isLoading, pathname]);
 
   function getRandomColor() {
     let color;
     do {
       color = colors[Math.floor(Math.random() * colors.length)];
     } while (lastPickedColors.current.includes(color));
-  
-    // Update the last picked colors
+
     lastPickedColors.current.push(color);
-    if (lastPickedColors.current.length > 2) { // or 3, if you want to ensure a color isn't repeated for 3 turns
-      lastPickedColors.current.shift(); // remove the oldest color
+    if (lastPickedColors.current.length > 2) {
+      lastPickedColors.current.shift();
     }
-  
+
     return color;
   }
 
@@ -49,6 +55,14 @@ export const PageLayout = ({ children }) => {
         setIsHomePage(false);
       }, 1550);
     }
+    if (pathname.startsWith("/work/") && pathname !== "/work") {
+      setIsWorkDetails(true);
+      setUrlWorks(URL_WORKS_DETAILS + pathWorks[2]);
+
+      setTimeout(() => {
+        setIsWorkDetails(false);
+      }, 1550);
+    }
   }, [location]);
 
   return (
@@ -58,18 +72,17 @@ export const PageLayout = ({ children }) => {
         className="page-slide"
         style={{ borderColor: slideColor }}
         {...anim(PageTransition.slide)}
-        custom={isHomePage}
+        custom={isHomePage || isWorkDetails}
       >
         {isHomePage && (
-          <video
-            loop
-            muted
-            webkit-playsinline="true"
-            playsInline
-            className="page-slide__video"
-          >
-            <source src="/media/Video/Trailers.mp4" />
-          </video>
+          <DataProvider url={URL_HOME_DATA}>
+            <ScreenShotVideo />
+          </DataProvider>
+        )}
+        {isWorkDetails && (
+          <DataProvider url={urlWorks}>
+            <WorksHeroPrepered />
+          </DataProvider>
         )}
       </motion.div>
       <motion.div className="page" {...anim(PageTransition.perspective)}>
@@ -77,5 +90,43 @@ export const PageLayout = ({ children }) => {
         <Footer />
       </motion.div>
     </div>
+  );
+};
+
+const ScreenShotVideo = () => {
+  const { data, isLoading } = useContext(DataContext);
+
+  return (
+    !isLoading && (
+      <ReactPlayer
+        autoPlay
+        muted
+        playsinline
+        width="100%"
+        height="100%"
+        className="video-bg page-slide__video"
+        controls={false}
+        url={data.hero.timeline_list[0].video}
+      />
+    )
+  );
+};
+
+const WorksHeroPrepered = () => {
+  const { data, isLoading } = useContext(DataContext);
+
+  return (
+    !isLoading && (
+      <section className="works-hero works-hero--loader">
+        <div className="top">
+          <h1 className="super-text top__title">{data.main.title}</h1>
+        </div>
+        <img
+          src={data.main.image}
+          alt="works-hero"
+          className="works-hero__bg"
+        />
+      </section>
+    )
   );
 };

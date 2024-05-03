@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Formik, Field, Form, ErrorMessage, getIn } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -6,6 +6,9 @@ import classNames from "classnames";
 
 import "../Form.scss";
 import { Link } from "react-router-dom";
+import { URL_FORM_HELLO_FORM } from "@/helpers/dataHelpers/linksAPI";
+import { ScrollTrigger } from "gsap/all";
+import { DataContext } from "@/helpers/dataHelpers/dataProvider";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("The field is required"),
@@ -18,6 +21,8 @@ const validationSchema = Yup.object({
 export const MainForm = () => {
   const [submitted, setSubmitted] = useState(false);
 
+  const { data } = useContext(DataContext);
+
   return (
     <Formik
       initialValues={{ name: "", email: "", message: "" }}
@@ -25,13 +30,13 @@ export const MainForm = () => {
       onSubmit={(values, { setSubmitting }) => {
         axios({
           method: "post",
-          url: "http://2915880.cd416004.web.hosting-test.net/wp-json/rez/v1/form/say-hello",
+          url: URL_FORM_HELLO_FORM,
           data: values,
           headers: {
             "Content-Type": "application/json",
           },
         }).then((response) => {
-          console.log(response);
+          ScrollTrigger.refresh(true)
           setSubmitting(false);
           setSubmitted(true);
         });
@@ -40,11 +45,7 @@ export const MainForm = () => {
       {(formik) => (
         <div>
           {submitted && (
-            <div className="form form--submited">
-              <h2>Thank you!</h2>
-              <h2>We’re happy to receive your application.</h2>
-              <h2>We’ll reach out to you in 1-3 working days via email</h2>
-            </div>
+            <div className="form form--submited" dangerouslySetInnerHTML={{ __html: data?.form?.message_after_form_submit }}/>
           )}
           {!submitted && (
             <Form className="form form--main">

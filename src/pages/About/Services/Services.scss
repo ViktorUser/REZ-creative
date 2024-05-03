@@ -26,62 +26,39 @@
   }
 
   &-list {
+    &__icon {
+      display: block;
+      width: 0.7vw;
+      height: 0.7vw;
+      background: no-repeat center;
+      background-size: contain;
+      transition: transform 1s $ExpoInOut;
+
+      @include forVerticalTablet() {
+        width: 1.3vw;
+        height: 1.3vw;
+      }
+
+      @include forMobile {
+        width: 3vw;
+        height: 3vw;
+      }
+    }
+
     &--top {
       transition: all 1s $ExpoInOut;
 
       &__title {
-        position: relative;
         display: flex;
         align-items: center;
+        justify-content: flex-end;
+        flex-direction: row-reverse;
         gap: 1vw;
+        position: relative;
         transition: gap 1s $ExpoInOut;
 
         @include forMobile {
           gap: 2vw;
-        }
-
-        &::before {
-          content: "";
-          display: block;
-          width: 0.7vw;
-          height: 0.7vw;
-          background: no-repeat center;
-          background-size: contain;
-          transition: transform 1s $ExpoInOut;
-
-          @include forVerticalTablet() {
-            width: 1.3vw;
-            height: 1.3vw;
-          }
-
-          @include forMobile {
-            width: 3vw;
-            height: 3vw;
-          }
-        }
-      }
-
-      &:nth-of-type(1) {
-        .services-list--top__title {
-          &::before {
-            background-image: url("/public/media/AboutPage/ServicesIcons/YTriangle.svg");
-          }
-        }
-      }
-
-      &:nth-of-type(2) {
-        .services-list--top__title {
-          &::before {
-            background-image: url("/public/media/AboutPage/ServicesIcons/Rectangle.svg");
-          }
-        }
-      }
-
-      &:nth-of-type(3) {
-        .services-list--top__title {
-          &::before {
-            background-image: url("/public/media/AboutPage/ServicesIcons/Elipse.svg");
-          }
         }
       }
     }
@@ -132,18 +109,18 @@
               position: absolute;
               right: 0;
               transform: rotate(90deg);
-              transition: transform .3s $ExpoInOut;
+              transition: transform 0.3s $ExpoInOut;
             }
 
             &--active {
               gap: 4vw;
+              
               &::after {
                 transform: rotate(-90deg);
               }
 
-              &::before {
+              .services-list__icon {
                 transform: rotate(360deg);
-
               }
             }
           }
@@ -194,6 +171,8 @@
       position: relative;
       display: flex;
       align-items: center;
+      justify-content: flex-end;
+      flex-direction: row-reverse;
       gap: 1vw;
       margin-top: 1.5vw;
 
@@ -203,26 +182,6 @@
 
       @include forMobile {
         gap: 2vw;
-      }
-
-      &::before {
-        content: "";
-        display: block;
-        width: 0.7vw;
-        height: 0.7vw;
-        background: url("/public/media/AboutPage/ServicesIcons/PTriangle.svg")
-          no-repeat center;
-        background-size: contain;
-
-        @include forVerticalTablet() {
-          width: 1.3vw;
-          height: 1.3vw;
-        }
-
-        @include forMobile {
-          width: 3vw;
-          height: 3vw;
-        }
       }
     }
   }

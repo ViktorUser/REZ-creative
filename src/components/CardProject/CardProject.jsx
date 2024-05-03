@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pixelify } from "react-pixelify";
 import { useIsTouchDevice } from "@/helpers/isTouchDevice";
 
@@ -36,7 +36,16 @@ const CardProjectDesktop = ({ project }) => {
   const { slug, img: srcBg, img_hover: srcBgZoomed, logo } = project;
 
   const [pixelSize, setPixelSize] = useState(0);
-  const [image, setImage] = useState(srcBg);
+  const [images, setImages] = useState([srcBg, srcBgZoomed]);
+  const [imageIndex, setImageIndex] = useState(0);
+
+  useEffect(() => {
+    const preloadImage = new Image();
+    preloadImage.src = srcBgZoomed;
+    preloadImage.onload = () => {
+      setImages([srcBg, preloadImage.src]);
+    };
+  }, [srcBg, srcBgZoomed]);
 
   const animEnterStepsHandler = () => {
     setPixelSize(18);
@@ -47,20 +56,20 @@ const CardProjectDesktop = ({ project }) => {
 
     setTimeout(() => {
       setPixelSize(0);
-      setImage(srcBgZoomed);
+      setImageIndex(1); 
     }, 400);
   };
 
   const animLeaveStepsHandler = () => {
     setPixelSize(28);
-    setImage(srcBg);
-
+    setImageIndex(0); 
+    
     setTimeout(() => {
       setPixelSize(18);
     }, 200);
-
+    
     setTimeout(() => {
-      setImage(srcBg);
+      setImageIndex(0); 
       setPixelSize(0);
     }, 400);
   };
@@ -72,7 +81,7 @@ const CardProjectDesktop = ({ project }) => {
       onMouseEnter={() => animEnterStepsHandler()}
       onMouseLeave={() => animLeaveStepsHandler()}
     >
-      <Pixelify src={image} pixelSize={pixelSize} />
+      <Pixelify src={images[imageIndex]} pixelSize={pixelSize} />
       <div className="pixel-card__logo">
         <img src={logo} alt="" className="pixel-card__logo-image" />
       </div>

@@ -77,6 +77,10 @@ export default function Services() {
                     onClick={() => handlerClickedServ(i)}
                   >
                     {curr.title}
+                    <span
+                      className="services-list__icon"
+                      style={{ backgroundImage: `url(${curr.icon})` }}
+                    />
                   </p>
                   <ul className="services-list__list smallText shadow">
                     {curr.numeric_list.map((currServ, index) => (
@@ -99,6 +103,10 @@ export default function Services() {
                     onClick={() => handlerClickedServ(i)}
                   >
                     {curr.title}
+                  <span
+                    className="services-list__icon"
+                    style={{ backgroundImage: `url(${curr.icon})` }}
+                  />
                   </p>
                   <AnimatePresence>
                     <motion.ul
@@ -135,6 +143,10 @@ export default function Services() {
                       key={`${currServMain.title}-${j}`}
                     >
                       {currSubList.text}
+                      <span
+                        className="services-list__icon"
+                        style={{ backgroundImage: `url(${currSubList.icon})` }}
+                      />
                     </span>
                   ))}
                 </div>

@@ -7,45 +7,48 @@ import { CustomEase } from "gsap/all";
 
 import { DataContext } from "@/helpers/dataHelpers/dataProvider";
 import { VideoPlay } from "@/components/VideoPlay/VideoPlay";
+import { LoaderContext } from "@/components/Loader/LoaderContext";
 
 export default function Reel() {
   const titleRef = useRef();
   const presenceAnimRef = useRef();
 
   const { data, isLoading } = useContext(DataContext);
+  const { loaderFinished } = useContext(LoaderContext);
 
   useGSAP(() => {
     const tl = gsap.timeline({ delay: 0.5 });
+    if (loaderFinished) {
+      tl.fromTo(
+        titleRef.current,
+        {
+          yPercent: 20,
+          clipPath: "inset(0 0 100% 0)",
+        },
+        {
+          yPercent: -2,
+          clipPath: "inset(0 0 0% 0)",
+          duration: 1,
+          ease: CustomEase.create(
+            "custom",
+            "M0,0 C0.17,0 0.308,0.115 0.331,0.155 0.389,0.256 0.391,0.359 0.434,0.555 0.478,0.751 0.661,0.877 0.661,0.877 0.661,0.877 0.794,1 1,1 "
+          ),
+        }
+      );
 
-    tl.fromTo(
-      titleRef.current,
-      {
-        yPercent: 20,
-        clipPath: "inset(0 0 100% 0)",
-      },
-      {
-        yPercent: -2,
-        clipPath: "inset(0 0 0% 0)",
-        duration: 1,
-        ease: CustomEase.create(
-          "custom",
-          "M0,0 C0.17,0 0.308,0.115 0.331,0.155 0.389,0.256 0.391,0.359 0.434,0.555 0.478,0.751 0.661,0.877 0.661,0.877 0.661,0.877 0.794,1 1,1 "
-        ),
-      }
-    );
-
-    tl.fromTo(
-      presenceAnimRef.current,
-      {
-        opacity: 0,
-      },
-      {
-        opacity: 1,
-        duration: 1,
-      },
-      "<50%"
-    );
-  }, [isLoading]);
+      tl.fromTo(
+        presenceAnimRef.current,
+        {
+          opacity: 0,
+        },
+        {
+          opacity: 1,
+          duration: 1,
+        },
+        "<50%"
+      );
+    }
+  }, [isLoading, loaderFinished]);
 
   return (
     <section className="reel">

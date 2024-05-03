@@ -30,7 +30,7 @@ export const ScrollProvider = ({ children }) => {
   const scrollToTop = (e) => {
     e.preventDefault();
     locomotiveScroll.current.scrollTo(0, {
-      duration: 1,
+      duration: 1.4,
       easing: (x) => easeOutExpo(x),
       offset: 0,
     });

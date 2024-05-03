@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Formik, Field, Form, ErrorMessage, getIn } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -6,6 +6,9 @@ import classNames from "classnames";
 
 import "../Form.scss";
 import { Link } from "react-router-dom";
+import { URL_FORM_APPLY } from "@/helpers/dataHelpers/linksAPI";
+import { ScrollTrigger } from "gsap/all";
+import { DataContext } from "@/helpers/dataHelpers/dataProvider";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("The field is required"),
@@ -13,7 +16,7 @@ const validationSchema = Yup.object({
     .email("Please enter a valid email address")
     .required("Please enter a valid email address"),
   phone: Yup.string().required("The field is required"),
-  website: Yup.string().required("The field is required"),
+  website: Yup.string(),
   resume: Yup.mixed()
     .required("A file is required")
     .test(
@@ -24,24 +27,27 @@ const validationSchema = Yup.object({
     .test(
       "fileFormat",
       "Unsupported Format",
-      (value) => value && ["application/pdf"].includes(value.type)
+      (value) =>
+        value &&
+        [
+          "application/pdf",
+          "application/msword",
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        ].includes(value.type)
     ),
   "cover-letter": Yup.mixed()
-    .required("A file is required")
+    .nullable()
     .test(
       "fileSize",
       "File needs to be less than 2MB",
-      (value) => value && value.size <= 2000000 // 2 MB
-    )
-    .test(
-      "fileFormat",
-      "Unsupported Format",
-      (value) => value && ["application/pdf"].includes(value.type)
+      (value) => !value || value.size <= 2000000 // 2 MB
     ),
 });
 
 export const ApplyVacancyForm = () => {
   const [submitted, setSubmitted] = useState(false);
+
+  const { data } = useContext(DataContext);
 
   return (
     <Formik
@@ -66,13 +72,13 @@ export const ApplyVacancyForm = () => {
 
         axios({
           method: "post",
-          url: "http://2915880.cd416004.web.hosting-test.net/wp-json/rez/v1/form/apply-now",
+          url: URL_FORM_APPLY,
           data: formData,
           headers: {
             "Content-Type": "multipart/form-data",
           },
         }).then((response) => {
-          console.log(response);
+          ScrollTrigger.refresh(true);
           setSubmitting(false);
           setSubmitted(true);
         });
@@ -81,11 +87,12 @@ export const ApplyVacancyForm = () => {
       {(formik) => (
         <div>
           {submitted && (
-            <div className="form form--submited">
-              <h2>Thank you!</h2>
-              <h2>We’re happy to receive your application.</h2>
-              <h2>We’ll reach out to you in 1-3 working days via email</h2>
-            </div>
+            <div
+              className="form form--submited"
+              dangerouslySetInnerHTML={{
+                __html: data?.form?.message_after_form_submit,
+              }}
+            />
           )}
           {!submitted && (
             <Form className="form form--general">
@@ -206,12 +213,17 @@ const UploadFileResume = ({ setFieldValue }) => {
       setFileError("File needs to be less than 2MB");
       return false;
     }
-    if (file.type !== "application/pdf") {
-      setFileError("Unsupported Format");
-      return false;
+    if (
+      file.type === "application/pdf" ||
+      file.type === "application/msword" ||
+      file.type ===
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ) {
+      setFileError("");
+      return true;
     }
-    setFileError("");
-    return true;
+    setFileError("Unsupported Format");
+    return false;
   };
 
   return (
@@ -220,7 +232,7 @@ const UploadFileResume = ({ setFieldValue }) => {
         id="resume"
         name="resume"
         type="file"
-        accept=".pdf"
+        accept=".pdf,.doc,.docx"
         style={{ display: "none" }}
         onChange={(e) => {
           if (e.currentTarget.files.length > 0) {
@@ -268,12 +280,17 @@ const UploadFileCL = ({ setFieldValue }) => {
       setFileError("File needs to be less than 2MB");
       return false;
     }
-    if (file.type !== "application/pdf") {
-      setFileError("Unsupported Format");
-      return false;
+    if (
+      file.type === "application/pdf" ||
+      file.type === "application/msword" ||
+      file.type ===
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ) {
+      setFileError("");
+      return true;
     }
-    setFileError("");
-    return true;
+    setFileError("Unsupported Format");
+    return false;
   };
 
   return (
@@ -282,6 +299,7 @@ const UploadFileCL = ({ setFieldValue }) => {
         id="cover-letter"
         name="cover-letter"
         type="file"
+        accept=".pdf,.doc,.docx"
         style={{ display: "none" }}
         onChange={(e) => {
           if (e.currentTarget.files.length > 0) {

@@ -14,6 +14,8 @@ import { HeaderAnim, MenuAnim, anim } from "@/helpers/anim";
 import AnchorLink from "../AnchorLink/AnchorLink";
 
 export const Header = () => {
+  const { loaderFinished } = useContext(LoaderContext);
+
   const location = useLocation();
   const { pathname } = location;
 
@@ -44,7 +46,7 @@ export const Header = () => {
     });
   }, [window.innerHeight, pathname]);
 
-  return (
+  return loaderFinished && (
     <AnimatePresence mode="wait">
       <motion.header className="header" key={`header-location-${pathname}`}>
         <motion.div
