@@ -18,6 +18,7 @@
     height: 2.5vw;
     position: relative;
     z-index: 2;
+    display: flex;
 
     @include forVerticalTablet() {
       height: 6vw;
@@ -28,51 +29,9 @@
     }
 
     &-wrapper {
-      position: absolute;
       display: flex;
       gap: 15vw;
-      transform: translateX(-200%);
-      animation: 6s infinite linear;
-
-      @include forDesktop() {
-        animation-name: spinDesktop;
-      }
-
-      @include forHorizontalTablet {
-        animation-name: spinDesktop;
-      }
-
-      @include forVerticalTablet() {
-        animation-name: spinTablet;
-      }
-
-      @include forMobile() {
-        animation-name: spinMobile;
-      }
-
-      &:nth-of-type(2) {
-        left: 90%;
-
-        @include forVerticalTablet() {
-          left: 120%;
-        }
-
-        @include forMobile() {
-          left: 160%;
-        }
-      }
-
-      &:nth-of-type(3) {
-        left: 180%;
-
-        @include forVerticalTablet() {
-          left: 240%;
-        }
-
-        @include forMobile() {
-          left: 320%;
-        }
-      }
+      animation: spinAnimation 16s infinite linear;
     }
   }
 
@@ -94,29 +53,11 @@
   }
 }
 
-@keyframes spinDesktop {
+@keyframes spinAnimation {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-117%);
-  }
-}
-
-@keyframes spinTablet {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-110%);
-  }
-}
-
-@keyframes spinMobile {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-113.5%);
+    transform: translateX(-100%);
   }
 }

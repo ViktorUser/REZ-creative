@@ -33,16 +33,6 @@ export default function Partners() {
             />
           ))}
         </div>
-        <div className="partners__slider-wrapper">
-          {data.partners.logos.map((currLogo, i) => (
-            <img
-              alt=""
-              key={`partners-logo--${i}`}
-              className="partners__logo"
-              src={currLogo}
-            />
-          ))}
-        </div>
       </div>
     </section>
   );

@@ -76,7 +76,7 @@ const CardProjectDesktop = ({ project }) => {
 
   return (
     <Link
-      to={slug}
+    to={`/work/${slug}`}
       className="pixel-card"
       onMouseEnter={() => animEnterStepsHandler()}
       onMouseLeave={() => animLeaveStepsHandler()}
