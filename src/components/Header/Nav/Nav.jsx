@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Nav.scss";
 import { motion } from "framer-motion";
 import { MenuAnim, anim } from "@/helpers/anim";
 import { Link } from "react-router-dom";
 import AnchorLink from "@/components/AnchorLink/AnchorLink";
+import { DataContext } from "@/helpers/dataHelpers/dataProvider";
 
 export const Nav = ({ setisActive }) => {
+  const { data, isLoading } = useContext(DataContext);
+
   return (
     <motion.div className="navigation" {...anim(MenuAnim.presenceMenu)}>
       <nav className="navigation__list container">
@@ -22,7 +25,7 @@ export const Nav = ({ setisActive }) => {
           </motion.span>
         </h1>
         <h1 className="navigation__link-wrapper super-text">
-          <motion.a
+          <motion.span
             href="/"
             className="navigation__link"
             {...anim(MenuAnim.links)}
@@ -31,26 +34,24 @@ export const Nav = ({ setisActive }) => {
             <Link to="/about" className="navigation__link" onClick={() => setisActive(false)}>
               About us
             </Link>
-          </motion.a>
+          </motion.span>
         </h1>
         <h1 className="navigation__link-wrapper super-text">
-          <motion.a
+          <motion.span
             href="/"
             className="navigation__link"
             {...anim(MenuAnim.links)}
             custom={[3 * 0.1, 3 * 0.01]}
+            onClick={() => setisActive(false)}
           >
             
-            <AnchorLink toSection="#contact-us" className="navigation__link" onClick={() => setisActive(false)}>
+            <AnchorLink toSection="#contact-us" className="navigation__link">
               Contact us
             </AnchorLink>
-            {/* <Link to="/contact" className="navigation__link" onClick={() => setisActive(false)}>
-              Contact us
-            </Link> */}
-          </motion.a>
+          </motion.span>
         </h1>
         <h1 className="navigation__link-wrapper super-text">
-          <motion.a
+          <motion.span
             href="/"
             className="navigation__link link-with-arrow"
             {...anim(MenuAnim.links)}
@@ -59,7 +60,7 @@ export const Nav = ({ setisActive }) => {
             <Link to="/vacancies" className="navigation__link" onClick={() => setisActive(false)}>
               Join our team
             </Link>
-          </motion.a>
+          </motion.span>
         </h1>
       </nav>
 
@@ -67,27 +68,13 @@ export const Nav = ({ setisActive }) => {
         <p className="shadow">Follow us</p>
 
         <ul className="socials__list">
-          <li className="socials__item">
-            <a href="https://vimeo.com/rezcreative">
-              <img src="/media/Socials/Vimeo.svg" alt="" />
+        {data?.socials && data?.socials?.links.map((currSocial, i) => (
+          <li className="socials__item" key={`socials__item-${i}`}>
+            <a href={currSocial.link} target="_blank">
+              <img src={currSocial.icon} alt="socials" />
             </a>
           </li>
-          <li className="socials__item">
-            <a href="https://www.instagram.com/rezcreative/">
-              <img src="/media/Socials/Instagram.svg" alt="" />
-            </a>
-          </li>
-          <li className="socials__item">
-            <a href="https://www.facebook.com/Rezcreative/">
-              <img src="/media/Socials/FB.svg" alt="" />
-            </a>
-          </li>
-          <li className="socials__item">
-            <a href="https://www.linkedin.com/company/rez-creative/?originalSubdomain=ca">
-              <img src="/media/Socials/Linkedin.svg" alt="" />
-            </a>
-          </li>
-        </ul>
+        ))}        </ul>
       </motion.div>
     </motion.div>
   );

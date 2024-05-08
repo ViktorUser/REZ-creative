@@ -87,7 +87,7 @@ const WorksList = () => {
       <div ref={presenceAnimRef}>
 
         <WorkFilter worksList={worksList} setWorksList={setWorksList} />
-        <ul className="works__list">
+        <ul className="works__list" id="works-list">
           <AnimatePresence mode="wait">
             {worksList.map((currWork, i) => (
               <ProjWrapper

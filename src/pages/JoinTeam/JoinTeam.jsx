@@ -3,7 +3,7 @@ import { PageLayout } from "@/components/PageLayout/PageLayout";
 import React, { useEffect } from "react";
 import TeamHero from "./TeamHero/TeamHero";
 import "./JoinTeam.scss";
-import Vacancies from "./TeamHero/Vacancies/Vacancies";
+import Vacancies from "./Vacancies/Vacancies";
 import { DataProvider } from "@/helpers/dataHelpers/dataProvider";
 import { URL_VACANCIES } from "@/helpers/dataHelpers/linksAPI";
 

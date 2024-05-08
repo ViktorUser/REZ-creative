@@ -17,7 +17,7 @@ export default function WorksTop() {
         <WorksTopDesktop />
       </div>
     </>
-  )
+  );
 }
 
 const WorksTopMobile = () => {
@@ -32,8 +32,8 @@ const WorksTopMobile = () => {
   useGSAP(() => {
     const tl = gsap.timeline();
 
-    ScrollTrigger.refresh(true)
-    
+    ScrollTrigger.refresh(true);
+
     if (!isLoading) {
       lineRef.current.forEach((currLine, i) => {
         tl.set(currLine, { scale: 0.2 });
@@ -77,7 +77,6 @@ const WorksTopMobile = () => {
         );
       });
     }
-
   }, [isLoading, titlesRef, mainRef]);
 
   return (
@@ -129,7 +128,7 @@ const WorksTopDesktop = () => {
   useGSAP(() => {
     const tl = gsap.timeline();
 
-    ScrollTrigger.refresh(true)
+    ScrollTrigger.refresh(true);
 
     if (!isLoading) {
       lineRef.current.forEach((currLine, i) => {
@@ -145,9 +144,12 @@ const WorksTopDesktop = () => {
             ease: "expo.inOut",
             scrollTrigger: {
               trigger: mainRef.current,
-              start: "top 75%",
-              end: "top 0%",
-              scrub: (i + 1) * 0.2,
+              start: `${(i)}% 75%`,
+              end: `${(i)}% 0%`,
+              // start: "top 75%",
+              // end: "top 0%",
+              // scrub: (i + 1) * 0.2,
+              scrub: true,
             },
           }
         );
@@ -162,9 +164,9 @@ const WorksTopDesktop = () => {
             ease: "expo.inOut",
             scrollTrigger: {
               trigger: mainRef.current,
-              start: "25% bottom",
-              end: "40% top",
-              scrub: (i + 1) * 0.2,
+              start: `${25 + (i * 2)}% bottom`,
+              end: `${40 + (i * 2)}% top`,
+              scrub: true,
             },
           }
         );
@@ -175,13 +177,16 @@ const WorksTopDesktop = () => {
             scale: 1,
           },
           {
-            scale: 0.75,
+            scale: 0.65,
             ease: "expo.inOut",
             scrollTrigger: {
               trigger: mainRef.current,
-              start: "55% bottom",
-              end: "75% top",
-              scrub: (i + 1) * 0.2,
+              start: `${55 + (i * 2)}% bottom`,
+              end: `${75 + (i * 2)}% top`,
+              // start: "55% bottom",
+              // end: "75% top",
+              // scrub: (i + 1) * 0.2,
+              scrub: true,
             },
           }
         );
@@ -193,42 +198,46 @@ const WorksTopDesktop = () => {
           yPercent: 20,
         });
 
-        tl.fromTo(
-          currT,
-          {
-            clipPath: "inset(0% 0 100% 0)",
-            yPercent: 20,
-          },
-          {
-            clipPath: "inset(0% 0 0% 0)",
-            yPercent: 0,
-            ease: "expo.inOut",
-            scrollTrigger: {
-              trigger: mainRef.current,
-              start: "0% 65%",
-              end: "0% 45%",
-              scrub: (i + 3) * 0.9,
+        tl.add(
+          gsap.fromTo(
+            currT,
+            {
+              clipPath: "inset(0% 0 100% 0)",
+              yPercent: 20,
             },
-          }
+            {
+              clipPath: "inset(0% 0 -5% 0)",
+              yPercent: -5,
+              ease: "expo.inOut",
+              scrollTrigger: {
+                trigger: mainRef.current,
+                start: "4% 65%",
+                end: "4% 30%",
+                scrub: 1,
+              },
+            }
+          )
         );
 
-        tl.fromTo(
-          currT,
-          {
-            clipPath: "inset(0% 0 0% 0)",
-            yPercent: 0,
-          },
-          {
-            clipPath: "inset(100% 0 0% 0)",
-            yPercent: -20,
-            ease: "expo.inOut",
-            scrollTrigger: {
-              trigger: mainRef.current,
-              start: "60% bottom",
-              end: "70% top",
-              scrub: (i + 1) * 0.2,
+        tl.add(
+          gsap.fromTo(
+            currT,
+            {
+              clipPath: "inset(0% 0 -5% 0)",
+              yPercent: -5,
             },
-          }
+            {
+              clipPath: "inset(100% 0 20% 0)",
+              yPercent: -20,
+              ease: "expo.inOut",
+              scrollTrigger: {
+                trigger: mainRef.current,
+                start: "60% bottom",
+                end: "70% top",
+                scrub: true,
+              },
+            }
+          )
         );
       });
 
@@ -261,7 +270,7 @@ const WorksTopDesktop = () => {
             trigger: mainRef.current,
             start: "60% bottom",
             end: "75% top",
-            scrub: 2,
+            scrub: 1,
           },
         }
       );

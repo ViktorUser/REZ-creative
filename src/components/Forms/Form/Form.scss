@@ -2,12 +2,9 @@
 
 .main-form {
   background-color: $g-100;
-  padding: 5vw 3.2vw 7.4vw;
+  padding: 3vw 3.2vw 2vw;
   position: relative;
   z-index: 10;
-
-  //g: 70vw
-  //m: 57vw
 
   @include forVerticalTablet() {
     padding: 8vw 5.2vw 15.4vw;
@@ -43,7 +40,7 @@
   &__content {
     width: 100%;
     position: relative;
-    border: 0.2vw solid $c-orange;
+    // border: 0.2vw solid $c-orange;
     margin-top: 3vw;
     padding-bottom: 2vw;
 
@@ -75,12 +72,9 @@
 
   row-gap: 2.5vw;
 
-  border: 0.2vw solid $c-yellow;
+  // border: 0.2vw solid $c-yellow;
   margin: 1.6vw 5.2vw 0;
-  padding: 5vw 22vw;
-
-  // m: 30vw / 50vw / 85vw
-  // g: 40vw / 70vw / 130vw
+  padding: 2vw 22vw 1vw;
 
   @include forVerticalTablet() {
     padding: 8vw 12vw;

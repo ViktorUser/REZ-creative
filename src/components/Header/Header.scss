@@ -62,6 +62,8 @@
   }
 
   &__menu-button {
+    cursor: pointer;
+    
     @include forHorizontalTablet() {
       display: none;
     }

@@ -6,7 +6,6 @@ import WorksTop from "./WorksTop/WorksTop";
 import Works from "./Works/Works";
 import Partners from "./Partners/Partners";
 import { PageLayout } from "@/components/PageLayout/PageLayout";
-import { Footer } from "@/components/Footer/Footer";
 import { DataProvider } from "@/helpers/dataHelpers/dataProvider";
 import { URL_HOME_DATA } from "@/helpers/dataHelpers/linksAPI";
 

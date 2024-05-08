@@ -29,6 +29,7 @@
     text-transform: none;
     display: block;
     position: relative;
+    @include hoverForLinks;
 
     &.link-with-arrow {
       width: 90vw;

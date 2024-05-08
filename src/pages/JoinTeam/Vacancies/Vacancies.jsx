@@ -87,7 +87,7 @@ const Vacancy = ({ vacancy, index }) => {
           className="upperCase semiBold vacancy__deadline"
           data-only-desktop--flex
         >
-          <h3 className="upperCase semiBold">{deadline.day}</h3>
+          <span className="upperCase semiBold">{deadline.day}</span>
           <span>{deadline.month_and_year}</span>
         </p>
         <div className="vacancy__deadline vacancy__deadline-wrapper">

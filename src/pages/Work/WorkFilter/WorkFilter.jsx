@@ -52,12 +52,14 @@ export const WorkFilter = ({ worksList, setWorksList }) => {
     ScrollTrigger.create({
       trigger: mainSortList.current,
       start: "bottom top",
-      endTrigger: ".works__list",
+      endTrigger: "#works-list",
       end: "bottom bottom",
       scrub: true,
       onUpdate: () => ScrollTrigger.refresh(true),
       onEnter: () => setIsFixed(true),
+      onEnterBack: () => setIsFixed(true),
       onLeaveBack: () => setIsFixed(false),
+      onLeave: () => setIsFixed(false),
     });
   }, []);
 
@@ -120,13 +122,12 @@ export const WorkFilter = ({ worksList, setWorksList }) => {
           </li>
         ))}
       </ul>
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         <motion.ul
           className="works-filter works-filter--fixed"
           ref={fixedSortList}
           variants={WorksListAnim.filterMenu}
-          initial="initial"
-          animate={isFixed ? "animate": "exit"}
+          animate={isFixed ? "animate" : "exit"}
           data-only-desktop--flex
         >
           <li

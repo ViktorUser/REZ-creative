@@ -31,7 +31,8 @@
     &-wrapper {
       display: flex;
       gap: 15vw;
-      animation: spinAnimation 16s infinite linear;
+      animation: spinAnimation infinite linear;
+      padding-left: 15vw;
     }
   }
 

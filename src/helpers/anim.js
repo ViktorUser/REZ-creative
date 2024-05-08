@@ -384,16 +384,16 @@ export const WorksListAnim = {
     }),
   },
   filterMenu: {
-    initial: {
-      opacity: 0,
-      transition,
-    },
     animate: {
       opacity: 1,
+      y: '0%',
+      x: '-10%',
       transition,
     },
     exit: {
       opacity: 0,
+      y: '100%',
+      x: '-10%',
       transition,
     },
   },

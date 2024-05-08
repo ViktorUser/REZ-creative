@@ -58,8 +58,7 @@ export const Loader = () => {
         imageRef.current,
         progressWrapperRef.current,
         linesRef.current[3],
-        loaderRef.current,
-        isHomePage
+        isHomePage || isWorkDetails
       ),
       "<77%"
     );

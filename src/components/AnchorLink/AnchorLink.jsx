@@ -9,17 +9,19 @@ const AnchorLink = ({ toSection, children, ...rest }) => {
 
   const {scrollToSection} = useContext(ScrollContext);
 
-  useEffect(() => {
-    if (hash) {
-      setTimeout(() => {
-        const id = hash.replace("#", "");
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView();
-        }
-      }, 100);
-    }
-  }, [hash]);
+  // useEffect(() => {
+  //   if (hash) {
+  //     setTimeout(() => {
+  //       const id = hash.replace("#", "");
+  //       const element = document.getElementById(id);
+
+  //       if (element) {
+  //         element.scrollIntoView();
+  //       }
+        
+  //     }, 100);
+  //   }
+  // }, [hash]);
 
   return (
     <Link

@@ -41,7 +41,7 @@ export const linesAnim = (linesArray) => {
   return tl;
 };
 
-export const endingAnim = (image, progress, lastLine) => {
+export const endingAnim = (image, progress, lastLine, isSpecialPage) => {
   const tl = gsap.timeline();
 
   tl
@@ -57,9 +57,9 @@ export const endingAnim = (image, progress, lastLine) => {
       tl.to(
         lastLine,
         {
-          border: 0,
+          border: "none" ,
           duration: 0.4,
-          ease: "expo.out",
+          delay: 1,
         },
         0
       ).to(image, {
@@ -68,6 +68,7 @@ export const endingAnim = (image, progress, lastLine) => {
         duration: 1.4,
         ease: "expo.out",
       }, 0);
+
 
   return tl;
 };

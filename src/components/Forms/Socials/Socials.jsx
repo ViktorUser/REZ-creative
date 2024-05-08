@@ -13,7 +13,7 @@ export const Socials = () => {
       <ul className="socials__list">
         {data?.socials && data?.socials?.links.map((currSocial, i) => (
           <li className="socials__item" key={`socials__item-${i}`}>
-            <a href={currSocial.link}>
+            <a href={currSocial.link} target="_blank">
               <img src={currSocial.icon} alt="socials" />
             </a>
           </li>
