@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+
+import "./Hero.scss";
 import { LoaderContext } from "@/components/Loader/LoaderContext";
 import { DataContext } from "@/helpers/dataHelpers/dataProvider";
 import classNames from "classnames";
@@ -6,16 +8,19 @@ import { AnimatePresence, motion } from "framer-motion";
 import { anim, TimelineAnim } from "@/helpers/anim";
 import ReactPlayer from "react-player";
 
-
 export const Hero = () => {
   const { loaderFinished } = useContext(LoaderContext);
-  const { data } = useContext(DataContext);
+
+  const { data, isLoading } = useContext(DataContext);
 
   const [currentVideo, setCurrentVideo] = useState(0);
   const [videoArray, setVideoArray] = useState([]);
   const [isInitial, setIsInitial] = useState(true);
 
+  const timelineName = useRef([]);
+
   const canvasRef = useRef();
+
   const currentVideoRef = useRef(currentVideo);
 
   useEffect(() => {
@@ -23,11 +28,19 @@ export const Hero = () => {
   }, [currentVideo]);
 
   useEffect(() => {
+    if (videoArray[currentVideoRef.current]) {
+      videoArray[currentVideoRef.current].oncanplaythrough = () => {
+        console.log("Video can play through without interruption.");
+      };
+    }
+  }, [videoArray, currentVideo]);
+
+  useEffect(() => {
     const observer = new MutationObserver((mutationsList, observer) => {
       for (let mutation of mutationsList) {
         if (mutation.type === "childList") {
           const videos = document.querySelectorAll(".hero__video-bg div video");
-          setVideoArray(Array.from(videos)); // Convert NodeList to Array
+          setVideoArray(videos);
         }
       }
     });
@@ -41,18 +54,18 @@ export const Hero = () => {
 
   useEffect(() => {
     if (videoArray.length && loaderFinished) {
+      const videos = document.querySelectorAll(".hero__video-bg div video");
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
 
       ctx.imageSmoothingEnabled = false;
 
       const loop = () => {
-        const currentVideoElement = videoArray[currentVideoRef.current];
-
         if (
-          currentVideoElement &&
-          !currentVideoElement.paused &&
-          !currentVideoElement.ended
+          videos[currentVideoRef.current] &&
+          !videos[currentVideoRef.current].paused &&
+          !videos[currentVideoRef.current].ended &&
+          loaderFinished
         ) {
           const scaleWidth = 80;
           const scaleHeight = 45;
@@ -60,7 +73,7 @@ export const Hero = () => {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
 
           ctx.drawImage(
-            currentVideoElement,
+            videos[currentVideoRef.current],
             0,
             0,
             scaleWidth,
@@ -83,22 +96,16 @@ export const Hero = () => {
         setTimeout(loop, 1000 / 60);
       };
 
-      const currentVideoElement = videoArray[currentVideoRef.current];
-      if (currentVideoElement) {
-        currentVideoElement.addEventListener("play", loop, 0);
-        currentVideoElement.addEventListener("ended", () => {
-          setCurrentVideo((currentVideoRef.current + 1) % videoArray.length);
+      if (videos[currentVideoRef.current]) {
+        videoArray[currentVideoRef.current].oncanplaythrough = () => {
+          videos[currentVideoRef.current].addEventListener("play", loop, 0);
+        };
+        videos[currentVideoRef.current].addEventListener("ended", () => {
+          setCurrentVideo((currentVideoRef.current + 1) % videos.length);
         });
       }
-
-      return () => {
-        currentVideoElement.removeEventListener("play", loop);
-        currentVideoElement.removeEventListener("ended", () => {
-          setCurrentVideo((currentVideoRef.current + 1) % videoArray.length);
-        });
-      };
     }
-  }, [loaderFinished, videoArray, currentVideo, currentVideoRef]);
+  }, [videoArray, currentVideo, currentVideoRef.current, canvasRef]);
 
   useEffect(() => {
     if (currentVideo === 0) {
@@ -152,49 +159,94 @@ export const Hero = () => {
           })}
         >
           {loaderFinished && (
-            <div className="content">
-              <div className="timelines">
-                {data.hero.timeline_list.length !== 1 &&
-                  data.hero.timeline_list.map((currV, i) => (
-                    <div
-                      className="timelines__item"
-                      key={`timeline-${currV.name}--${i}`}
-                    >
-                      <p
-                        className={classNames("timelines__name", {
-                          "timelines__name--active": currentVideo === i,
-                        })}
+            <>
+              <div className="content">
+                <div className="timelines">
+                  {data.hero.timeline_list.length !== 1 &&
+                    data.hero.timeline_list.map((currV, i) => (
+                      <div
+                        className="timelines__item"
+                        key={`timeline-${currV.name}--${i}`}
+                        ref={(n) => timelineName.current.push(n)}
                       >
-                        {currV.name}
-                      </p>
-                      <motion.span
-                        className="timelines__line"
-                        variants={TimelineAnim.lines}
-                        initial="initial"
-                        animate={
-                          currentVideo === i && !isInitial
-                            ? "aninate"
-                            : isInitial
-                            ? "initial"
-                            : currentVideo > i ||
-                              (i === 0 && currentVideo === 0 && "exit")
-                        }
-                        custom={videoArray[currentVideo]?.duration || 5}
-                      />
-                      <p
-                        className={classNames(
-                          "timelines__name timelines__category",
-                          {
+                        <p
+                          className={classNames("timelines__name", {
                             "timelines__name--active": currentVideo === i,
+                          })}
+                        >
+                          {currV.name}
+                        </p>
+                        <motion.span
+                          className="timelines__line"
+                          variants={TimelineAnim.lines}
+                          initial="initial"
+                          animate={
+                            currentVideo === i && !isInitial
+                              ? "aninate"
+                              : isInitial
+                              ? "initial"
+                              : currentVideo > i ||
+                                (i === 0 && currentVideo === 0 && "exit")
                           }
-                        )}
-                      >
-                        {currV.category}
-                      </p>
-                    </div>
-                  ))}
+                          custom={videoArray[currentVideo]?.duration || 5}
+                        />
+                        <p
+                          className={classNames(
+                            "timelines__name timelines__category",
+                            {
+                              "timelines__name--active": currentVideo === i,
+                            }
+                          )}
+                        >
+                          {currV.category}
+                        </p>
+                      </div>
+                    ))}
+                </div>
               </div>
-            </div>
+              <div className="mobile">
+                <div className="timelines container">
+                  <AnimatePresence mode="wait">
+                    <motion.h3
+                      {...anim(TimelineAnim.names.Mobile)}
+                      key={`${data.hero.timeline_list[currentVideo]?.name}`}
+                    >
+                      {data.hero.timeline_list[currentVideo]?.name}
+                    </motion.h3>
+                    <motion.p
+                      {...anim(TimelineAnim.names.Mobile)}
+                      key={`${data.hero.timeline_list[currentVideo]?.category}`}
+                      custom={0.1}
+                      className="upperCase semiBold"
+                    >
+                      {data.hero.timeline_list[currentVideo]?.category}
+                    </motion.p>
+                  </AnimatePresence>
+
+                  <div className="timelines__lines">
+                    {data.hero.timeline_list.map((_, i) => (
+                      <div className="timelines__wrapper">
+                        <motion.span
+                          className="timelines__line timelines__line--mobile"
+                          variants={TimelineAnim.lines}
+                          initial="initial"
+                          animate={
+                            currentVideo === i && !isInitial
+                              ? "aninate"
+                              : isInitial
+                              ? "initial"
+                              : currentVideo > i ||
+                                (i === 0 && currentVideo === 0 && "exit")
+                          }
+                          custom={videoArray[currentVideo]?.duration || 5}
+                        />
+                        <span className="timelines__line--empty" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </>
           )}
         </div>
       </section>
