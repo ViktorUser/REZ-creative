@@ -9,13 +9,19 @@ import { anim, TimelineAnim } from "@/helpers/anim";
 import ReactPlayer from "react-player";
 
 export const Hero = () => {
+  
   const { loaderFinished } = useContext(LoaderContext);
+
   const { data, isLoading } = useContext(DataContext);
+
   const [currentVideo, setCurrentVideo] = useState(0);
   const [videoArray, setVideoArray] = useState([]);
   const [isInitial, setIsInitial] = useState(true);
+
   const timelineName = useRef([]);
+
   const canvasRef = useRef();
+
   const currentVideoRef = useRef(currentVideo);
 
   useEffect(() => {
@@ -88,7 +94,7 @@ export const Hero = () => {
           );
         }
 
-        requestAnimationFrame(loop);
+        setTimeout(loop, 1000 / 60);
       };
 
       if (videos[currentVideoRef.current]) {
@@ -215,7 +221,7 @@ export const Hero = () => {
                       className="upperCase semiBold"
                     >
                       {data.hero.timeline_list[currentVideo]?.category}
-                    </p>
+                    </motion.p>
                   </AnimatePresence>
 
                   <div className="timelines__lines">
