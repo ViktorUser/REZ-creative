@@ -53,59 +53,63 @@ export const Hero = () => {
   }, []);
 
   useEffect(() => {
-    if (videoArray.length && loaderFinished) {
-      const videos = document.querySelectorAll(".hero__video-bg div video");
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext("2d");
+  if (videoArray.length > 0 && loaderFinished) {
+    const videos = document.querySelectorAll(".hero__video-bg div video");
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
 
-      ctx.imageSmoothingEnabled = false;
+    ctx.imageSmoothingEnabled = false;
 
-      const loop = () => {
-        if (
-          videos[currentVideoRef.current] &&
-          !videos[currentVideoRef.current].paused &&
-          !videos[currentVideoRef.current].ended &&
-          loaderFinished
-        ) {
-          const scaleWidth = 80;
-          const scaleHeight = 45;
+    const drawFrame = () => {
+      if (
+        videos[currentVideoRef.current] &&
+        !videos[currentVideoRef.current].paused &&
+        !videos[currentVideoRef.current].ended
+      ) {
+        const scaleWidth = 80;
+        const scaleHeight = 45;
 
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-          ctx.drawImage(
-            videos[currentVideoRef.current],
-            0,
-            0,
-            scaleWidth,
-            scaleHeight
-          );
-
-          ctx.drawImage(
-            canvas,
-            0,
-            0,
-            scaleWidth,
-            scaleHeight,
-            0,
-            0,
-            canvas.width,
-            canvas.height
-          );
-        }
-
-        setTimeout(loop, 1000 / 60);
-      };
-
-      if (videos[currentVideoRef.current]) {
-        videoArray[currentVideoRef.current].oncanplaythrough = () => {
-          videos[currentVideoRef.current].addEventListener("play", loop, 0);
-        };
-        videos[currentVideoRef.current].addEventListener("ended", () => {
-          setCurrentVideo((currentVideoRef.current + 1) % videos.length);
-        });
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(
+          videos[currentVideoRef.current],
+          0,
+          0,
+          scaleWidth,
+          scaleHeight
+        );
+        ctx.drawImage(
+          canvas,
+          0,
+          0,
+          scaleWidth,
+          scaleHeight,
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
       }
-    }
-  }, [videoArray, currentVideo, currentVideoRef.current, canvasRef]);
+    };
+
+    const loop = () => {
+      drawFrame();
+      requestAnimationFrame(loop);
+    };
+
+    videos[currentVideoRef.current].addEventListener('play', () => {
+      requestAnimationFrame(loop);
+    });
+
+    videos[currentVideoRef.current].addEventListener('ended', () => {
+      setCurrentVideo((prevVideo) => (prevVideo + 1) % videos.length);
+    });
+
+    return () => {
+      videos[currentVideoRef.current].removeEventListener('play', loop);
+      videos[currentVideoRef.current].removeEventListener('ended', loop);
+    };
+  }
+}, [videoArray, currentVideo, loaderFinished]);
 
   useEffect(() => {
     if (currentVideo === 0) {
