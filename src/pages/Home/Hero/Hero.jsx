@@ -1,3 +1,12 @@
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { LoaderContext } from "@/components/Loader/LoaderContext";
+import { DataContext } from "@/helpers/dataHelpers/dataProvider";
+import classNames from "classnames";
+import { AnimatePresence, motion } from "framer-motion";
+import { anim, TimelineAnim } from "@/helpers/anim";
+import ReactPlayer from "react-player";
+
+
 export const Hero = () => {
   const { loaderFinished } = useContext(LoaderContext);
   const { data } = useContext(DataContext);
