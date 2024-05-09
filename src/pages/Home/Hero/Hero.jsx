@@ -54,7 +54,7 @@ export const Hero = () => {
   }, []);
 
   useEffect(() => {
-  if (videoArray.length && loaderFinished && isInitial) {
+  if (videoArray.length && loaderFinished) {
     const videos = document.querySelectorAll(".hero__video-bg div video");
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -94,20 +94,22 @@ export const Hero = () => {
         );
       }
 
-      setTimeout(loop, 1000 / 60);
+      requestAnimationFrame(loop);
     };
 
     if (videos[currentVideoRef.current]) {
       videoArray[currentVideoRef.current].oncanplaythrough = () => {
-        videos[currentVideoRef.current].addEventListener("play", loop, 0);
+        videos[currentVideoRef.current].addEventListener("play", loop);
       };
       videos[currentVideoRef.current].addEventListener("ended", () => {
         setCurrentVideo((currentVideoRef.current + 1) % videos.length);
       });
     }
-    loop(); // Start the loop immediately if conditions are met
+
+    // Start the loop immediately if conditions are met
+    loop();
   }
-}, [videoArray, currentVideo, currentVideoRef.current, canvasRef, loaderFinished, isInitial]);
+}, [videoArray, currentVideo, currentVideoRef.current, canvasRef, loaderFinished]);
 
   useEffect(() => {
     if (currentVideo === 0) {
